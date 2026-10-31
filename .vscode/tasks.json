@@ -1,0 +1,8 @@
+{
+  "version":"2.0.0",
+  "tasks":[
+    {"label":"MongoDB: local dev","type":"shell","command":"npm.cmd run db:dev","problemMatcher":[]},
+    {"label":"NestJS: dev","type":"shell","command":"npm.cmd run start:dev","problemMatcher":[]},
+    {"label":"Build","type":"shell","command":"npm.cmd run build","group":"build","problemMatcher":["$tsc"]}
+  ]
+}

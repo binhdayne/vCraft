@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3000/api/v1
+
+### Database health
+GET {{baseUrl}}/health
+
+### Approved workshops
+GET {{baseUrl}}/workshops?limit=20
+
+### Published products
+GET {{baseUrl}}/products?limit=20
