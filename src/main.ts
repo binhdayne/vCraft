@@ -1,23 +1,23 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { rateLimit } from 'express-rate-limit';
+import { join } from 'node:path';
 import { AppModule } from './app.module';
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const config = app.get(ConfigService);
-  app.use(helmet());
-  app.enableCors({ origin: config.getOrThrow<string>('CORS_ORIGIN').split(',') });
-  app.setGlobalPrefix('api/v1');
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
-  app.enableShutdownHooks();
-  if (config.get('NODE_ENV') !== 'production') {
-    const doc = new DocumentBuilder().setTitle('vCraft API').setDescription('Backend starter: health and public catalog. Business workflows are planned in docs/ROADMAP.md.').setVersion('0.1.0').build();
-    SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, doc));
-  }
-  await app.listen(config.getOrThrow<number>('PORT'), config.getOrThrow<string>('HOST'));
+async function bootstrap(){
+ const app=await NestFactory.create<NestExpressApplication>(AppModule);
+ const config=app.get(ConfigService);
+ app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'"],styleSrc:["'self'","'unsafe-inline'"],imgSrc:["'self'","data:","blob:","https://*.tile.openstreetmap.org"],connectSrc:["'self'"],fontSrc:["'self'","data:"],upgradeInsecureRequests:null}}}));
+ app.enableCors({origin:config.getOrThrow<string>('CORS_ORIGIN').split(',')});
+ app.use('/api/v1/auth',rateLimit({windowMs:15*60*1000,limit:60,standardHeaders:true,legacyHeaders:false}));
+ app.setGlobalPrefix('api/v1');app.enableShutdownHooks();
+ app.useStaticAssets(join(process.cwd(),'public','art'),{prefix:'/art/'});
+ app.useStaticAssets(join(process.cwd(),'.local','uploads'),{prefix:'/uploads/'});
+ app.useStaticAssets(join(process.cwd(),'frontend','dist'));
+ if(config.get('NODE_ENV')!=='production'){const doc=new DocumentBuilder().setTitle('vCraft · Đông Hồ API').setDescription('Artisan studios, provenance, quotations and village administration.').setVersion('1.0.0').addBearerAuth().build();SwaggerModule.setup('docs',app,SwaggerModule.createDocument(app,doc),{customJs:[],customCss:''});}
+ await app.listen(config.getOrThrow<number>('PORT'),config.getOrThrow<string>('HOST'));
 }
-bootstrap().catch(() => { console.error('Startup failed. Check configuration and MongoDB availability.'); process.exit(1); });
+bootstrap().catch(error=>{console.error('Startup failed:',error.message);process.exit(1);});
