@@ -1,3 +1,5 @@
 # batches
 
-Module dự kiến; chưa có API thực thi. Xem docs/ROADMAP.md.
+Lô sản xuất, nhật ký, truy xuất và QR.
+
+Xem [kiến trúc backend](../../../docs/ARCHITECTURE.md).

@@ -1,3 +1,5 @@
 # quotes
 
-Module dự kiến; chưa có API thực thi. Xem docs/ROADMAP.md.
+Yêu cầu báo giá, chào giá, phân bổ, sản xuất và giao hàng.
+
+Xem [kiến trúc backend](../../../docs/ARCHITECTURE.md).

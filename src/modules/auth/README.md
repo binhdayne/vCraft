@@ -1,3 +1,5 @@
 # auth
 
-Module dự kiến; chưa có API thực thi. Xem docs/ROADMAP.md.
+Đăng ký, đăng nhập, JWT, tài khoản hiện tại và guard.
+
+Xem [kiến trúc backend](../../../docs/ARCHITECTURE.md).

@@ -1,10 +1,10 @@
 require('reflect-metadata');
-const mongoose=require('mongoose');const {hash}=require('bcryptjs');const {Database}=require('../dist/domain/database');
+const mongoose=require('mongoose');const {hash}=require('bcryptjs');const {createDatabase}=require('./database.cjs');
 try{process.loadEnvFile();}catch{}
 const categories=['Chúc tụng','Sinh hoạt','Lịch sử & dân gian','Tứ quý'];
 async function seed(){
  if(process.env.NODE_ENV==='production')throw new Error('Demo seed is disabled in production');
- const conn=await mongoose.createConnection(process.env.MONGODB_URI||'mongodb://127.0.0.1:27017/vcraft').asPromise();const db=new Database(conn);
+ const conn=await mongoose.createConnection(process.env.MONGODB_URI||'mongodb://127.0.0.1:27017/vcraft').asPromise();const db=createDatabase(conn);
  try{
  const passwordHash=await hash('DongHo@2026!',12);const accounts=[];
  for(const [email,name,role] of [['admin@vcraft.local','Ban quản lý Đông Hồ','admin'],['buyer@vcraft.local','Khách hàng demo','buyer'],['artisan@vcraft.local','Nghệ nhân An (demo)','artisan'],['artisan2@vcraft.local','Nghệ nhân Bình (demo)','artisan'],['artisan3@vcraft.local','Nghệ nhân Chi (demo)','artisan']]){

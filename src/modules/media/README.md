@@ -1,3 +1,5 @@
 # media
 
-Module dự kiến; chưa có API thực thi. Xem docs/ROADMAP.md.
+Kiểm tra ảnh, chuyển WebP và lưu file tải lên.
+
+Xem [kiến trúc backend](../../../docs/ARCHITECTURE.md).

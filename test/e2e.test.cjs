@@ -1,9 +1,9 @@
 require('reflect-metadata');
 const {test}=require('node:test');const assert=require('node:assert/strict');const {NestFactory}=require('@nestjs/core');const {getConnectionToken}=require('@nestjs/mongoose');const {hash}=require('bcryptjs');const sharp=require('sharp');const fs=require('node:fs/promises');const path=require('node:path');
 process.env.MONGODB_URI='mongodb://127.0.0.1:27017/vcraft_test_'+Date.now();process.env.JWT_SECRET='test-secret-only-'.repeat(4);process.env.NODE_ENV='test';
-const {AppModule}=require('../dist/app.module');const {Database}=require('../dist/domain/database');
+const {AppModule}=require('../dist/app.module');const {createDatabase}=require('../scripts/database.cjs');
 test('end-to-end workflows against isolated MongoDB database',async t=>{
- const app=await NestFactory.create(AppModule,{logger:false});app.setGlobalPrefix('api/v1');await app.listen(0,'127.0.0.1');const base=await app.getUrl();const db=app.get(Database);const conn=app.get(getConnectionToken());const uploads=[];
+ const app=await NestFactory.create(AppModule,{logger:false});app.setGlobalPrefix('api/v1');await app.listen(0,'127.0.0.1');const base=await app.getUrl();const conn=app.get(getConnectionToken());const db=createDatabase(conn);const uploads=[];
  async function req(url,method='GET',body,token){const r=await fetch(base+'/api/v1'+url,{method,headers:{...(body instanceof FormData?{}:{'Content-Type':'application/json'}),...(token?{Authorization:'Bearer '+token}:{})},body:body?(body instanceof FormData?body:JSON.stringify(body)):undefined});return {status:r.status,data:r.headers.get('content-type')?.includes('json')?await r.json():Buffer.from(await r.arrayBuffer())};}
  async function ok(url,method,body,token,status){const r=await req(url,method,body,token);assert.equal(r.status,status|| (method==='POST'?201:200),JSON.stringify(r.data));return r.data;}
  let admin,buyer,other,art1,art2,studio1,studio2,p1,batch,q;const password='TestPassword123!';const categories=['Chúc tụng'];

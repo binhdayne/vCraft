@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { validateEnvironment } = require('../dist/config');
+const { validateEnvironment } = require('../dist/config/environment.validation');
 test('defaults connect to local MongoDB and bind loopback', () => {
   const config = validateEnvironment({JWT_SECRET:'a'.repeat(48)});
   assert.equal(config.PORT, 3000);

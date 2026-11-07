@@ -1,44 +1,38 @@
-# vCraft Backend
+# vCraft
 
-Bộ khung NestJS 11 + MongoDB (Mongoose), Node.js 22 trở lên. Dựa trên đề vCraft; frontend và các luồng nghiệp vụ đầy đủ chưa được triển khai. Xem [lộ trình](docs/ROADMAP.md).
+Ứng dụng làng nghề Đông Hồ: backend NestJS 11 + MongoDB, frontend React + Vite. Yêu cầu Node.js 22 trở lên.
 
-## Chạy trên Windows / VS Code
+## Chạy local trên Windows
 
-Mở vcraft.code-workspace. Dùng npm.cmd để tránh lỗi PowerShell chặn npm.ps1.
+1. Chạy `npm.cmd ci`.
+2. Chạy `Copy-Item .env.example .env` nếu chưa có .env; cấu hình JWT_SECRET ít nhất 32 ký tự.
+3. Terminal thứ nhất: `npm.cmd run db:dev`.
+4. Chạy `npm.cmd run build` để build backend và frontend.
+5. Terminal thứ hai: `npm.cmd run start:dev`.
+6. Mở [ứng dụng](http://localhost:3000), [Swagger](http://localhost:3000/docs) hoặc [health](http://localhost:3000/api/v1/health).
 
-1. npm.cmd ci
-2. Copy-Item .env.example .env (chỉ khi chưa có .env)
-3. Terminal thứ nhất: npm.cmd run db:dev
-4. Terminal thứ hai: npm.cmd run start:dev
-5. Swagger: http://localhost:3000/docs
-6. Health: http://localhost:3000/api/v1/health
+Khi phát triển giao diện, chạy thêm `npm.cmd run web:dev`. Backend phục vụ bản frontend đã build; chạy lại `npm.cmd run build:web` để cập nhật bản này.
 
-MongoDB dev tải binary ở lần chạy đầu và lưu database trong .local/mongodb-data. Dữ liệu giữ lại sau khi dừng; không xóa thư mục này nếu cần giữ dữ liệu. Nhấn Ctrl+C ở mỗi terminal để dừng. Không chạy đồng thời db:dev và Docker trên cùng cổng 27017.
+MongoDB dev lưu dữ liệu tại .local/mongodb-data; dữ liệu giữ lại sau khi dừng. Không chạy hai instance MongoDB cùng thư mục dữ liệu/cổng 27017. Có thể dùng MongoDB riêng qua MONGODB_URI. Không commit .env.
 
-Nếu có Docker: docker compose up -d mongodb thay cho bước 3. Hoặc đặt MONGODB_URI trong .env thành URI MongoDB Atlas. Không commit .env hay thông tin đăng nhập. Cấu hình local chỉ lắng nghe 127.0.0.1 và không có xác thực MongoDB; không dùng nguyên cấu hình này cho production.
+`npm.cmd run seed` tạo dữ liệu demo sau khi build backend. Script giữ bản ghi hiện có và không cho chạy trong production.
 
-## VS Code
+## Cấu trúc NestJS
 
-- F5: Debug NestJS (khởi động MongoDB trước).
-- Terminal > Run Task: MongoDB: local dev hoặc NestJS: dev.
-- requests.http: gọi API với extension REST Client nếu muốn.
-- Extensions recommendations: MongoDB, REST Client (không bắt buộc).
+- [src/app.module.ts](src/app.module.ts): ghép các feature module.
+- [src/config/](src/config/): kiểm tra biến môi trường.
+- [src/database/](src/database/): kết nối MongoDB, đăng ký và export Mongoose model.
+- [src/common/](src/common/): validation dùng chung, kiểm tra quyền và decorator người dùng hiện tại.
+- [src/modules/](src/modules/): mỗi chức năng có module, controller, service; DTO và schema nằm cạnh chức năng sử dụng.
+- [frontend/](frontend/): ứng dụng React, tách khỏi backend.
+- [test/](test/): kiểm thử cấu hình và nghiệp vụ E2E.
+
+Xem [kiến trúc và quy ước mở rộng](docs/ARCHITECTURE.md).
 
 ## Kiểm tra
 
-npm.cmd run typecheck
-npm.cmd test
+`npm.cmd run typecheck`, `npm.cmd test`, `npm.cmd run test:e2e`, `npm.cmd run build`.
 
-API danh sách trả về mảng rỗng khi database chưa có dữ liệu. Chỉ xưởng approved=true và sản phẩm published=true thuộc xưởng đã duyệt mới xuất hiện. Chưa có API tạo dữ liệu vì phân quyền chưa được triển khai.
+E2E cần MongoDB local tại cổng 27017, tạo database vcraft_test_<timestamp> riêng và xóa database test sau khi hoàn tất. Không sử dụng database ứng dụng.
 
-## Cấu trúc
-
-- src/modules/catalog: schema và public API xưởng/sản phẩm.
-- src/modules/auth, users, batches, quotes, news, media: vị trí dành cho nghiệp vụ tiếp theo.
-- src/health.controller.ts: ping MongoDB.
-- .vscode: tasks, launch và settings.
-- docs/requirements.md: nội dung đề, bỏ ảnh nhúng.
-
-Repo Git được tạo local. Chưa có remote GitHub. Khi cần đưa lên GitHub, tạo repo trống rồi thêm origin và push nhánh main.
-
-Tài liệu: https://docs.nestjs.com/techniques/mongodb và https://docs.nestjs.com/openapi/introduction
+Các luồng hiện có: đăng ký/đăng nhập, quản trị tài khoản và duyệt xưởng, sản phẩm, lô tranh và QR truy xuất, báo giá/phân bổ/sản xuất/giao hàng, tin tức và tải ảnh.

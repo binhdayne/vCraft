@@ -1,3 +1,5 @@
 # news
 
-Module dự kiến; chưa có API thực thi. Xem docs/ROADMAP.md.
+Tin công khai và CRUD dành cho quản trị viên.
+
+Xem [kiến trúc backend](../../../docs/ARCHITECTURE.md).
