@@ -4,6 +4,7 @@
   "private": true,
   "description": "vCraft NestJS + MongoDB backend starter",
   "scripts": {
+    "setup": "node scripts/setup.cjs",
     "build": "npm run build:api && npm run build:web",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
@@ -14,8 +15,10 @@
     "build:api": "nest build",
     "build:web": "vite build --config frontend/vite.config.mjs --configLoader native",
     "web:dev": "vite --config frontend/vite.config.mjs --configLoader native",
+    "preseed": "npm run build:api",
     "seed": "node scripts/seed.cjs",
-    "test:e2e": "node --test test/e2e.test.cjs",
+    "pretest:e2e": "npm run build:api",
+    "test:e2e": "node --test test/e2e.test.cjs test/seed.test.cjs",
     "dev": "node scripts/dev.cjs"
   },
   "engines": {
