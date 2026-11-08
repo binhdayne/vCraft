@@ -15,6 +15,10 @@ import {
   BulletinSchema,
 } from "../modules/news/schemas/news.schema";
 import {
+  MediaAssetModelName,
+  MediaAssetSchema,
+} from "../modules/media/schemas/media-asset.schema";
+import {
   QuotationModelName,
   QuotationSchema,
 } from "../modules/quotes/schemas/quotes.schema";
@@ -29,4 +33,5 @@ export const databaseModels = [
   { name: BatchModelName, schema: BatchSchema },
   { name: QuotationModelName, schema: QuotationSchema },
   { name: BulletinModelName, schema: BulletinSchema },
+  { name: MediaAssetModelName, schema: MediaAssetSchema },
 ];

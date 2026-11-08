@@ -41,6 +41,30 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   const fake=new FormData();fake.append('files',new Blob(['not an image'],{type:'image/png'}),'fake.png');assert.equal((await req('/media','POST',fake,art1)).status,400);
   assert.equal((await req('/media','POST',data,buyer)).status,403);
  });
+ await t.test('map photos require uploads from the studio owner and follow saved images',async()=>{
+  const photo=uploads[0];assert.ok(photo);
+  const asset=await conn.models.MediaAsset.findOne({url:photo}).lean();
+  assert.equal(asset.ownerId,studio1.ownerId);
+  assert.deepEqual((await ok('/workshops/'+studio1._id,'GET')).ownerPhotos,[]);
+  // Uploading alone does not publish the photo. The owner must save it on their studio.
+  await ok('/studio','PATCH',{...studio,images:[...studio.images,photo]},art1);
+  assert.deepEqual((await ok('/studio','GET',undefined,art1)).ownerPhotos,[photo]);
+  assert.deepEqual((await ok('/workshops/'+studio1._id,'GET')).ownerPhotos,[photo]);
+  const listing=await ok('/workshops','GET');
+  assert.deepEqual(listing.find(item=>item._id===studio1._id).ownerPhotos,[photo]);
+  assert.deepEqual(listing.find(item=>item._id===studio2._id).ownerPhotos,[]);
+  assert.equal((await req('/studio','PATCH',{...studio,images:[photo]},art2)).status,403);
+  assert.equal((await req('/studio','PATCH',{...studio,images:['/uploads/unowned.webp']},art1)).status,403);
+  assert.equal((await req('/studio','PATCH',{...studio,ownerId:studio2.ownerId},art1)).status,400);
+  assert.equal((await req('/studio','PATCH',studio,buyer)).status,403);
+  // Legacy images stay usable, but unknown upload ownership is never advertised in the popup.
+  const legacy='/uploads/legacy-photo.webp';
+  await db.workshops.updateOne({_id:studio1._id},{$set:{images:[legacy,photo]}});
+  await ok('/studio','PATCH',{...studio,images:[legacy,photo]},art1);
+  assert.deepEqual((await ok('/workshops/'+studio1._id,'GET')).ownerPhotos,[photo]);
+  await ok('/studio','PATCH',studio,art1);
+  assert.deepEqual((await ok('/workshops/'+studio1._id,'GET')).ownerPhotos,[]);
+ });
  await t.test('batch ownership, chronology and public QR provenance',async()=>{
   const input={productId:p1._id,quantity:100,story:'Batch provenance test',published:true};
   assert.equal((await req('/studio/batches','POST',input,art2)).status,403);

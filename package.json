@@ -11,7 +11,7 @@
     "start:debug": "nest start --debug --watch",
     "db:dev": "node scripts/mongo-dev.cjs",
     "typecheck": "tsc --noEmit",
-    "test": "npm run build:api && node --test test/config.test.cjs",
+    "test": "npm run build:api && node --test test/config.test.cjs test/maps.test.cjs",
     "build:api": "nest build",
     "build:web": "vite build --config frontend/vite.config.mjs --configLoader native",
     "web:dev": "vite --config frontend/vite.config.mjs --configLoader native",

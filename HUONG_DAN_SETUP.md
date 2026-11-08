@@ -18,7 +18,7 @@ Máy thứ hai phải clone và setup độc lập. Kiểm tra trên máy hiện
 - Git để clone repo.
 - Node.js **22 trở lên**, kèm npm. Kiểm tra phiên bản thực tế trước khi bắt đầu.
 - VS Code hoặc IDE đang dùng, với hai terminal cho MongoDB và ứng dụng.
-- Kết nối Internet khi cài dependency và khi MongoDB dev tải binary lần đầu. Bản đồ cũng cần mạng để tải nền OpenStreetMap.
+- Kết nối Internet khi cài dependency và khi MongoDB dev tải binary lần đầu. Bản đồ dùng Leaflet/OpenStreetMap; nút xem vệ tinh mở Google Maps ở tab mới, không cần API key.
 
 Không cần cài MongoDB riêng khi dùng `db:dev`: script tải và chạy MongoDB thật, lưu dữ liệu trên máy. Có thể dùng MongoDB đã cài sẵn theo mục 2.4.
 
@@ -298,7 +298,8 @@ Minh chứng nên gồm kết quả terminal, ảnh trang bộ sưu tập, trang
 | Cổng 3000 trả 404 trang chủ | Với chế độ dev, mở 5173. Muốn mở 3000 thì build cả frontend theo mục 2.6 |
 | Không có tranh hoặc không đăng nhập được tài khoản demo | Chạy seed trên đúng `MONGODB_URI`; kiểm tra trạng thái tài khoản đã có trước đó |
 | QR trỏ sai cổng | Sửa `PUBLIC_URL` theo chế độ chạy rồi khởi động lại backend |
-| Ảnh nền bản đồ không tải | Kiểm tra mạng truy cập OpenStreetMap; đối chiếu API xưởng vẫn trả tọa độ |
+| Ảnh nền bản đồ không tải | Ứng dụng tự thử OSM France dự phòng; nếu vẫn lỗi, dùng nút Thử tải lại, kiểm tra DNS/mạng và API xưởng; xem [chẩn đoán bản đồ](docs/MAP.md) |
+| Định vị không hoạt động | Bấm Vị trí của tôi và cấp quyền trong trình duyệt; dùng HTTPS hoặc localhost, kiểm tra định vị thiết bị. Nút chỉ đường vẫn mở Google Maps để chọn điểm xuất phát khi không cấp quyền |
 | E2E không kết nối được DB | Chạy MongoDB local cổng 27017; E2E không lấy URI database ứng dụng từ `.env` |
 
 Xem tiến trình đang nghe trên các cổng cần dùng:
