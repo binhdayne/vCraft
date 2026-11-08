@@ -19,19 +19,22 @@ export class CatalogService {
     private readonly productsModel: Model<Record<string, any>>,
     @InjectModel("Batch")
     private readonly batchesModel: Model<Record<string, any>>,
+    @InjectModel("MediaAsset")
+    private readonly assetsModel: Model<Record<string, any>>,
   ) {}
   async workshops() {
-    return this.workshopsModel
+    const studios = await this.workshopsModel
       .find({ approved: true })
       .sort({ name: 1 })
       .lean();
+    return this.withOwnerPhotos(studios);
   }
   async workshop(key: string) {
     const item = await this.workshopsModel
       .findOne({ _id: parse(id, key), approved: true })
       .lean();
     if (!item) throw new NotFoundException("Không tìm thấy xưởng");
-    return item;
+    return (await this.withOwnerPhotos([item]))[0];
   }
   async products(query: unknown) {
     const q = parse(productsInputSchema, query);
@@ -76,11 +79,20 @@ export class CatalogService {
   }
   async studio(actor: Actor) {
     role(actor, "artisan");
-    return this.own(actor);
+    return (await this.withOwnerPhotos([await this.own(actor)]))[0];
   }
   async updateStudio(actor: Actor, body: unknown) {
     role(actor, "artisan");
     const data = parse(workshopInput, body);
+    const studio = await this.own(actor);
+    // Preserve unchanged legacy images, but new uploads must belong to this account.
+    const existing = new Set(studio.images || []);
+    const additions = [...new Set(data.images.filter(url => url.startsWith("/uploads/") && !existing.has(url)))];
+    if (additions.length) {
+      const owned = await this.assetsModel.countDocuments({ ownerId: actor.id, url: { $in: additions } });
+      if (owned !== additions.length)
+        throw new ForbiddenException("Chỉ được thêm ảnh do tài khoản xưởng của bạn tải lên");
+    }
     return this.workshopsModel.findOneAndUpdate(
       { ownerId: actor.id },
       { $set: data },
@@ -121,5 +133,18 @@ export class CatalogService {
       .lean();
     if (!studio) throw new NotFoundException("Chưa có hồ sơ xưởng");
     return studio;
+  }
+
+  private async withOwnerPhotos(studios: Record<string, any>[]) {
+    const urls = [...new Set(studios.flatMap(studio => (studio.images || []) as string[]))]
+      .filter(url => url.startsWith("/uploads/"));
+    const assets = urls.length ? await this.assetsModel.find({
+      url: { $in: urls }, ownerId: { $in: studios.map(studio => studio.ownerId) },
+    }).select("url ownerId").lean() : [];
+    const owned = new Set(assets.map(asset => `${asset.ownerId}:${asset.url}`));
+    return studios.map(studio => ({
+      ...studio,
+      ownerPhotos: ((studio.images || []) as string[]).filter(url => owned.has(`${studio.ownerId}:${url}`)),
+    }));
   }
 }

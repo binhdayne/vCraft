@@ -32,6 +32,12 @@ Mở [web phát triển](http://localhost:5173), [Swagger](http://localhost:3000
 
 MongoDB dev lưu dữ liệu tại `.local/mongodb-data`; dữ liệu giữ lại sau khi dừng. Không chạy hai instance trên cổng 27017. Có thể dùng MongoDB riêng qua `MONGODB_URI` và bỏ qua `db:dev`. Không commit `.env`.
 
+Bản đồ chính dùng Leaflet/OpenStreetMap, giữ giới hạn zoom quanh làng và tự thử nguồn OSM France khi nền chính tải lỗi. Chọn ghim/xưởng rồi bấm **Xem ảnh vệ tinh trên Google Maps** để mở đúng vị trí ở chế độ vệ tinh, zoom 19, trong tab mới. Không cần Google API key; xem [hướng dẫn xem vệ tinh](HUONG_DAN_GOOGLE_MAPS.md).
+
+Nút **Vị trí của tôi** xin quyền định vị, sắp xếp xưởng theo khoảng cách đường thẳng và gợi ý xưởng gần nhất trong danh sách đang lọc. Nút **Chỉ đường** mở Google Maps với điểm xuất phát đã xác định; vị trí chỉ dùng trong phiên trang đang mở.
+
+Popup bản đồ có thư viện ảnh do chủ tài khoản xưởng tải lên: chuyển ảnh và bấm xem lớn. Chủ xưởng thêm ảnh ở **Hồ sơ xưởng → Chỉnh sửa → Ảnh xưởng**, rồi lưu; ảnh hiện công khai khi xưởng đã được duyệt. Ảnh minh họa mẫu không được gắn nhãn ảnh do chủ xưởng đăng. Xem [chi tiết ảnh xưởng](docs/MAP.md#ảnh-xưởng-do-chủ-tài-khoản-tải-lên).
+
 `seed` tự build backend trước khi nạp 5 tài khoản, 3 xưởng, 6 tranh, 3 lô, 3 tin và 1 yêu cầu báo giá. Script giữ bản ghi hiện có và từ chối chạy trong production. Mật khẩu demo: `DongHo@2026!`; danh sách email và cách kiểm tra có trong hướng dẫn.
 
 ## Cấu trúc NestJS
