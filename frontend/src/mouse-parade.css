@@ -1,0 +1,49 @@
+.mouse-parade {
+  --mice-width: clamp(300px, 32vw, 400px);
+  position: relative;
+  height: 200px;
+  background: var(--paper);
+  overflow: hidden;
+  isolation: isolate;
+}
+.mouse-parade-track { position: absolute; inset: 0; pointer-events: none; }
+.mouse-parade-troupe {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: var(--mice-width);
+  animation: mice-cross-ground 22s linear infinite;
+  animation-delay: -6s;
+  animation-play-state: paused;
+}
+.mouse-parade-troupe img { display: block; width: 100%; height: auto; user-select: none; }
+.mouse-parade.is-running .mouse-parade-troupe { animation-play-state: running; }
+.mouse-parade-toggle {
+  position: absolute;
+  top: 5px;
+  right: max(20px, calc((100% - 1232px) / 2));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  color: var(--muted);
+  font: 11px var(--sans);
+  z-index: 1;
+}
+@keyframes mice-cross-ground {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
+}
+.mouse-parade.is-reduced .mouse-parade-troupe { animation: none; left: calc(50% - var(--mice-width) / 2); }
+@media (max-width: 540px) {
+  .mouse-parade { --mice-width: 285px; height: 160px; }
+  .mouse-parade-troupe { animation-duration: 16s; animation-delay: -5s; }
+  .mouse-parade-toggle { top: 0; right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mouse-parade-troupe { animation: none; left: calc(50% - var(--mice-width) / 2); }
+}

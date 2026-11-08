@@ -1,0 +1,18 @@
+{
+  "source": "gemini_generated_video_d9076fd7.mp4",
+  "sourceRangeSeconds": [
+    1,
+    8
+  ],
+  "fps": 18,
+  "frames": 126,
+  "durationMs": 7000,
+  "size": [
+    720,
+    354
+  ],
+  "audio": false,
+  "processing": "Top-edge logo crop, chroma key, isolated sparkle removal, edge despill",
+  "output": "mice-running.webp",
+  "bytes": 4543250
+}
