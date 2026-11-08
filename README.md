@@ -4,18 +4,35 @@
 
 ## Chạy local trên Windows
 
-1. Chạy `npm.cmd ci`.
-2. Chạy `Copy-Item .env.example .env` nếu chưa có .env; cấu hình JWT_SECRET ít nhất 32 ký tự.
-3. Terminal thứ nhất: `npm.cmd run db:dev`.
-4. Chạy `npm.cmd run build` để build backend và frontend.
-5. Terminal thứ hai: `npm.cmd run start:dev`.
-6. Mở [ứng dụng](http://localhost:3000), [Swagger](http://localhost:3000/docs) hoặc [health](http://localhost:3000/api/v1/health).
+Hướng dẫn đầy đủ cho **Ngày 1: setup** và **Ngày 2: dữ liệu mẫu, kiểm tra máy khác** nằm trong [HUONG_DAN_SETUP.md](HUONG_DAN_SETUP.md), gồm cấu hình MongoDB, tài khoản demo, xử lý lỗi và biên bản kiểm tra.
 
-Khi phát triển giao diện, chạy thêm `npm.cmd run web:dev`. Backend phục vụ bản frontend đã build; chạy lại `npm.cmd run build:web` để cập nhật bản này.
+Lần đầu, chạy tại thư mục gốc repo:
 
-MongoDB dev lưu dữ liệu tại .local/mongodb-data; dữ liệu giữ lại sau khi dừng. Không chạy hai instance MongoDB cùng thư mục dữ liệu/cổng 27017. Có thể dùng MongoDB riêng qua MONGODB_URI. Không commit .env.
+```powershell
+npm.cmd ci
+npm.cmd run setup
+```
 
-`npm.cmd run seed` tạo dữ liệu demo sau khi build backend. Script giữ bản ghi hiện có và không cho chạy trong production.
+Terminal 1 — khởi động MongoDB và giữ terminal mở:
+
+```powershell
+npm.cmd run db:dev
+```
+
+Đợi `MongoDB ready`, sau đó tại terminal 2:
+
+```powershell
+npm.cmd run seed
+npm.cmd run dev
+```
+
+Mở [web phát triển](http://localhost:5173), [Swagger](http://localhost:3000/docs) hoặc [health](http://localhost:3000/api/v1/health). `dev` chạy NestJS và Vite cùng lúc; `Ctrl+C` dừng cả hai. Các lần sau chỉ cần chạy MongoDB và `dev`.
+
+`setup` tạo `.env` với JWT secret ngẫu nhiên, giữ nguyên `.env` đã có. Nếu dùng `.env` cũ, đặt `PUBLIC_URL=http://localhost:5173` để QR mở đúng web phát triển. Muốn xem bản build tại cổng 3000, đặt lại `PUBLIC_URL=http://localhost:3000`, chạy `npm.cmd run build` rồi `npm.cmd start`.
+
+MongoDB dev lưu dữ liệu tại `.local/mongodb-data`; dữ liệu giữ lại sau khi dừng. Không chạy hai instance trên cổng 27017. Có thể dùng MongoDB riêng qua `MONGODB_URI` và bỏ qua `db:dev`. Không commit `.env`.
+
+`seed` tự build backend trước khi nạp 5 tài khoản, 3 xưởng, 6 tranh, 3 lô, 3 tin và 1 yêu cầu báo giá. Script giữ bản ghi hiện có và từ chối chạy trong production. Mật khẩu demo: `DongHo@2026!`; danh sách email và cách kiểm tra có trong hướng dẫn.
 
 ## Cấu trúc NestJS
 
@@ -33,6 +50,6 @@ Xem [kiến trúc và quy ước mở rộng](docs/ARCHITECTURE.md).
 
 `npm.cmd run typecheck`, `npm.cmd test`, `npm.cmd run test:e2e`, `npm.cmd run build`.
 
-E2E cần MongoDB local tại cổng 27017, tạo database vcraft_test_<timestamp> riêng và xóa database test sau khi hoàn tất. Không sử dụng database ứng dụng.
+`test:e2e` tự build backend, cần MongoDB local tại cổng 27017, tạo database `vcraft_test_<timestamp>` riêng và xóa database test sau khi hoàn tất. Không sử dụng database ứng dụng.
 
 Các luồng hiện có: đăng ký/đăng nhập, quản trị tài khoản và duyệt xưởng, sản phẩm, lô tranh và QR truy xuất, báo giá/phân bổ/sản xuất/giao hàng, tin tức và tải ảnh.
