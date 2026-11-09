@@ -7,6 +7,10 @@ import {
   ArtworkSchema,
 } from "../modules/catalog/schemas/products.schema";
 import {
+  WorkshopProductModelName,
+  WorkshopProductSchema,
+} from "../modules/catalog/schemas/workshop-products.schema";
+import {
   StudioModelName,
   StudioSchema,
 } from "../modules/catalog/schemas/workshops.schema";
@@ -30,6 +34,7 @@ export const databaseModels = [
   { name: AccountModelName, schema: AccountSchema },
   { name: StudioModelName, schema: StudioSchema },
   { name: ArtworkModelName, schema: ArtworkSchema },
+  { name: WorkshopProductModelName, schema: WorkshopProductSchema },
   { name: BatchModelName, schema: BatchSchema },
   { name: QuotationModelName, schema: QuotationSchema },
   { name: BulletinModelName, schema: BulletinSchema },
