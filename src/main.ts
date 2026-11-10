@@ -12,6 +12,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   app.use(
     helmet({
+      referrerPolicy: { policy: "strict-origin-when-cross-origin" },
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
@@ -21,7 +22,9 @@ async function bootstrap() {
             "'self'",
             "data:",
             "blob:",
+            "https://tile.openstreetmap.org",
             "https://*.tile.openstreetmap.org",
+            "https://*.tile.openstreetmap.fr",
           ],
           connectSrc: ["'self'"],
           fontSrc: ["'self'", "data:"],

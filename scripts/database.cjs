@@ -10,6 +10,7 @@ exports.createDatabase = (connection) => {
     users: models.Account,
     workshops: models.Studio,
     products: models.Artwork,
+    workshopProducts: models.WorkshopProduct,
     batches: models.Batch,
     quotes: models.Quotation,
     news: models.Bulletin,
