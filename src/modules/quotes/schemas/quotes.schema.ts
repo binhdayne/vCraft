@@ -3,6 +3,7 @@ export const QuotationModelName = "Quotation";
 export const QuotationSchema = new Schema(
   {
     buyerId: { type: String, index: true },
+    productId: { type: String, index: true },
     title: String,
     category: String,
     quantity: Number,

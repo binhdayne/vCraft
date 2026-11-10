@@ -29,6 +29,8 @@ export class QuotesService {
     private readonly workshopsModel: Model<Record<string, any>>,
     @InjectModel("Quotation")
     private readonly quotesModel: Model<Record<string, any>>,
+    @InjectModel("Artwork")
+    private readonly artworksModel: Model<Record<string, any>>,
   ) {}
   async list(actor: Actor) {
     const u: Actor = actor;
@@ -56,6 +58,10 @@ export class QuotesService {
     role(actor, "buyer");
     const data = parse(quoteInput, body);
     this.deadline(data.deadline);
+    if (data.productId) {
+      const product = await this.artworksModel.findById(data.productId).select("_id").lean();
+      if (!product) throw new NotFoundException("Không tìm thấy bức tranh đã chọn");
+    }
     return this.quotesModel.create({
       ...data,
       buyerId: actor.id,
