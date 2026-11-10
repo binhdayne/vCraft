@@ -12,7 +12,7 @@ export const WorkshopProductSchema = new Schema(
     inStock: { type: Boolean, default: true },
     published: { type: Boolean, default: true, index: true },
   },
-  { timestamps: true, strict: true },
+  { collection: "workshop_products", timestamps: true, strict: true },
 );
 
 WorkshopProductSchema.index({ productId: 1, workshopId: 1 }, { unique: true });

@@ -44,3 +44,114 @@ h1,h2,h3{overflow-wrap:break-word}
  .form-grid{min-width:0}.form-grid>label{min-width:0}.modal-head h2{font-size:24px;line-height:1.4}
  .modal-actions{flex-wrap:wrap}.modal-actions .btn{white-space:normal}
 }
+
+
+/* Type Tabs Filter */
+.type-tabs{display:inline-flex;gap:4px;background:rgba(48,45,37,0.06);padding:4px;border-radius:6px;margin-bottom:18px}
+.type-tabs button{padding:7px 16px;background:transparent;border:none;border-radius:4px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.2s ease}
+.type-tabs button:hover{color:var(--ink)}
+.type-tabs button.selected{background:#fff8e8;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,0.08);font-weight:600}
+
+/* Custom Tag in Card */
+.custom-tag{display:inline-block;padding:1px 6px;background:var(--red);color:#fff8e8;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-left:4px}
+
+/* Heritage Byline in Product Detail */
+.heritage-byline{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:500}
+
+/* Story Section */
+.artwork-story-card{background:#fffdfa;border:1px solid var(--line);border-radius:8px;padding:36px 40px;margin:40px 0 50px;box-shadow:0 2px 8px rgba(48,45,37,0.03)}
+.artwork-story-card .story-header{margin-bottom:24px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.artwork-story-card .story-header h2{font-size:26px;color:var(--ink);margin-top:6px;font-weight:600}
+.artwork-story-card .story-body p{font-size:15.5px;line-height:1.9;color:#3d3a33;margin-bottom:18px;text-align:justify}
+.artwork-story-card .story-body p:last-child{margin-bottom:0}
+
+/* Workshop Listings Section */
+.workshop-listings-section{margin-top:20px}
+.workshop-listing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-top:20px}
+.workshop-listing-card{background:#fffdfa;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 6px rgba(48,45,37,0.04);transition:transform 0.2s ease,box-shadow 0.2s ease}
+.workshop-listing-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(48,45,37,0.08)}
+.workshop-listing-card .listing-visual{height:200px;overflow:hidden;background:#ece7da}
+.workshop-listing-card .listing-visual img{width:100%;height:100%;object-fit:cover}
+.workshop-listing-card .listing-body{padding:20px;display:flex;flex-direction:column;flex:1}
+.workshop-listing-card .listing-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.workshop-listing-card .listing-header h3{font-size:17px;font-weight:600;color:var(--ink);margin:0 0 4px}
+.workshop-listing-card .listing-address{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)}
+.workshop-listing-card .listing-price{font-size:18px;font-weight:700;color:var(--red);text-align:right;white-space:nowrap}
+.workshop-listing-card .listing-price small{display:block;font-size:11px;font-weight:400;color:var(--muted)}
+.workshop-listing-card .listing-desc{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:16px;flex:1}
+.workshop-listing-card .listing-actions{display:flex;gap:10px;margin-top:auto}
+.workshop-listing-card .listing-actions .btn{flex:1;text-align:center;justify-content:center}
+.btn.sm{padding:7px 14px;font-size:12px}
+
+@media(max-width:768px){
+  .artwork-story-card{padding:24px 20px}
+  .artwork-story-card .story-header h2{font-size:22px}
+  .workshop-listing-grid{grid-template-columns:1fr}
+}
+
+/* Product Price Note for General Artworks */
+.product-price-note{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:rgba(48,45,37,0.06);border:1px dashed var(--line);border-radius:6px;color:var(--ink);font-size:13.5px;font-weight:500;margin:14px 0 18px}
+.product-price-note svg{color:var(--green);flex-shrink:0}
+
+/* Phase 5: Workspace Artisan Management Styles */
+.workspace-tabs-shell{margin-bottom:24px}
+.pane-intro{background:#fffdfa;border:1px solid var(--line);border-left:3px solid var(--red);padding:14px 20px;border-radius:4px;margin-bottom:24px}
+.pane-intro p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
+
+.heritage-manage-card{align-items:flex-start}
+.manage-card-img-wrap{position:relative;flex-shrink:0;width:110px;height:140px;background:#ece4d3;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.manage-card-img-wrap img{width:100%;height:100%;object-fit:cover}
+.stock-pill{position:absolute;bottom:6px;left:6px;right:6px;font-size:10px;font-weight:600;text-align:center;padding:2px 4px;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px}
+.stock-pill.in-stock{background:#2e6b38;color:#fff}
+.stock-pill.out-of-stock{background:#6b675e;color:#fff}
+
+.manage-card-content{flex:1;min-width:0;display:flex;flex-direction:column}
+.card-top-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.card-top-meta .eyebrow{margin-bottom:0}
+.meta-dim{font-size:11px;color:var(--muted)}
+.manage-card-content h3{margin:0 0 6px;font-size:17px;font-weight:600}
+.card-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.price-label{font-size:12px;color:var(--muted)}
+.price-value{font-size:16px;color:var(--red);font-weight:700}
+.card-desc-snippet{font-size:12px;line-height:1.5;color:var(--muted);margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.manage-card-actions{display:flex;align-items:center;gap:12px;margin-top:auto}
+
+/* Heritage Picker Modal */
+.modal.heritage-picker-modal{max-width:980px;width:95vw;max-height:90vh;display:flex;flex-direction:column;padding:28px}
+.modal.heritage-picker-modal .modal-head{flex-shrink:0;margin-bottom:20px}
+.picker-browse-body{display:flex;flex-direction:column;flex:1;overflow:hidden}
+.picker-toolbar{flex-shrink:0;margin-bottom:18px;display:flex;flex-direction:column;gap:12px}
+.picker-search input{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:4px;background:#fff;font-size:13.5px}
+.picker-search input:focus{border-color:var(--red);outline:none}
+.category-pills{display:flex;flex-wrap:wrap;gap:8px}
+.category-pills button{border:1px solid var(--line);background:#fff;padding:6px 14px;border-radius:18px;font-size:12px;color:var(--ink);cursor:pointer;transition:all 0.15s ease}
+.category-pills button:hover{border-color:var(--red);color:var(--red)}
+.category-pills button.active{background:var(--red);color:#fff;border-color:var(--red)}
+
+.heritage-picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;overflow-y:auto;padding-right:6px;max-height:56vh}
+.picker-item-card{background:#fffdfa;border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:all 0.15s ease}
+.picker-item-card:hover{box-shadow:0 3px 10px rgba(48,45,37,0.08);transform:translateY(-1px)}
+.picker-item-card.is-listed{background:#f6f3eb;opacity:0.85}
+.picker-item-img{position:relative;height:140px;background:#eee5d2;overflow:hidden}
+.picker-item-img img{width:100%;height:100%;object-fit:cover}
+.listed-tag{position:absolute;top:8px;right:8px;background:#2e6b38;color:#fff;font-size:10px;font-weight:600;padding:3px 7px;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.picker-item-info{padding:12px;flex:1;display:flex;flex-direction:column}
+.picker-item-info .eyebrow{margin-bottom:2px;font-size:10px}
+.picker-item-info h4{margin:0 0 4px;font-size:14.5px;font-weight:600}
+.picker-item-action{padding:0 12px 12px}
+
+/* Picker Config Form (Step 2) */
+.picker-config-form{display:flex;flex-direction:column;overflow-y:auto;max-height:70vh;padding-right:6px}
+.picker-art-summary{display:flex;gap:20px;background:#fbf8f1;border:1px solid var(--line);border-radius:6px;padding:16px;margin-bottom:20px;align-items:flex-start}
+.picker-art-summary img{width:110px;height:140px;object-fit:cover;border-radius:4px;border:1px solid var(--line);flex-shrink:0}
+.summary-info{flex:1;min-width:0}
+.summary-info h3{font-size:22px;margin:4px 0 6px}
+.art-meta-tag{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.art-story-snippet{font-size:12.5px;line-height:1.6;color:#555;margin:0}
+.check-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.check-row input[type="checkbox"]{width:18px;height:18px;cursor:pointer}
+.check-row label{font-size:13px;cursor:pointer;color:var(--ink)}
+.text-link.danger{color:#a32626}
+.text-link.danger:hover{color:#781c1c}
+.text-link.small{font-size:12px}
+.empty-search{grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}

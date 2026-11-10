@@ -38,7 +38,7 @@ export const productsInputSchema = z
     type: z.enum(["general", "custom"]).optional(),
     search: z.string().max(100).optional(),
     page: z.coerce.number().int().min(1).max(10000).default(1),
-    limit: z.coerce.number().int().min(1).max(60).default(12),
+    limit: z.coerce.number().int().min(1).max(100).default(12),
   })
   .strict();
 

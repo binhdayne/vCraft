@@ -26,6 +26,8 @@ export class BatchesService {
     private readonly productsModel: Model<Record<string, any>>,
     @InjectModel("Batch")
     private readonly batchesModel: Model<Record<string, any>>,
+    @InjectModel("WorkshopProduct")
+    private readonly workshopProductsModel: Model<Record<string, any>>,
     private readonly config: ConfigService,
   ) {}
   async trace(key: string) {
@@ -73,12 +75,15 @@ export class BatchesService {
     role(actor, "artisan");
     const d = parse(createInputSchema, body);
     const s = await this.studio(actor.id);
-    if (
-      !(await this.productsModel.exists({
-        _id: d.productId,
-        workshopId: String(s._id),
-      }))
-    )
+    const isCustom = await this.productsModel.exists({
+      _id: d.productId,
+      workshopId: String(s._id),
+    });
+    const isHeritage = await this.workshopProductsModel.exists({
+      productId: d.productId,
+      workshopId: String(s._id),
+    });
+    if (!isCustom && !isHeritage)
       throw new ForbiddenException("Sản phẩm không thuộc xưởng");
     return this.batchesModel.create({
       ...d,
