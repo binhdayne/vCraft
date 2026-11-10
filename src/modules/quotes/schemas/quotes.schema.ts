@@ -4,6 +4,7 @@ export const QuotationSchema = new Schema(
   {
     buyerId: { type: String, index: true },
     productIds: { type: [String], default: [], index: true },
+    productLines: [{ productId: String, quantity: Number }],
     productId: { type: String, index: true },
     title: String,
     category: String,

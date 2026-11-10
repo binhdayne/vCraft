@@ -58,12 +58,18 @@ export class QuotesService {
     role(actor, "buyer");
     const data = parse(quoteInput, body);
     this.deadline(data.deadline);
+    const productIds = data.productLines.map((line) => line.productId);
+    const products = await this.artworksModel.find({ _id: { $in: productIds } }).select("_id").lean();
+    if (products.length !== new Set(productIds).size)
+      throw new NotFoundException("Không tìm thấy một hoặc nhiều bức tranh đã chọn");
     if (data.productId) {
       const product = await this.artworksModel.findById(data.productId).select("_id").lean();
       if (!product) throw new NotFoundException("Không tìm thấy bức tranh đã chọn");
     }
     return this.quotesModel.create({
       ...data,
+      productIds,
+      quantity: data.productLines.reduce((sum, line) => sum + line.quantity, 0),
       buyerId: actor.id,
       status: "draft",
       recipients: [],
@@ -86,6 +92,10 @@ export class QuotesService {
     this.buyer(q, actor);
     this.state(q, ["draft"]);
     this.deadline(data.deadline);
+    const lineIds = data.productLines.map((line) => line.productId);
+    const products = await this.artworksModel.find({ _id: { $in: lineIds } }).select("_id").lean();
+    if (products.length !== new Set(lineIds).size)
+      throw new NotFoundException("Không tìm thấy một hoặc nhiều bức tranh đã chọn");
     const { version, ...changes } = data;
     return this.cas(q, version, changes, actor, "Cập nhật bản nháp");
   }
