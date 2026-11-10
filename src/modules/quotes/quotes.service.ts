@@ -95,13 +95,16 @@ export class QuotesService {
     this.buyer(q, actor);
     this.state(q, ["draft"]);
     this.deadline(q.deadline);
+    const productIds = q.productIds?.length ? q.productIds : q.productId ? [q.productId] : [];
+    if (!productIds.length) throw new BadRequestException("Vui lòng chọn ít nhất một bức tranh");
+    const categories = await this.artworksModel.find({ _id: { $in: productIds } }).distinct("category");
     const active = await this.usersModel
       .find({ role: "artisan", active: true })
       .distinct("_id");
     const studios = await this.workshopsModel
       .find({
         approved: true,
-        categories: q.category,
+        categories: { $in: categories },
         ownerId: { $in: active.map(String) },
       })
       .distinct("_id");

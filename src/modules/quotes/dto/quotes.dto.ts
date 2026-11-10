@@ -3,8 +3,9 @@ import { category, id, isoDate, text } from "../../../common/validation";
 export const quoteInput = z
   .object({
     title: text(150),
+    productIds: z.array(id).min(1).max(100),
     productId: id.optional(),
-    category,
+    category: category.optional(),
     quantity: z.number().int().min(1).max(1000000),
     deadline: isoDate,
     description: text(5000),
