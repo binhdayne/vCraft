@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -12,12 +13,14 @@ import { CurrentUser } from "../../common/decorators/current-user.decorator";
 import { AuthGuard } from "../auth/guards/auth.guard";
 import { Actor } from "../auth/interfaces/actor.interface";
 import { AdminService } from "./admin.service";
+
 @ApiTags("admin")
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller("admin")
 export class AdminController {
   constructor(private readonly service: AdminService) {}
+
   @Get("users")
   users(
     @CurrentUser()
@@ -25,6 +28,7 @@ export class AdminController {
   ) {
     return this.service.users(actor);
   }
+
   @Get("workshops")
   workshops(
     @CurrentUser()
@@ -32,6 +36,7 @@ export class AdminController {
   ) {
     return this.service.workshops(actor);
   }
+
   @Post("artisans")
   create(
     @CurrentUser()
@@ -41,6 +46,7 @@ export class AdminController {
   ) {
     return this.service.create(actor, body);
   }
+
   @Patch("workshops/:id/approval")
   approval(
     @CurrentUser()
@@ -52,6 +58,7 @@ export class AdminController {
   ) {
     return this.service.approval(actor, key, body);
   }
+
   @Patch("users/:id")
   account(
     @CurrentUser()
@@ -62,5 +69,55 @@ export class AdminController {
     body: unknown,
   ) {
     return this.service.account(actor, key, body);
+  }
+
+  @Get("artworks")
+  artworks(
+    @CurrentUser()
+    actor: Actor,
+  ) {
+    return this.service.artworks(actor);
+  }
+
+  @Get("artworks/:id/listings")
+  artworkListings(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+  ) {
+    return this.service.artworkListings(actor, key);
+  }
+
+  @Post("artworks")
+  createArtwork(
+    @CurrentUser()
+    actor: Actor,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.createArtwork(actor, body);
+  }
+
+  @Patch("artworks/:id")
+  editArtwork(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.editArtwork(actor, key, body);
+  }
+
+  @Delete("artworks/:id")
+  deleteArtwork(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+  ) {
+    return this.service.deleteArtwork(actor, key);
   }
 }

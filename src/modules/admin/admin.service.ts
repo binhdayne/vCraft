@@ -12,9 +12,12 @@ import { id, parse } from "../../common/validation";
 import { Actor } from "../auth/interfaces/actor.interface";
 import {
   accountInputSchema,
+  adminArtworkInput,
   approvalInputSchema,
   createInputSchema,
+  updateAdminArtworkInput,
 } from "./dto/admin.dto";
+
 @Injectable()
 export class AdminService {
   constructor(
@@ -22,15 +25,22 @@ export class AdminService {
     private readonly usersModel: Model<Record<string, any>>,
     @InjectModel("Studio")
     private readonly workshopsModel: Model<Record<string, any>>,
+    @InjectModel("Artwork")
+    private readonly productsModel: Model<Record<string, any>>,
+    @InjectModel("WorkshopProduct")
+    private readonly workshopProductsModel: Model<Record<string, any>>,
   ) {}
+
   async users(actor: Actor) {
     role(actor, "admin");
     return this.usersModel.find().sort({ _id: -1 }).lean();
   }
+
   async workshops(actor: Actor) {
     role(actor, "admin");
     return this.workshopsModel.find().sort({ _id: -1 }).lean();
   }
+
   async create(actor: Actor, body: unknown) {
     role(actor, "admin");
     const data = parse(createInputSchema, body);
@@ -57,6 +67,7 @@ export class AdminService {
       throw e;
     }
   }
+
   async approval(actor: Actor, key: string, body: unknown) {
     role(actor, "admin");
     const data = parse(approvalInputSchema, body);
@@ -68,6 +79,7 @@ export class AdminService {
     if (!item) throw new NotFoundException();
     return item;
   }
+
   async account(actor: Actor, key: string, body: unknown) {
     role(actor, "admin");
     const data = parse(accountInputSchema, body);
@@ -80,5 +92,77 @@ export class AdminService {
     );
     if (!item) throw new NotFoundException();
     return item;
+  }
+
+  async artworks(actor: Actor) {
+    role(actor, "admin");
+    const items = await this.productsModel
+      .find({ type: "general" })
+      .sort({ _id: -1 })
+      .lean();
+
+    const counts = await this.workshopProductsModel.aggregate([
+      { $group: { _id: "$productId", count: { $sum: 1 } } },
+    ]);
+    const countMap = new Map(counts.map((c: any) => [String(c._id), c.count]));
+
+    return items.map((item: any) => ({
+      ...item,
+      workshopCount: countMap.get(String(item._id)) || 0,
+    }));
+  }
+
+  async artworkListings(actor: Actor, key: string) {
+    role(actor, "admin");
+    const artId = parse(id, key);
+    const listings = await this.workshopProductsModel
+      .find({ productId: artId })
+      .sort({ _id: -1 })
+      .lean();
+    if (!listings.length) return [];
+    const studioIds = listings.map((l) => l.workshopId);
+    const studios = await this.workshopsModel
+      .find({ _id: { $in: studioIds } })
+      .lean();
+    const studioMap = new Map(studios.map((s: any) => [String(s._id), s]));
+    return listings.map((l) => ({
+      ...l,
+      workshop: studioMap.get(String(l.workshopId)) || null,
+    }));
+  }
+
+  async createArtwork(actor: Actor, body: unknown) {
+    role(actor, "admin");
+    const data = parse(adminArtworkInput, body);
+    return this.productsModel.create({
+      ...data,
+      type: "general",
+      workshopId: null,
+      price: null,
+    });
+  }
+
+  async editArtwork(actor: Actor, key: string, body: unknown) {
+    role(actor, "admin");
+    const data = parse(updateAdminArtworkInput, body);
+    const item = await this.productsModel.findOneAndUpdate(
+      { _id: parse(id, key), type: "general" },
+      { $set: data },
+      { new: true },
+    );
+    if (!item) throw new NotFoundException("Không tìm thấy tác phẩm di sản");
+    return item;
+  }
+
+  async deleteArtwork(actor: Actor, key: string) {
+    role(actor, "admin");
+    const artId = parse(id, key);
+    await this.workshopProductsModel.deleteMany({ productId: artId });
+    const item = await this.productsModel.findOneAndDelete({
+      _id: artId,
+      type: "general",
+    });
+    if (!item) throw new NotFoundException("Không tìm thấy tác phẩm di sản");
+    return { success: true };
   }
 }

@@ -19,7 +19,8 @@
     "seed": "node scripts/seed.cjs",
     "pretest:e2e": "npm run build:api",
     "test:e2e": "node --test test/e2e.test.cjs test/seed.test.cjs",
-    "dev": "node scripts/dev.cjs"
+    "dev": "node scripts/dev.cjs",
+    "seed:artworks": "node art_work_import.js"
   },
   "engines": {
     "node": ">=22"

@@ -1,13 +1,14 @@
-import React,{useState} from 'react';import {Link,Navigate,useNavigate,useParams} from 'react-router-dom';import {Plus,ArrowUpRight,Palette,Layers,ClipboardList,Users,Newspaper,Home,Check,Edit3,Trash2,RefreshCw,Send,MapPin,ShieldCheck,X} from 'lucide-react';import {api,useApp,useLoad,LoadState,Empty,Badge,FormDialog,PageTitle,CATEGORIES,STATUS,money,date,ImageUpload} from './shared';
+import React,{useState} from 'react';import {Link,Navigate,useNavigate,useParams} from 'react-router-dom';import {Plus,ArrowUpRight,Palette,Layers,ClipboardList,Users,Newspaper,Home,Check,Edit3,Trash2,RefreshCw,Send,MapPin,ShieldCheck,X,Landmark,Search,Eye} from 'lucide-react';import {api,useApp,useLoad,LoadState,Empty,Badge,FormDialog,PageTitle,CATEGORIES,STATUS,money,date,ImageUpload,Pagination} from './shared';
 const field=(name,label,type='text',extra={})=>({name,label,type,...extra});
 const quoteFields=[field('title','Tên yêu cầu'),field('category','Phân loại','select',{options:CATEGORIES}),field('quantity','Số lượng bản tranh','number',{min:1,step:1}),field('deadline','Hạn giao hàng','date'),field('description','Mô tả yêu cầu / quy cách','textarea',{wide:true})];
 const productFields=[field('name','Tên tranh'),field('category','Phân loại','select',{options:CATEGORIES}),field('price','Giá tham khảo (VNĐ)','number',{min:0}),field('dimensions','Kích thước'),field('material','Chất liệu'),field('published','Công khai sản phẩm','checkbox'),field('description','Câu chuyện bức tranh','textarea',{wide:true}),field('images','Ảnh sản phẩm','images',{wide:true})];
 const studioFields=[field('name','Tên xưởng'),field('address','Địa chỉ'),field('latitude','Vĩ độ','number',{min:-90,max:90}),field('longitude','Kinh độ','number',{min:-180,max:180}),field('visitingHours','Giờ đón khách'),field('openForVisits','Mở cửa đón khách','checkbox'),field('story','Câu chuyện gia đình / lịch sử làm nghề','textarea',{wide:true}),field('categories','Phân loại nhận sản xuất','categories',{wide:true}),field('images','Ảnh xưởng (hiển thị trên bản đồ)','images',{wide:true}),field('certificates','Ảnh chứng nhận chất lượng','images',{wide:true,required:false})];
 const newsFields=[field('title','Tiêu đề'),field('category','Chuyên mục','select',{options:['Thông báo','Làng nghề','Sự kiện']}),field('body','Nội dung','textarea',{wide:true,maxLength:15000}),field('pictures','Ảnh minh họa','images',{wide:true,required:false}),field('published','Công khai','checkbox')];
 const pick=(obj,fields)=>Object.fromEntries(fields.map(f=>[f.name,obj[f.name]??(f.type==='images'||f.type==='categories'?[]:f.type==='checkbox'?false:'')]));
-export function Dashboard(){const {user,loading}=useApp(),[tab,setTab]=useState('quotes');if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;const items=user.role==='artisan'?[['quotes','Yêu cầu báo giá',ClipboardList],['studio','Hồ sơ xưởng',Home],['products','Tranh của xưởng',Palette],['batches','Lô tranh & nhật ký',Layers]]:user.role==='admin'?[['quotes','Điều phối đơn hàng',ClipboardList],['artisans','Nghệ nhân & kiểm duyệt',Users],['news','Tin tức cộng đồng',Newspaper]]:[['quotes','Yêu cầu đặt tranh',ClipboardList]];return <section className="workspace wrap"><aside className="workspace-sidebar"><span className="eyebrow">KHÔNG GIAN LÀM VIỆC</span><h2>{user.name}</h2><span className="role-label">{user.role==='admin'?'Ban quản lý':user.role==='artisan'?'Nghệ nhân':'Khách hàng'}</span><nav>{items.map(([key,label,Icon])=><button key={key} className={tab===key?'active':''} onClick={()=>setTab(key)}><Icon size={18}/>{label}</button>)}</nav><div className="sidebar-note"><ShieldCheck/><p>Mỗi tác phẩm một câu chuyện. Mỗi đơn hàng một kết nối.</p></div></aside><div className="workspace-content" key={tab}>{tab==='quotes'&&<QuotesList/>}{tab==='studio'&&<StudioEditor/>}{tab==='products'&&<ProductsEditor/>}{tab==='batches'&&<BatchesEditor/>}{tab==='artisans'&&<ArtisansAdmin/>}{tab==='news'&&<NewsEditor/>}</div></section>;}
+export function Dashboard(){const {user,loading}=useApp(),[tab,setTab]=useState('quotes');if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;const items=user.role==='artisan'?[['quotes','Yêu cầu báo giá',ClipboardList],['studio','Hồ sơ xưởng',Home],['products','Tranh của xưởng',Palette],['batches','Lô tranh & nhật ký',Layers]]:user.role==='admin'?[['quotes','Điều phối đơn hàng',ClipboardList],['heritage','Kho Di sản Làng',Landmark],['artisans','Nghệ nhân & kiểm duyệt',Users],['news','Tin tức cộng đồng',Newspaper]]:[['quotes','Yêu cầu đặt tranh',ClipboardList]];return <section className="workspace wrap"><aside className="workspace-sidebar"><span className="eyebrow">KHÔNG GIAN LÀM VIỆC</span><h2>{user.name}</h2><span className="role-label">{user.role==='admin'?'Ban quản lý':user.role==='artisan'?'Nghệ nhân':'Khách hàng'}</span><nav>{items.map(([key,label,Icon])=><button key={key} className={tab===key?'active':''} onClick={()=>setTab(key)}><Icon size={18}/>{label}</button>)}</nav><div className="sidebar-note"><ShieldCheck/><p>Mỗi tác phẩm một câu chuyện. Mỗi đơn hàng một kết nối.</p></div></aside><div className="workspace-content" key={tab}>{tab==='quotes'&&<QuotesList/>}{tab==='studio'&&<StudioEditor/>}{tab==='products'&&<ProductsEditor/>}{tab==='batches'&&<BatchesEditor/>}{tab==='artisans'&&<ArtisansAdmin/>}{tab==='heritage'&&<HeritageAdmin/>}{tab==='news'&&<NewsEditor/>}</div></section>;}
 function QuotesList(){const {user}=useApp(),state=useLoad('/quotes'),[dialog,setDialog]=useState(false),navigate=useNavigate(),[filter,setFilter]=useState('');const data=(state.data||[]).filter(q=>!filter||q.status===filter);return <><PageTitle eyebrow="KẾT NỐI & HỢP TÁC" title={user.role==='buyer'?'Yêu cầu đặt tranh':user.role==='artisan'?'Yêu cầu báo giá':'Điều phối đơn hàng'} action={user.role==='buyer'&&<button className="btn" onClick={()=>setDialog(true)}><Plus size={18}/> Tạo yêu cầu</button>}>Theo dõi chào giá, phân bổ và tiến độ thực hiện.</PageTitle>{state.data&&<div className="stats-grid"><div><span>Tổng yêu cầu</span><strong>{state.data.length}</strong></div><div><span>Đang chào giá</span><strong>{state.data.filter(q=>['sent','bidding'].includes(q.status)).length}</strong></div><div><span>Đang sản xuất</span><strong>{state.data.filter(q=>q.status==='in_production').length}</strong></div><div><span>Đã giao</span><strong>{state.data.filter(q=>q.status==='delivered').length}</strong></div></div>}<div className="table-toolbar"><select aria-label="Lọc trạng thái đơn" value={filter} onChange={e=>setFilter(e.target.value)}><option value="">Mọi trạng thái</option>{Object.entries(STATUS).filter(([k])=>k!=='ready').map(([k,v])=><option key={k} value={k}>{v}</option>)}</select><button className="text-link" onClick={state.reload}><RefreshCw size={16}/> Làm mới</button></div><LoadState {...state}/>{state.data&&data.length===0&&<Empty title="Chưa có yêu cầu ở trạng thái này"><p>{user.role==='buyer'?'Bắt đầu bằng ý tưởng và số lượng tranh bạn muốn đặt.':'Yêu cầu phù hợp sẽ xuất hiện tại đây.'}</p></Empty>}<div className="quote-list">{data.map(q=><Link to={'/quotes/'+q._id} className="quote-row" key={q._id}><div><Badge status={q.status}/><h3>{q.title}</h3><p>{q.category} · {q.quantity.toLocaleString('vi-VN')} bản · Hạn giao {date(q.deadline)}</p></div><div><strong>{q.bids.length} chào giá</strong><ArrowUpRight size={20}/></div></Link>)}</div>{dialog&&<FormDialog title="Tạo yêu cầu đặt tranh" fields={quoteFields} initial={{category:CATEGORIES[0],quantity:100,deadline:'',description:'',title:''}} onClose={()=>setDialog(false)} submitLabel="Lưu bản nháp" onSubmit={async body=>{const q=await api('/quotes',{method:'POST',body});navigate('/quotes/'+q._id);}}/>}</>;}
 function StudioEditor(){const state=useLoad('/studio'),[edit,setEdit]=useState(false),{notify}=useApp();return <><PageTitle eyebrow="CÂU CHUYỆN CỦA BẠN" title="Hồ sơ xưởng" action={<button className="btn" onClick={()=>setEdit(true)} disabled={!state.data}><Edit3 size={17}/> Chỉnh sửa</button>}/><LoadState {...state}/>{state.data&&<div className="panel"><span className={'badge '+(state.data.approved?'status-delivered':'status-draft')}>{state.data.approved?'Đã được duyệt':'Đang chờ BQL duyệt'}</span><h2>{state.data.name}</h2><p className="prose">{state.data.story}</p><p><MapPin size={16}/> {state.data.address}</p><p>{state.data.visitingHours} · {state.data.openForVisits?'Đang mở cửa':'Hẹn trước'}</p><p className="muted">Ảnh xưởng bạn tải lên và lưu sẽ xuất hiện trong popup bản đồ khi xưởng đã được duyệt. Tối đa 8 ảnh; ảnh minh họa có sẵn không được tính là ảnh do chủ xưởng đăng.</p><div className="event-images">{state.data.images.map((src,i)=><img key={i} src={src} alt="Ảnh xưởng"/>)}</div><p>Phân loại: {state.data.categories.join(' · ')}</p><p>{state.data.certificates.length} ảnh chứng nhận</p></div>}{edit&&state.data&&<FormDialog title="Chỉnh sửa hồ sơ xưởng" fields={studioFields} initial={pick(state.data,studioFields)} onClose={()=>setEdit(false)} onSubmit={async body=>{await api('/studio',{method:'PATCH',body});state.reload();notify('Đã lưu hồ sơ xưởng');}}/>}</>;}
+
 
 function ProductsEditor() {
   const [tab, setTab] = useState('heritage');
@@ -16,7 +17,11 @@ function ProductsEditor() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [editHeritage, setEditHeritage] = useState(null);
   const [editCustom, setEditCustom] = useState(null);
+  const [heritagePage, setHeritagePage] = useState(1);
+  const [customPage, setCustomPage] = useState(1);
   const { notify } = useApp();
+
+  const PAGE_SIZE = 8;
 
   async function removeHeritage(item) {
     if (!window.confirm('Xưởng ngừng nhận in tác phẩm “' + (item.product?.name || 'này') + '”?')) return;
@@ -29,8 +34,16 @@ function ProductsEditor() {
     }
   }
 
-  const heritageCount = heritageState.data?.length || 0;
-  const customCount = customState.data?.length || 0;
+  const heritageList = heritageState.data || [];
+  const customList = customState.data || [];
+  const heritageCount = heritageList.length;
+  const customCount = customList.length;
+
+  const heritagePages = Math.ceil(heritageCount / PAGE_SIZE) || 1;
+  const pagedHeritage = heritageList.slice((heritagePage - 1) * PAGE_SIZE, heritagePage * PAGE_SIZE);
+
+  const customPages = Math.ceil(customCount / PAGE_SIZE) || 1;
+  const pagedCustom = customList.slice((customPage - 1) * PAGE_SIZE, customPage * PAGE_SIZE);
 
   return (
     <>
@@ -100,7 +113,7 @@ function ProductsEditor() {
             </Empty>
           )}
           <div className="management-grid">
-            {heritageState.data?.map(item => (
+            {pagedHeritage.map(item => (
               <article className="manage-card heritage-manage-card" key={item._id}>
                 <div className="manage-card-img-wrap">
                   <img
@@ -138,6 +151,16 @@ function ProductsEditor() {
               </article>
             ))}
           </div>
+
+          <Pagination
+            page={heritagePage}
+            pages={heritagePages}
+            onPageChange={p => {
+              setHeritagePage(p);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            total={heritageCount}
+          />
         </div>
       )}
 
@@ -171,7 +194,7 @@ function ProductsEditor() {
             </Empty>
           )}
           <div className="management-grid">
-            {customState.data?.map(p => (
+            {pagedCustom.map(p => (
               <article className="manage-card" key={p._id}>
                 <div className="manage-card-img-wrap">
                   <img src={p.images?.[0]} alt={p.name} />
@@ -197,6 +220,16 @@ function ProductsEditor() {
               </article>
             ))}
           </div>
+
+          <Pagination
+            page={customPage}
+            pages={customPages}
+            onPageChange={p => {
+              setCustomPage(p);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            total={customCount}
+          />
         </div>
       )}
 
@@ -516,6 +549,385 @@ function BatchesEditor(){
   const eventFields=[field('title','Công đoạn / mốc sản xuất'),field('date','Ngày thực hiện','date'),field('note','Mô tả công đoạn','textarea',{wide:true}),field('images','Ảnh bằng chứng','images',{wide:true})];
   return <><PageTitle eyebrow="MINH BẠCH TỪNG CÔNG ĐOẠN" title="Lô tranh & nhật ký" action={<button className="btn" onClick={()=>setDialog({type:'new'})}><Plus size={18}/> Tạo lô tranh</button>}/><LoadState {...state}/>{state.data?.length===0&&<Empty title="Chưa có lô tranh"/>}<div className="batch-manage">{state.data?.map(b=><article className="panel" key={b._id}><div className="section-head"><div><span className="eyebrow">{b.code}</span><h3>{getBatchProductName(b.productId)}</h3><p>{b.quantity} bản · {b.published?'Đang công khai':'Chưa công khai'}</p></div>{b.published&&<Link to={'/trace/'+b._id} className="text-link">Trang QR <ArrowUpRight size={17}/></Link>}</div><p className="prose">{b.story}</p><div className="mini-timeline">{b.events.map(e=><div key={e._id}><Check size={15}/><span>{date(e.date)}</span><strong>{e.title}</strong></div>)}</div><div className="button-row"><button className="btn outline small" onClick={()=>setDialog({type:'event',batch:b})}><Plus size={16}/> Thêm mốc nhật ký</button><button className="text-link" onClick={()=>setDialog({type:'edit',batch:b})}>Chỉnh sửa lô</button></div></article>)}</div>{dialog&&<FormDialog title={dialog.type==='event'?'Thêm mốc sản xuất':dialog.type==='edit'?'Chỉnh sửa lô tranh':'Tạo lô tranh'} fields={dialog.type==='event'?eventFields:dialog.type==='edit'?fields.filter(f=>['story','published'].includes(f.name)):fields} initial={dialog.type==='event'?{date:new Date().toISOString().slice(0,10),images:[]}:dialog.type==='edit'?{story:dialog.batch.story,published:dialog.batch.published}:{quantity:100,published:false}} onClose={()=>setDialog(null)} onSubmit={async body=>{await api('/studio/batches'+(dialog.batch?'/'+dialog.batch._id:'')+(dialog.type==='event'?'/events':''),{method:dialog.type==='edit'?'PATCH':'POST',body});state.reload();notify('Đã lưu thông tin lô tranh');}}/>}</>;
 }
+
+
+const heritageAdminFields = [
+  field('name', 'Tên tranh di sản'),
+  field('category', 'Phân loại', 'select', { options: CATEGORIES }),
+  field('dimensions', 'Kích thước chuẩn (ví dụ: 26 × 37 cm)'),
+  field('material', 'Chất liệu chuẩn (ví dụ: Giấy điệp thủ công, màu tự nhiên)'),
+  field('published', 'Công khai trên triển lãm', 'checkbox'),
+  field('story', 'Câu chuyện văn hóa & ý nghĩa biểu tượng (hiển thị cho khách xem)', 'textarea', { wide: true, maxLength: 20000 }),
+  field('description', 'Mô tả chi tiết / Tích truyện', 'textarea', { wide: true, maxLength: 10000 }),
+  field('images', 'Ảnh tư liệu tranh di sản', 'images', { wide: true }),
+];
+
+
+function HeritageWorkshopsModal({ art, onClose }) {
+  const state = useLoad('/admin/artworks/' + art._id + '/listings');
+  const listings = state.data || [];
+
+  return (
+    <div className="modal-backdrop">
+      <section
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="workshops-modal-title"
+        className="modal heritage-workshops-modal"
+      >
+        <div className="modal-head">
+          <div>
+            <span className="eyebrow">LIÊN KẾT XƯỞNG SẢN XUẤT</span>
+            <h2 id="workshops-modal-title">Xưởng nhận in: {art.name}</h2>
+          </div>
+          <button className="icon-btn" aria-label="Đóng" onClick={onClose}>
+            <X />
+          </button>
+        </div>
+
+        <div className="art-summary-banner">
+          <img src={art.images?.[0]} alt={art.name} className="banner-art-thumb" />
+          <div className="banner-art-info">
+            <span className="eyebrow">{art.category}</span>
+            <h3>{art.name}</h3>
+            <p className="dim-text">{art.dimensions} · {art.material}</p>
+            <p className="prose art-story-preview">
+              {art.story ? art.story.slice(0, 160) + '…' : 'Chưa có câu chuyện văn hóa.'}
+            </p>
+          </div>
+          <div className="banner-stat">
+            <span>Số xưởng nhận in</span>
+            <strong>{listings.length}</strong>
+          </div>
+        </div>
+
+        <LoadState {...state} />
+
+        {state.data && listings.length === 0 && (
+          <Empty title="Chưa có xưởng nào nhận in tác phẩm này">
+            <p>
+              Tác phẩm hiện đang lưu giữ trong kho di sản chung. Các xưởng nghệ nhân có thể đăng ký nhận in từ không gian làm việc của xưởng.
+            </p>
+          </Empty>
+        )}
+
+        <div className="admin-workshop-listings-grid">
+          {listings.map(item => (
+            <article className="panel admin-workshop-item" key={item._id}>
+              <div className="workshop-item-visual">
+                <img
+                  src={item.images?.[0] || art.images?.[0]}
+                  alt={item.workshop?.name || 'Thành phẩm xưởng'}
+                />
+                <span className={'stock-pill ' + (item.inStock ? 'in-stock' : 'out-of-stock')}>
+                  {item.inStock ? 'Sẵn sàng in' : 'Tạm hết phôi'}
+                </span>
+              </div>
+              <div className="workshop-item-body">
+                <div className="workshop-item-head">
+                  <div>
+                    <h4>{item.workshop?.name || 'Xưởng nghệ nhân'}</h4>
+                    <p className="workshop-item-address">
+                      <MapPin size={13} /> {item.workshop?.address || 'Làng Đông Hồ, Thuận Thành, Bắc Ninh'}
+                    </p>
+                  </div>
+                  <div className="workshop-item-price">
+                    <span className="price-label">Giá xưởng in:</span>
+                    <strong>{money(item.price)}</strong>
+                  </div>
+                </div>
+
+                {item.description ? (
+                  <p className="workshop-item-note prose">{item.description}</p>
+                ) : (
+                  <p className="workshop-item-note muted italic">Xưởng chưa bổ sung mô tả quy cách riêng.</p>
+                )}
+
+                <div className="workshop-item-actions">
+                  {item.workshop?._id && (
+                    <Link
+                      to={'/xuong/' + item.workshop._id}
+                      target="_blank"
+                      className="btn outline small"
+                    >
+                      Hồ sơ xưởng <ArrowUpRight size={14} />
+                    </Link>
+                  )}
+                  <Link
+                    to={'/tranh/' + art._id}
+                    target="_blank"
+                    className="text-link small"
+                  >
+                    Xem trên triển lãm <ArrowUpRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="modal-actions">
+          <button type="button" className="btn ghost" onClick={onClose}>
+            Đóng
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function HeritageAdmin() {
+  const state = useLoad('/admin/artworks');
+  const [edit, setEdit] = useState(null);
+  const [viewingWorkshopsArt, setViewingWorkshopsArt] = useState(null);
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
+  const [page, setPage] = useState(1);
+  const [error, setError] = useState('');
+  const { notify } = useApp();
+
+  const PAGE_SIZE = 8;
+
+  async function remove(art) {
+    if (!window.confirm('Xóa tác phẩm di sản “' + art.name + '” khỏi kho làng? Mọi bản ghi nhận in liên quan tại các xưởng cũng sẽ bị xóa.')) return;
+    try {
+      await api('/admin/artworks/' + art._id, { method: 'DELETE' });
+      state.reload();
+      notify('Đã xóa tranh di sản khỏi kho làng');
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  const items = state.data || [];
+  const filtered = items.filter(a => {
+    const matchesSearch = !search || a.name.toLowerCase().includes(search.toLowerCase());
+    const matchesCat = !category || a.category === category;
+    return matchesSearch && matchesCat;
+  });
+
+  const totalListings = items.reduce((sum, a) => sum + (a.workshopCount || 0), 0);
+  const pages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
+  const pagedItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  return (
+    <>
+      <PageTitle
+        eyebrow="BAN QUẢN LÝ LÀNG NGHỀ"
+        title="Kho Di sản Làng Đông Hồ"
+        action={
+          <button
+            className="btn"
+            onClick={() =>
+              setEdit({
+                name: '',
+                category: CATEGORIES[0],
+                dimensions: '26 × 37 cm',
+                material: 'Giấy điệp thủ công, màu tự nhiên',
+                images: [],
+                published: true,
+                story: '',
+                description: '',
+              })
+            }
+          >
+            <Plus size={18} /> Thêm Tranh Di sản
+          </button>
+        }
+      >
+        Bảo tồn và quản lý 69 tác phẩm tranh khắc gỗ cổ truyền của làng Đông Hồ. Biên tập câu chuyện văn hóa, tư liệu lịch sử và theo dõi các xưởng nhận in.
+      </PageTitle>
+
+      {state.data && (
+        <div className="admin-stats-3">
+          <div>
+            <span>Tổng tranh di sản</span>
+            <strong>{items.length}</strong>
+          </div>
+          <div>
+            <span>Đang công khai</span>
+            <strong>{items.filter(a => a.published).length}</strong>
+          </div>
+          <div>
+            <span>Lượt xưởng nhận in</span>
+            <strong>{totalListings}</strong>
+          </div>
+        </div>
+      )}
+
+      <div className="heritage-admin-toolbar">
+        <div className="toolbar-search-wrap">
+          <Search size={16} className="search-icon" />
+          <input
+            type="search"
+            placeholder="Tìm kiếm tranh di sản theo tên tác phẩm…"
+            value={search}
+            onChange={e => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+          />
+        </div>
+        <div className="toolbar-select-wrap">
+          <select
+            aria-label="Lọc dòng tranh"
+            value={category}
+            onChange={e => {
+              setCategory(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">Tất cả các dòng tranh ({items.length})</option>
+            {CATEGORIES.map(cat => (
+              <option key={cat} value={cat}>
+                {cat} ({items.filter(a => a.category === cat).length})
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="button" className="btn outline small" onClick={state.reload}>
+          <RefreshCw size={15} /> Làm mới
+        </button>
+        <div className="toolbar-count">
+          <span>Hiển thị <strong>{filtered.length}</strong> tranh</span>
+        </div>
+      </div>
+
+      <LoadState {...state} />
+      {error && <p className="error">{error}</p>}
+
+      {state.data && filtered.length === 0 && (
+        <Empty title="Không tìm thấy tranh di sản phù hợp" />
+      )}
+
+      <div className="heritage-admin-grid">
+        {pagedItems.map(art => (
+          <article className="panel heritage-admin-card" key={art._id}>
+            <div
+              className="card-clickable-area"
+              onClick={() => setViewingWorkshopsArt(art)}
+              title="Bấm vào tranh để xem danh sách xưởng nhận in"
+            >
+              <img
+                src={art.images?.[0]}
+                alt={art.name}
+                className="heritage-admin-thumb"
+              />
+              <div className="heritage-admin-info">
+                <div className="heritage-admin-meta">
+                  <span className="eyebrow">{art.category}</span>
+                  <span
+                    className={
+                      'badge ' +
+                      (art.published ? 'status-delivered' : 'status-draft')
+                    }
+                  >
+                    {art.published ? 'Công khai' : 'Tạm ẩn'}
+                  </span>
+                </div>
+                <h3>{art.name}</h3>
+                <p className="dim-text">
+                  {art.dimensions} · {art.material}
+                </p>
+                <div className="workshop-coverage">
+                  <button
+                    type="button"
+                    className="badge-btn"
+                    onClick={e => {
+                      e.stopPropagation();
+                      setViewingWorkshopsArt(art);
+                    }}
+                    title="Bấm xem danh sách xưởng nhận in"
+                  >
+                    <span
+                      className={
+                        'badge ' +
+                        (art.workshopCount > 0
+                          ? 'status-in_production'
+                          : 'status-draft')
+                      }
+                    >
+                      {art.workshopCount > 0
+                        ? art.workshopCount + ' xưởng nhận in'
+                        : 'Chưa có xưởng nhận in'}
+                      <Eye size={12} style={{ marginLeft: 4 }} />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="heritage-admin-story">
+              {art.story ? (
+                <p className="prose">{art.story.slice(0, 180)}…</p>
+              ) : (
+                <p className="prose muted italic">
+                  Chưa có câu chuyện văn hóa cho tác phẩm này. Bấm chỉnh sửa để bổ sung.
+                </p>
+              )}
+            </div>
+
+            <div className="button-row">
+              <button
+                className="btn outline small"
+                onClick={() => setEdit(art)}
+              >
+                <Edit3 size={15} /> Chỉnh sửa di sản
+              </button>
+              <button
+                className="btn outline small"
+                onClick={() => setViewingWorkshopsArt(art)}
+              >
+                <Eye size={15} /> Xem xưởng in ({art.workshopCount})
+              </button>
+              <button
+                className="text-link danger small"
+                onClick={() => remove(art)}
+              >
+                <Trash2 size={15} /> Xóa khỏi kho
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <Pagination
+        page={page}
+        pages={pages}
+        onPageChange={p => {
+          setPage(p);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        total={filtered.length}
+      />
+
+      {viewingWorkshopsArt && (
+        <HeritageWorkshopsModal
+          art={viewingWorkshopsArt}
+          onClose={() => setViewingWorkshopsArt(null)}
+        />
+      )}
+
+      {edit && (
+        <FormDialog
+          title={edit._id ? 'Chỉnh sửa tranh di sản: ' + edit.name : 'Thêm tranh di sản mới vào kho làng'}
+          fields={heritageAdminFields}
+          initial={pick(edit, heritageAdminFields)}
+          onClose={() => setEdit(null)}
+          onSubmit={async values => {
+            await api('/admin/artworks' + (edit._id ? '/' + edit._id : ''), {
+              method: edit._id ? 'PATCH' : 'POST',
+              body: values,
+            });
+            state.reload();
+            notify('Đã lưu tranh di sản');
+          }}
+        />
+      )}
+    </>
+  );
+}
+
 
 function ArtisansAdmin(){const state=useLoad('/admin/workshops'),users=useLoad('/admin/users'),[create,setCreate]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),{notify}=useApp();async function action(url,body){setBusy(true);setError('');try{await api(url,{method:'PATCH',body});state.reload();users.reload();notify('Đã cập nhật');}catch(e){setError(e.message);}finally{setBusy(false);}}return <><PageTitle eyebrow="BAN QUẢN LÝ LÀNG NGHỀ" title="Nghệ nhân & kiểm duyệt" action={<button className="btn" onClick={()=>setCreate(true)}><Plus size={18}/> Cấp tài khoản</button>}/><LoadState {...state}/>{error&&<p className="error">{error}</p>}<div className="admin-studios">{state.data?.map(s=>{const u=users.data?.find(u=>u._id===s.ownerId);return <article className="panel" key={s._id}><span className={'badge '+(s.approved?'status-delivered':'status-draft')}>{s.approved?'Đã duyệt':'Chờ kiểm duyệt'}</span><h3>{s.name}</h3><p>{u?.name} · {u?.email}</p><p>{s.address}</p><p className="prose">{s.story}</p><div className="thumbnails">{s.images.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={i}><img src={src} alt="Hồ sơ xưởng"/></a>)}{s.certificates.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={'c'+i}><img src={src} alt="Chứng nhận"/></a>)}</div><div className="button-row"><button className="btn outline small" disabled={busy} onClick={()=>action('/admin/workshops/'+s._id+'/approval',{approved:!s.approved})}>{s.approved?'Thu hồi công khai':'Duyệt xưởng'}</button>{u&&<button className="text-link" disabled={busy} onClick={()=>action('/admin/users/'+u._id,{active:!u.active})}>{u.active?'Khóa tài khoản':'Mở lại tài khoản'}</button>}</div></article>;})}</div>{create&&<FormDialog title="Cấp tài khoản nghệ nhân" fields={[field('accountName','Họ tên nghệ nhân'),field('email','Email đăng nhập','email'),field('password','Mật khẩu ban đầu (10–72 ký tự)','password'),...studioFields]} initial={{categories:CATEGORIES,images:[],certificates:[],latitude:21.0606,longitude:106.0813,visitingHours:'08:00–17:00',openForVisits:false}} onClose={()=>setCreate(false)} submitLabel="Cấp tài khoản chờ duyệt" onSubmit={async values=>{const {accountName,email,password,...workshop}=values;await api('/admin/artisans',{method:'POST',body:{name:accountName,email,password,workshop}});state.reload();users.reload();notify('Đã cấp tài khoản. Kiểm tra hồ sơ rồi duyệt xưởng.');}}/>}</>;}
 function NewsEditor(){const state=useLoad('/news/manage'),[edit,setEdit]=useState(null),[error,setError]=useState(''),{notify}=useApp();async function remove(n){if(!window.confirm('Xóa tin “'+n.title+'”?'))return;try{await api('/news/'+n._id,{method:'DELETE'});state.reload();notify('Đã xóa tin');}catch(e){setError(e.message);}}return <><PageTitle eyebrow="NHỊP SỐNG CỘNG ĐỒNG" title="Quản lý tin tức" action={<button className="btn" onClick={()=>setEdit({category:'Thông báo',pictures:[],published:false})}><Plus size={17}/> Viết tin</button>}/><LoadState {...state}/>{error&&<p className="error">{error}</p>}{state.data?.length===0&&<Empty title="Chưa có tin tức"/>}{state.data?.map(n=><article className="panel" key={n._id}><span className="eyebrow">{n.category} · {n.published?'Công khai':'Bản nháp'}</span><h3>{n.title}</h3><p>{n.body.slice(0,180)}…</p><div className="button-row"><button className="btn outline small" onClick={()=>setEdit({...n,pictures:n.image?[n.image]:[]})}><Edit3 size={15}/> Chỉnh sửa</button><button className="text-link danger" onClick={()=>remove(n)}><Trash2 size={15}/> Xóa tin</button></div></article>)}{edit&&<FormDialog title={edit._id?'Chỉnh sửa tin':'Viết tin cộng đồng'} fields={newsFields} initial={pick(edit,newsFields)} onClose={()=>setEdit(null)} onSubmit={async values=>{const {pictures,...body}=values;body.image=pictures[0]||'';await api('/news'+(edit._id?'/'+edit._id:''),{method:edit._id?'PATCH':'POST',body});state.reload();notify('Đã lưu tin tức');}}/>}</>;}

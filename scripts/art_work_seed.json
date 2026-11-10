@@ -1,0 +1,2472 @@
+{
+  "version": "1.0",
+  "description": "VCraft Dong Ho Master Heritage Artworks & Workshop Listings Seed",
+  "exportedAt": "2026-11-10T09:32:51.144Z",
+  "stats": {
+    "totalArtworks": 69,
+    "totalListings": 139
+  },
+  "artworks": [
+    {
+      "name": "Bà Nguyệt Se Duyên",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Bà Nguyệt Se Duyên mang ý nghĩa chúc tụng và mong muốn cho trai gái đến tuổi cập kê tìm được ý chung nhân tâm, đầu ý hợp và gắn kết bên nhau trọn đời. Trong tranh, bà Nguyệt cầm trên tay sợi tơ hồng để kết duyên cho hai người.\n\nNgoài ra, đây cũng là một món quà thể hiện tình cảm của người tặng đối với đối phương. Nó tượng trưng cho tình yêu đôi lứa và sự kết duyên trong ngày xuân, khi mùa chồi non nảy lộc và sinh vật phát triển mạnh mẽ. Theo quan niệm của các cụ ngày xưa, kết duyên vào mùa xuân sẽ mang lại cuộc sống sung túc, đầy đủ và tươi vui cho cặp trai gái, cũng như sự đông đúc của con cái sau này.",
+      "description": "Bức tranh chúc tụng dân gian thể hiện tích Nguyệt Lão buộc chỉ hồng, gửi gắm lời chúc lứa đôi hòa hợp, duyên tình viên mãn và trăm năm hạnh phúc.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ba-nguyet-se-duyen-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Bà Triệu Cưỡi Voi",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Bà Triệu Cưỡi Voi miêu tà về vị nữ anh hùng dân tộc Bà Triệu, còn được biết đến với các biệt danh như Triệu Trinh Nương, Triệu Thị Trinh, Lệ Hải Bà Vương hay Nhụy Kiều tướng quân, sinh ngày 2 tháng 10 năm Bính Ngọ (226), là một trong những anh hùng dân tộc trong lịch sử Việt Nam. Bà Triệu còn được gọi là Triệu Ẩu theo cách gọi của người Trung Hoa (\"Ẩu\" có nghĩa là bà già, bà lão). Bà sinh ra ở Quan Yên, quận Cửu Chân, nay thuộc huyện Yên Định, tỉnh Thanh Hóa, và là em gái của Triệu Quốc Đạt.\n\nQuy Cách Làm Tranh Dân Gian Đông Hồ",
+      "description": "Tác phẩm tranh lịch sử hào hùng khắc họa hình tượng nữ anh hùng Bà Triệu cưỡi voi ra trận đánh giặc Ngô, biểu trưng cho khí phách kiên cường bất khuất của dân tộc.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ba-trieu-cuoi-voi-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Bịt Mắt Bắt Dê",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Bịt Mắt Bắt Dê\" thuộc dòng tranh sinh hoạt dân gian Đông Hồ, tái hiện trò chơi truyền thống rộn rã trong những ngày hội xuân đất Kinh Bắc.\n\nTrong khung cảnh rào tre quây tròn, chàng trai và cô gái thôn quê bịt dải khăn đỏ, lần mò tìm bắt chú dê đang thoăn thoắt né tránh. Tiếng cười nói reo hò của dân làng xung quanh như vang vọng qua từng đường nét khắc gỗ mộc mạc mà sinh động.\n\nBức tranh không chỉ ghi lại một trò chơi dân gian lành mạnh mà còn ẩn chứa nét giao duyên kín đáo, hồn nhiên của tuổi trẻ nơi làng quê, gửi gắm ước nguyện về một mùa xuân tươi vui, hòa thuận và căng tràn nhựa sống.",
+      "description": "Bức tranh sinh hoạt hội xuân tươi vui, tái hiện trò chơi dân gian bắt dê trong rào tre mang đậm nét giao duyên trong sáng và hồn nhiên của tuổi trẻ thôn quê.",
+      "images": [
+        "/art/tranh-giay-dong-ho-bit-mat-bat-de-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Chim Công Thiên Hạ Thái Bình",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Chim Công Thiên Hạ Thái Bình với hình ảnh con công đang xòe cánh bên gốc hoa hồng là một tác phẩm nghệ thuật đẹp mắt. Loài chim Công còn được biết đến với tên gọi khác là chim khổng tước, thuộc họ trĩ và được coi là đại diện của Phượng Hoàng trong phong thủy. Với bộ lông óng ánh, xòe ra hình quạt đẹp mắt, chim Công thường được coi là biểu tượng của quan chức, tiền tài và uy quyền trong thời phong kiến.\n\nChim Công cũng là loài chim đặc biệt chung thuỷ, chỉ ghép đôi với duy nhất một con mái trong suốt cuộc đời. Vì vậy, treo bức tranh chim Công trong phong thủy mang ý nghĩa biểu tượng của tình yêu đôi lứa và tình cảm vợ chồng bền chặt mà son sắt thuỷ chung. Bên cạnh đó, bộ lông chim Công còn có nhiều hoa văn trông giống như các đồng tiền nối liền nhau, khiến nó trở nên lấp lánh và nổi bật hơn khi ánh nắng mặt trời chiếu vào. Điều này khiến cho treo tranh chim Công theo phong thủy còn được xem như biểu trưng của tài lộc và mang đến tác dụng điều hoà cân bằng âm dương.\n\nTranh Đông Hồ với chữ đề \"Thiên hạ thái bình\" mang ý nghĩa xua đuổi ma quỷ, cầu mong sung túc và an bình trong cuộc sống. Vì vậy, nó rất thích hợp treo trong ngày Tết, dịp đầu năm mới để mong một năm an lành, bình ăn và cuộc sống hạnh phúc. Bên cạnh đó, bức tranh còn thuộc dòng tranh Tết chúc tụng \"Thiên hạ thái bình\" với ngụ ý cầu mong cho đất nước thịnh vượng, thái bình và ấm no.",
+      "description": "Hình tượng chim công xòe cánh lộng lẫy bên gốc hoa hồng, mang ý nghĩa chúc cho giang sơn vững bền, bốn biển thanh bình và gia đạo hưng thịnh an khang.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chim-cong-thien-ha-thai-binh-37x52.jpg",
+        "/art/tranh-giay-dong-ho-chim-cong-thien-ha-thai-binh-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Chim Lồng",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Chim Lồng\" là một tác phẩm giàu tính biểu tượng và tính triết lý sâu sắc trong dòng tranh dân gian Đông Hồ, thường được treo đối xứng cùng bức \"Cá Chậu\".\n\nTranh miêu tả một chú chim quý với bộ lông rực rỡ đậu kiêu hãnh trong chiếc lồng son chạm trổ cầu kỳ, bên cạnh có bầu nước và cóng kê đầy đủ. Cảnh tượng toát lên thú chơi tao nhã ngắm chim cảnh của người xưa.\n\nTuy nhiên, phía sau vẻ đẹp êm đềm ấy là tầng ý nghĩa ngụ ngôn kín đáo: dù lồng son gác tía đủ đầy nhung lụa, chú chim vẫn ngước nhìn bầu trời rộng lớn. Bức tranh gửi gắm khát vọng muôn đời về sự tự do tự tại của tâm hồn.",
+      "description": "Tác phẩm miêu tả chú chim quý trong lồng son chạm trổ, gửi gắm triết lý nhân sinh tao nhã cùng khát vọng tự do tự tại của tâm hồn.",
+      "images": [
+        "/art/tranh-dong-ho-chim-long-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Chuột Múa Rồng",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Chuột Múa Rồng là một tác phẩm tranh dân gian Đông Hồ nổi tiếng, thường được treo trang trí trên tường nhà với hình ảnh 11 chú chuột lớn bé đang mang kèn trống, cờ quạt và đèn cá chép, đèn lồng rộn ràng đi hội. Bức tranh nhìn tổng thể như miêu tả trò chơi của trẻ em nông thôn xưa, khiến bầy chuột trông hồn nhiên và ngộ nghĩnh. Mô hình rồng uy nghi trùm lên, thu hút ánh nhìn vào trung tâm, nhưng vẫn không át được số đông của đàn chuột.\n\nTranh có tên gọi “chuột múa rồng” hoặc “chuột rước rồng”, không phải để tôn vinh rồng phượng, mà như một ngày hội vui, biểu dương lực lượng của những chú chuột có thân phận thấp kém hơn rồng. Tuy chuột sợ ánh sáng, nhưng vẫn rước đèn, gửi thông điệp về sự sung túc, tự tin của đàn chuột hội hè khi Tết đến xuân về.\n\nHai con chuột cầm sào nâng hình con rồng cao lên thụp xuống, một con cầm sào đính vào đầu rồng, một con cầm sào đính vào đuôi rồng. Nét trào phúng thể hiện ở những cái đuôi chuột dài, ám chỉ tóc tết đuôi sam của người Mãn Châu đang trị vì Trung Quốc mà những người Hoa “bài Thanh phục Minh” căm ghét.\n\nBức tranh chuột rước rồng nổi tiếng không chỉ bởi vẻ đẹp của nó mà còn vì nội dung triết lý về nhân văn, tính hài hước và châm biếm về sự bất công giữa dân chúng và bọn tham quan ô lại thời xưa.\n\nQuy cách làm Tranh Dân Gian Đông Hồ",
+      "description": "Bức tranh ngụ ngôn trào phúng độc đáo với 11 chú chuột múa rồng, gõ trống rước đèn rộn rã, thể hiện óc hài hước và tinh thần lạc quan của người dân lao động.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chuot-mua-rong-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Chăn Trâu Thả Diều",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh dân gian Đông Hồ thể hiện không chỉ nét đẹp văn hóa dân tộc mà còn mang đến sự phong phú và đa dạng trong cuộc sống tinh thần của người Việt Nam. Các nghệ nhân thời xưa không đặt tên riêng cho từng bức tranh, mà để người xem tự truy cập. Ví dụ, bức tranh Đông Hồ Chăn Trâu Thả Diều cũng được gọi là vậy.\n\nTương tự, bức tranh Đông Hồ Chăn Trâu Thổi Sáo cũng miêu tả một cảnh tượng cậu bé khéo léo thổi sáo trên lưng con trâu. Điều đó đòi hỏi một tài năng đặc biệt.\n\nBức tranh hiển thị hình ảnh con trâu nâng chân trước lên như muốn cùng cánh diều bay lên. Sự giao hòa giữa trâu và con người giúp cậu bé ngồi vững chắc để thả diều.\n\nTrên bức tranh, có dòng chữ: \"Nhất tướng phúc lộc điền\" - ý nghĩa là \"Được mùa nhất người dân\". Đáp lại câu \"Diệp nhất cái thanh thanh\" trên bức tranh Đông Hồ \"Chăn Trâu Thổi Sáo\".\n\nThực tế, người dân xưa có nhiều người không biết đọc chữ. Vì vậy, các nghệ nhân đã sáng tạo hình ảnh đơn giản và gần gũi nhằm giúp người nông dân dễ dàng hiểu và đồng cảm.",
+      "description": "Khung cảnh thanh bình với chú bé mục đồng nằm thảnh thơi trên lưng trâu thả cánh diều no gió, biểu tượng cho tuổi thơ êm đềm và khát vọng bay cao.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chan-trau-tha-dieu-37x52.jpg",
+        "/art/tranh-giay-dong-ho-chan-trau-thoi-sao-26x37-28fb2875-63a8-4ba8-8898-4735b5c5381d.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Chăn Trâu Thổi Sáo",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Ý Nghĩa Tranh Đông Hồ Chăn Trâu Thổi Sao :\n\nTranh Đông Hồ chăn trâu thổi sáo nhà nghệ nhân làm nghề tranh Đông Hồ có ý nghĩa sâu sắc đối với văn hóa và tín ngưỡng của người Việt Nam. Bức tranh này thể hiện những ý nghĩa sau đây:\n\nThứ nhất , nó thể hiện ước nguyện cho sự hoà hợp giữa con người và thiên nhiên để có được sự thuận lợi cho vụ mùa phát triển và hoa màu tốt tươi.\n\nThứ hai , nó ca ngợi khả năng sáng tạo nghệ thuật của người nông dân, được thể hiện qua việc chế tác ống sáo từ cành trúc và tạo ra âm thanh réo rắt.\n\nThứ ba , tranh thể hiện triết lí âm dương trong kinh nghiệm sống của người nông dân, cho rằng sự phát triển chỉ xảy ra khi có sự hòa quyện giữa Âm và Dương.\n\nCuối cùng, tranh còn góp phần xây dựng nên tín ngưỡng phồn thực, với hình ảnh các cây cỏ được phát triển mạnh mẽ nhờ sự thuận hòa của trời đất.\n\nTóm lại, bức tranh Đông Hồ chăn trâu thổi sáo mang ý nghĩa rất sâu sắc và có tầm ảnh hưởng lớn đối với văn hóa và tín ngưỡng của người Việt Nam. Nó là biểu tượng của khát vọng hoà hợp giữa con người và thiên nhiên, sự sáng tạo nghệ thuật của người nông dân, triết lí âm dương và tín ngưỡng phồn thực. Tranh đông hồ chăn trâu thổi sao thường đi cặp với bức tranh đông hồ chăn trâu thả diều .",
+      "description": "Hình ảnh cậu bé mục đồng ngồi trên lưng trâu cất tiếng sáo véo von giữa đồng quê xanh ngát, biểu trưng cho sự an lạc, thái bình và tâm hồn khoáng đạt.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chan-trau-thoi-sao-37x52.jpg",
+        "/art/tranh-giay-dong-ho-chan-trau-thoi-sao-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Chợ Quê",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Chợ Quê\" là bức tranh phong cảnh sinh hoạt đặc sắc, khắc họa bức tranh toàn cảnh về nhịp sống trù phú và gắn kết của làng quê đồng bằng Bắc Bộ.\n\nTác phẩm miêu tả phiên chợ quê đông vui tấp nập với những lều quán đơn sơ, gánh hàng rau quả tươi ngon, bà mẹ dẫn con nhỏ mua sắm tết và người mua kẻ bán trò chuyện thân tình. Từng dáng người, gánh gồng đều toát lên vẻ bình dị, chân chất.\n\nBức tranh tôn vinh sự cần cù lao động và tinh thần gắn bó cộng đồng, là hồi ức đẹp đẽ về một nét văn hóa làng xã nghìn năm của người Việt Nam.",
+      "description": "Bức tranh phong cảnh sinh hoạt sinh động ghi lại phiên chợ quê truyền thống tấp nập, phản ánh sự trù phú, bình dị và tình làng nghĩa xóm ấm áp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-cho-que-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Cá Chậu",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Cá Chậu và bức tranh Đông Hồ Chim Lồng là bức tranh thường được treo cùng nhau để thể hiện cuộc sống của người phụ nữ trong thời phong kiến. Trong bức tranh này, người phụ nữ khi đã đi lấy chồng được ví như con cá trong chậu hoặc con chim trong lồng, thể hiện sự kiểm soát và hạn chế trong cuộc sống của họ. Tuy nhiên, bức tranh cũng thể hiện khát vọng tự do của người phụ nữ, điều mà họ vẫn cố gắng tìm kiếm trong cuộc sống của mình.",
+      "description": "Hình ảnh cá cảnh bơi lội trong chậu gốm hoa văn, vừa tả thú chơi tao nhã vừa mang hàm ý ngụ ngôn sâu sắc về tự do và môi trường sống của con người.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ca-chau-26x37cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Cá Đàn",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ \"Cá Đàn\" mang đậm chất dân gian Việt Nam với màu sắc rực rỡ và những hình ảnh cá và cây sen quen thuộc. Bức tranh miêu tả một đàn cá tung tăng bơi lội trong nước, xung quanh là những bông hoa sen tươi đẹp. Mỗi con cá trong đàn đều có những động tác bơi riêng, có những con bơi dưới đáy nước, những con bơi phía sau mẹ, và có những con bơi cạnh những bông hoa sen. Tất cả đều hướng về phía mẹ. Miêu tả sự ấm áp tình mẫu tử mà bức tranh dân gian đông hồ cá đàn muốn gửi gắm tới người chơi tranh.\n\nSự sắp xếp chỗ đặt của từng con cá rất được chú trọng để tạo nên cảm giác sống động và vui tươi cho bức tranh. Những hình ảnh quen thuộc và thân thuộc của đồng bào Việt Nam được tái hiện một cách sinh động và đầy màu sắc trên bức tranh này. Điều đặc biệt ở bức tranh \"Cá Đàn\" là việc sử dụng các màu sắc sặc sỡ, chủ yếu là màu đỏ, xanh, vàng, xám, đen, trắng, tạo nên một bức tranh đẹp mắt và vô cùng cuốn hút. Bên cạnh đó, chi tiết và nét vẽ tinh tế, sắc nét và đầy màu sắc, thể hiện tinh thần trang trọng, uy nghi và tài năng của những nghệ nhân Đông Hồ đã tạo nên bức tranh độc đáo này.\n\nVới những đặc điểm trên, bức tranh \"Cá Đàn\" đã trở thành một tác phẩm nghệ thuật đặc sắc của Việt Nam, thu hút sự quan tâm của nhiều người yêu thích nghệ thuật và văn hóa dân gian.",
+      "description": "Đàn cá tung tăng bơi lội giữa đầm sen tươi thắm, tượng trưng cho sự quây quần sum họp, phúc lộc dồi dào và sinh sôi nảy nở không ngừng.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ca-dan-37x52.jpg",
+        "/art/tranh-giay-dong-ho-ngua-ca-dan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Em Bé Ôm Cá",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Em Bé Ôm Cá Trong văn hóa dân gian Việt Nam, tranh đông hồ em bé ôm cá chép là một trong những hình ảnh quen thuộc, được coi là biểu tượng của sự học hỏi và thăng tiến trong cuộc sống. Trong tranh, em bé gái với nét mặt đáng yêu ôm chặt một con cá chép khá to và nặng, đóng vai trò như là hình ảnh tượng trưng cho sự kiên cường và lòng dũng cảm. Để vượt qua những khó khăn trên đường đời, chúng ta cần phải có sức mạnh và lòng kiên trì, như con cá chép đã phải bơi ngược dòng nước với sức mạnh và lòng dũng cảm để vượt qua vũ môn và được hóa thành rồng.\n\nCá chép cũng là biểu tượng cho cuộc sống phú quý, sung túc và dư giả. Trong văn hóa dân gian Việt Nam, cá chép được xem là một loài cá quý, mang lại may mắn và tài lộc cho gia đình. Hình ảnh cá chép thường xuất hiện trong những bức tranh đông hồ , chữ Hán, đồ gốm sứ và nhiều tác phẩm khác, là biểu tượng của sự thịnh vượng và may mắn.",
+      "description": "Cậu bé bụ bẫm ôm chú cá chép hồng hào nở nụ cười rạng rỡ, mang lời chúc cho gia đình năm mới dư dả tiền bạc, công thành danh toại.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-ca-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Em Bé Ôm Cóc Ôm Bóng",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Em Bé Ôm Cóc Ôm Bóng\" là tác phẩm chúc tụng giàu ý nghĩa biểu trưng trong văn hóa tâm linh của người Việt.\n\nHình ảnh em bé bụ bẫm với vầng trán thông minh, nét mặt tươi vui hoan hỷ ôm chặt chú cóc tía ngộ nghĩnh. Trong tín ngưỡng dân gian, \"con cóc là cậu ông Trời\", loài vật mang lại mưa thuận gió hòa và tượng trưng cho sự gan dạ, kiên cường.\n\nBức tranh là lời chúc phúc đầu năm dành cho các gia đình: chúc con cháu hay ăn chóng lớn, khỏe mạnh dũng cảm, học hành đỗ đạt và mang lại may mắn, phúc lộc cho cả dòng tộc.",
+      "description": "Tranh chúc phúc với hình tượng em bé kháu khỉnh ôm chú cóc tía thông minh, chúc con trẻ hay ăn chóng lớn, khỏe mạnh dũng cảm và gặp nhiều điềm lành.",
+      "images": [
+        "/art/tranh-giay-dong-ho-em-be-om-bong-om-coc-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Em Bé Ôm Tôm",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Em Bé Ôm Tôm\" thuộc dòng tranh chúc tụng Đông Hồ, mang đến sinh khí tươi vui và rạng rỡ cho không gian Tết truyền thống.\n\nHình ảnh em bé kháu khỉnh, đôi má ửng hồng nở nụ cười rạng rỡ, hai tay ôm trọn chú tôm càng xanh vạm vỡ đang uốn mình khỏe khoắn. Cổ em đeo vòng bạc lấp lánh trên nền giấy điệp óng ánh.\n\nCon tôm trong quan niệm dân gian tượng trưng cho sự dẻo dai, bền bỉ và sức bật vươn lên mạnh mẽ. Bức tranh gửi gắm mong ước cho con trẻ sức khỏe dồi dào, nhanh nhẹn, đồng thời chúc cho gia đình một năm mới dồi dào sản vật và phát đạt.",
+      "description": "Cậu bé ôm chú tôm càng xanh dẻo dai khỏe khoắn, gửi gắm ước nguyện về sức khỏe dồi dào, sự bật nảy linh hoạt và mùa màng sông nước bội thu.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-tom-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Gà Dạ Xướng",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Gà Dạ Xướng là một trong những tác phẩm nổi tiếng của làng tranh Đông Hồ. Bức tranh này thể hiện sự mạnh mẽ, độc lập và kiên cường của chú gà trống thông qua hình ảnh và chữ trên bức tranh. Bộ lông đỏ, xanh và vàng được phối hợp một cách tinh tế để tạo nên một vẻ đẹp ấn tượng và sức sống của con gà. Tư thế của chú gà trống cũng rất ấn tượng và chuyên nghiệp, cho thấy sự chắc chắn và tự tin của nó. Điều đặc biệt ở bức tranh này là dòng chữ \"Dạ xương ngũ canh hòa\" tức Đêm Gáy năm canh đều đặn, đó là một câu ca ngợi tính cách kiên định, kiên trì của con gà trống, dù mưa gió hay nắng nó vẫn không ngừng gáy đều đặn cả đêm để báo hiệu cho người chăn nuôi về thời gian.\n\nBức tranh Gà Dạ Xướng là một ví dụ điển hình cho nghệ thuật dân gian tinh tế và ý nghĩa. Nó không chỉ mang tính trang trí mà còn thể hiện tinh thần, tư tưởng và giá trị văn hóa của người Việt Nam.",
+      "description": "Hình ảnh gà trống gáy vang báo sáng trong đêm, biểu trưng cho tính kiên định, sự chính trực và xua tan bóng tối để đón ánh bình minh thịnh vượng.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-da-xuong-37x52.jpg",
+        "/art/tranh-giay-dong-ho-ga-da-xuong-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Gà Hoa Hồng",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Gà Hoa Hồng miêu tả về một chú gà trống được tạo ra với mục đích truyền tải một thông điệp về ý nghĩa của hình ảnh gà trống trong văn hóa dân gian. Chú gà trống được coi là một biểu tượng của sức mạnh và sự trưởng thành, thể hiện qua dáng vẻ oai phong nhất của chúng trong tranh.\n\nMột số đặc trưng của chú gà trống trong tranh đông hồ cũng mang ý nghĩa sâu sắc. Ví dụ như chiếc mào đỏ trên đầu của chúng giống như một chiếc mũ cánh chuồn, thể hiện tinh thần võ công và sự bảo vệ. Cựa sắc nhọn của chú gà trống giống như một thanh kiếm, tượng trưng cho tinh thần dũng mãnh và quyết tâm. Thói quen chia mồi cho gà con của chúng cũng cho thấy tính nhân đức và tình yêu thương.\n\nBên cạnh đó, hoa hồng cũng được sử dụng trong tranh để thể hiện tình yêu và sự sung túc. Tuy nhiên, trong bức tranh gà trống hoa hồng, hoa hồng không chỉ đơn thuần là một biểu tượng tình yêu mà còn mang ý nghĩa của sự trưởng thành và sức mạnh. Hoa hồng là những gì tinh túy nhất giúp cho chú gà trống thể hiện sự oai phong và dũng mảnh của mình khi cất tiếng gáy.",
+      "description": "Chú gà trống dũng mãnh đứng cạnh khóm hoa hồng khoe sắc, thể hiện đầy đủ năm đức tính cao quý: Văn, Vũ, Dũng, Nhân, Tín của người quân tử.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-hoa-hong-26x37cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Gà Đàn",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "52 × 37 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ là một dòng tranh dân gian nổi tiếng của Việt Nam, được in trên giấy Dó, với những nét vẽ tinh tế và đa dạng về chủ đề.\n\nTranh Đông Hồ Đàn Gà là một trong 15 bức tranh nổi tiếng nhất của dòng tranh này.\n\nTranh Đông Hồ đàn gà mẹ con được xem là một biểu tượng của văn hóa dân gian Việt Nam, phản ánh tình mẹ hiếu thảo, sự quan tâm chăm sóc đến con cái và tình yêu gia đình. Nó cũng mang ý nghĩa là lời chúc phúc, tài lộc và sinh sản cho gia đình.\n\nNhìn vào bức tranh, chúng ta có thể thấy sự tươi vui và hạnh phúc của đàn gà con khi được bên cạnh mẹ, được yên ổn, bình an. Một số con gà con được vẽ chi tiết, tươi tắn, sống động, tạo ra một bức tranh rất đẹp và nghệ thuật.\n\nTranh Đông Hồ đàn gà mẹ con thường được sử dụng trong các dịp đặc biệt như Tết Nguyên đán, lễ cưới, hay tặng cho những người yêu thương để thể hiện tình cảm và chúc phúc.",
+      "description": "Gà mẹ ân cần chăm sóc đàn gà con ríu rít xúm xít, biểu tượng thiêng liêng cho tình mẫu tử ấm áp, sự chở che và gia đình con đàn cháu đống hòa thuận.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-dan-52x37.jpg",
+        "/art/tranh-giay-dong-ho-ga-dan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Gà Đại Cát",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Gà Đại Cát thể hiện sự kính trọng của người dân đối với gà và được cho là biểu tượng của ngũ đức: văn – võ – dũng – nhân – tín. Theo Hõa Kinh, gà đại cát được mô tả qua những đặc điểm sau đây: Đầu đội mũ (mào gà trống): đại diện cho Văn, chiếc mào gà cao thẳng thể hiện sự kiêu hãnh và chí khí. Từ \"mào gà\" trong tiếng Hán cũng có âm thanh giống với \"quan\", do đó mào gà được coi là biểu tượng của quan lại, và có tác dụng chiêu tài, công thành danh toại.\n\nBước đi nhanh là Võ: Gà đại cát thường đi đầu đàn và dẫn dắt đàn gà theo. Hình dạng gà đi nhanh nhẹn và mạnh mẽ, thể hiện sức mạnh và võ nghệ.\n\nGặp địch dám chiến đấu là Dũng: Gà đại cát di chuyển linh hoạt và đánh những cú mổ chuẩn xác. Chúng có thể đánh bại cả rắn để bảo vệ đàn gà.\n\nCó miếng ăn biết gọi đàn là Nhân: Gà đại cát sẽ kêu lên khi tìm thấy thức ăn để cả đàn cùng nhau đi tìm và ăn chung.\n\nLuôn căn gác ban đêm là Tín: Gà đại cát có thói quen ngủ sớm và thức dậy vào ban đêm. Tiếng gáy của chúng vào sáng sớm là biểu tượng của bình minh và khơi gợi sự hi vọng. Gà đại cát cũng thường xuyên tấn công và phòng thủ vào ban đêm, biểu thị sự can trường và tín nhiệm.\n\nChữ \"Đại cát\" (điều tốt lành lớn) được thêm vào tranh để thể hiện ước vọng của người dân. Như người trồng lúa mong mưa thuận gió hòa, người chăn nuôi mong các con vật ăn chóng lớn và cuộc sống khỏe mạnh. Tranh Đông Hồ Gà Đại Cát trở thành biểu tượng cho những ước vọng và hy vọng của người dân nông thôn trong cuộc sống. Nó thể hiện một tinh thần quyết tâm, kiên cường và vững chắc trong đối mặt với những thử thách của cuộc sống. Tranh cũng thể hiện những giá trị truyền thống của văn hóa dân tộc Việt Nam, giúp duy trì và phát triển những giá trị văn hoá đặc sắc của đất nước.",
+      "description": "Tác phẩm tranh Tết kinh điển với chú gà trống oai phong cất tiếng gáy, biểu tượng cho quẻ Đại Cát mang lại may mắn, tài lộc và đại thắng đầu xuân.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-dai-cat-37x52.jpg",
+        "/art/tranh-giay-dong-ho-ga-dai-cat-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Gái Làng Hồ",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Gái Làng Hồ\" là khúc ca tôn vinh vẻ đẹp thanh lịch, đoan trang và đôi bàn tay tài hoa của người con gái đất tranh Đông Hồ bên dòng sông Đuống.\n\nBức tranh phác họa cô gái Kinh Bắc trong tà áo tứ thân thướt tha, yếm đào rạng rỡ và chiếc nón quai thao duyên dáng. Nét mặt nàng phúc hậu, ánh mắt dịu dàng toát lên phẩm hạnh đoan trang và nét cần mẫn của người thợ thủ công gìn giữ nghề ván khắc.\n\nTác phẩm là niềm tự hào của người dân làng tranh, ca ngợi tinh thần lao động miệt mài và vẻ đẹp truyền thống của người phụ nữ Việt Nam qua bao thế hệ.",
+      "description": "Bức họa thanh nhã tôn vinh người thiếu nữ Kinh Bắc duyên dáng trong tà áo tứ thân và chiếc nón quai thao, lưu giữ tinh hoa truyền thống của làng nghề.",
+      "images": [
+        "/art/tranh-giay-dong-ho-gai-lang-ho-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hai Bà Trưng Đánh Giặc",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Hai Bà Trưng Đánh Giặc được lấy cảm hứng từ 2 danh nhân đất việt là Hai Bà Trưng, hai chị em anh hùng dân tộc của người Việt, là tên gọi chung của hai bà Trưng Trắc và Trưng Nhị. Mất vào ngày mùng 6 tháng 2 năm Quý Mão 43, hai bà khởi binh chống lại quân Hán, lập ra một quốc gia có kinh đô tại Mê Linh và tự phong là nữ vương. Tuy nhiên, cuộc khởi nghĩa này đã bị quân Hán dưới sự chỉ huy của Mã Viện đánh bại, và hai bà đã nhảy xuống sông tự tử vì không muốn chịu khuất phục.\n\nTrước đó, các Lạc tướng Mê Linh và Chu Diên đã có ý chống lại sự cai trị tàn bạo của Thái thú Tô Định. Định bèn bắt giết Thi Sách để trấn áp tinh thần người Việt. Tháng 2 năm Canh Tý (40), Trưng Trắc cùng với em gái là Trưng Nhị nổi binh đánh hãm trị sở ở châu để đối đầu với Tô Định, người đã giết chồng của mình và dùng pháp luật trói buộc nhân dân. Các quận Nam Hải, Cửu Chân, Nhật Nam, Hợp Phố đều hưởng ứng và hai bà lấy được 65 thành ở Lĩnh Nam. Trưng Trắc tự lập làm vua và xưng là Trưng Nữ Vương.\n\nNgày 30 tháng 2 năm Tân Sửu (41), nhà Hán thấy bà xưng vương dấy quân đánh lấy các thành ấp và các quận biên thùy. Họ đã hạ lệnh cho các quận Trường Sa, Hợp Phố và Giao Châu sắp sẵn xe thuyền, sửa sang cầu đường, thông các núi khe, chứa thóc lương, cho Mã Viện làm Phục Ba tướng quân, Phù Lạc hầu Lưu Long làm phó sang xâm lược. Tháng Giêng năm Nhâm Dần (42), Mã Viện tiến theo đường ven biển, san núi làm đường hơn nghìn dặm, đến Lãng Bạc (ở phía tây Tây Nhai của La Thành)đánh nhau với vua. Hai bà thấy thế giặc mạnh lắm, tự nghĩ quân mình ô hợp, sợ không chống nổi, lui quân về giữ Cấm Khê (sử chép là Kim Khê). Quân cũng cho vua là đàn bà, sợ không đánh nổi địch, bèn tan chạy.\" Quy cách làm Tranh Dân Gian Đông Hồ",
+      "description": "Tranh lịch sử ca ngợi hai vị nữ vương Trưng Trắc - Trưng Nhị cưỡi voi xung trận dẹp giặc ngoại xâm, biểu tượng muôn đời cho tinh thần độc lập tự chủ.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hai-ba-trung-danh-giac-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hiếu Học Chăn Trâu Đọc Sách",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Hiếu Học Chăn Trâu Đọc Sách miêu tả cảnh một em bé vừa chăn trâu vừa học bài, khen ngợi sự chăm chỉ của em bé trong việc học hành và khuyến khích con trẻ nỗ lực học hành để ghi danh cho gia đình, dòng họ. Tranh này thường được các bậc cha mẹ mua về để dán ngay trên chỗ con cháu mình đèn sách. Trên tranh có ba chữ Hán chú giải là “Như quải giác” – nghĩa là sừng trâu treo sách đi học.",
+      "description": "Cậu bé mục đồng vừa chăn trâu vừa chăm chú dùi mài kinh sử, là biểu tượng tôn sư trọng đạo, hiếu học và chí lớn vượt khó vươn lên thành tài.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hieu-hoc-chan-trau-doc-sach-37x52.jpg",
+        "/art/tranh-giay-dong-ho-hieu-hoc-chan-trau-doc-sach-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hát Quan Họ",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Hát Quan Họ đang miêu tả về một dạng nhạc cổ truyền đặc trưng của vùng đất Bắc Ninh ở miền Bắc Việt Nam. Nó được coi là một biểu tượng văn hóa vùng đất này và đã được UNESCO công nhận là Di sản văn hóa phi vật thể của nhân loại.\n\nQuan Họ là sự kết hợp giữa âm nhạc và ca hát nhóm, thường diễn ra trong các buổi họp mặt của các nhóm người bạn, trong các dịp lễ hội truyền thống. Hát Quan Họ là cuộc trò chuyện bằng âm nhạc giữa hai nhóm hát đối đáp nhau, gọi là các Điền Anh, Điền Chị. Mỗi nhóm sẽ thể hiện các bài hát đặc trưng của mình và chuyển đổi lượt ca cho nhau. Điểm đặc biệt của Hát Quan Họ là sự tương tác, hòa quyện giữa các Điền Anh, Điền Chị và khả năng tạo ra những giai điệu hài hòa, du dương.\n\nBài hát Quan Họ thường được xây dựng trên nền nhạc trữ tình, thể hiện những tình cảm sâu lắng, những câu chuyện tình yêu và tình đồng đội. Điệu nhạc nhẹ nhàng, êm dịu cùng với tiếng ca truyền cảm của người hát đã tạo nên một phong cách riêng biệt cho Hát Quan Họ.\n\nHát Quan Họ cũng có vai trò quan trọng trong việc duy trì và phát triển các giá trị văn hóa truyền thống của Bắc Ninh. Nó không chỉ là một nghệ thuật biểu diễn, mà còn là một hình thức giao lưu, trao đổi văn hóa giữa các thế hệ.\n\nVới sự đa dạng và sức hút của nó, Hát Quan Họ đã thu hút sự quan tâm và yêu mến của nhiều người trong và ngoài nước. Nó không chỉ góp phần bảo tồn và phát triển văn hóa dân tộc mà còn trở thành một biểu tượng đặc trưng của vùng đất Bắc Ninh và Việt Nam.",
+      "description": "Khung cảnh các liền anh liền chị Kinh Bắc duyên dáng trao nhau câu ca quan họ mượt mà bên mạn thuyền, đậm đà bản sắc văn hóa dân ca quan họ Bắc Ninh.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hat-quan-ho-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hội Kéo Co",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 26 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Hội Kéo Co miêu tả trò chơi kéo co trong dân gian, là một trò chơi rất phổ biến trong văn hóa dân gian Việt Nam. Nó không chỉ là một trò chơi giải trí, mà còn mang ý nghĩa đào tạo và rèn luyện sức khỏe, sức mạnh cả thể chất lẫn tinh thần cho người chơi. Bên cạnh đó, trò chơi còn giúp người chơi rèn luyện sự gắn kết và sự phối hợp tốt trong nhóm. Nhờ những ý nghĩa đó mà kéo co đã trở thành một trò chơi quen thuộc và được tổ chức trong nhiều hoạt động lễ hội, sinh hoạt cộng đồng.",
+      "description": "Bức tranh khắc họa trò chơi dân gian kéo co sôi động ngày hội làng, đề cao tinh thần đoàn kết tập thể, sức mạnh bền bỉ và ước vọng mưa thuận gió hòa.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hoi-keo-co-37x26cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hội Đu",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Hội Đu thuộc thể loại tranh phong tục trong Nghệ thuật tranh Dân gian Đông Hồ, mang đến hình ảnh sinh động về trò chơi truyền thống của người dân Việt Nam trong quá khứ và vẫn được duy trì tại một số làng quê ngày nay.\n\nTrò chơi Đánh Đu:\n\nTrò chơi đánh đu thường diễn ra vào những ngày Tết cổ truyền hoặc các lễ hội đầu xuân tại các hội làng. Cả làng hăng hái chọn cây tre đẹp để dựng cột đu, thường được đặt giữa sân đình làng. Cây đu bao gồm trụ đu, thượng đu, tay đu và bàn đu, tạo nên không gian vui tươi và hứng khởi.\n\nCác Loại Đu Phổ Biến:\n\nCó nhiều cách đu, nhưng đu đơn và đu đôi là phổ biến nhất. Đu đơn thể hiện sự nhẹ nhàng của phụ nữ và sức mạnh của nam giới. Đu đôi nam nữ, đẹp nhất và hấp dẫn nhất, thể hiện sự giao hòa giữa nam và nữ, bay lên cao với sự nhịp nhàng và điều khiển tinh tế.\n\nÝ Nghĩa của Tranh:\n\nBức tranh hội đu không chỉ là sự mô tả của một trò chơi truyền thống mà còn là biểu tượng của văn hóa nông dân Việt Nam, thể hiện sự kết nối giữa con người và thiên nhiên. Nó thể hiện mong ước cho một mùa màng bội thu và là biểu tượng của tình yêu và khát vọng bay cao của tuổi trẻ.\n\nVới tranh hội đu, chúng ta nhìn thấy nét đẹp và sự giao thoa giữa truyền thống và hiện đại, tạo nên một tác phẩm nghệ thuật độc đáo, phản ánh tâm hồn và tình cảm của cộng đồng người Việt.",
+      "description": "Cảnh đôi nam nữ đu bay nhịp nhàng trên cây đu tre cao vút ngày hội xuân, thể hiện nét đẹp giao hòa âm dương và ước vọng sinh sôi nảy nở của mùa màng.",
+      "images": [
+        "/art/tranh-dong-ho-hoi-du-26x37cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hội Đấu Vật",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 26 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Hội Đấu Vật miêu rả về một môn võ đấu vật cổ truyền của Việt Nam, được đánh giá cao về tinh thần thượng võ và tồn tại gắn liền với hoạt động bảo vệ tổ quốc và lễ hội xuân. Bức tranh đấu vật nổi tiếng của làng Đông Hồ khắc họa cảnh trong hội xuân, khi mọi người cùng tò mò, vui vẻ và phấn kích theo dõi phần thi. Trò chơi này không chỉ đem đến không khí Tết, lễ hội ngày xuân vui tươi mà còn mang ý nghĩa thể thao và giúp mọi người trở nên cường tráng, nghị lực và dũng cảm. Trống vật nổi tiếng của làng Đông Hồ thu hút đông đảo người tham gia bao gồm mọi tầng lớp. Môn vật còn có ý nghĩa trong năm mới, mong muốn mọi người luôn mạnh khỏe và cường tráng.",
+      "description": "Hai đô vật khôi ngô so tài dũng mãnh trong tiếng trống thúc rộn rã, ca ngợi tinh thần thượng võ, sự dẻo dai khỏe khoắn của thanh niên đất Việt.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hoi-dau-vat-37x26cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Hứng Dừa",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Hứng Dừa là một biểu tượng của gia đình hạnh phúc trong tranh dân gian Đông Hồ. Tranh mang hình ảnh đẹp và đơn giản về cảnh sinh hoạt gia đình, nhưng lại mang nhiều ý nghĩa sâu sắc.\n\nTranh Đông Hồ Hứng Dừa được thực hiện trên giấy điệp và in bằng bản khắc gỗ. Mỗi màu sắc đều được in lần lượt, chờ màu này khô mới in màu tiếp theo. Do đó, số lần in tương đương với số màu sắc của tranh.\n\nBố cục và nội dung của tranh Đông Hồ Hứng Dừa khá đơn giản. Tranh hiển thị hình ảnh người cha đang hái dừa và treo lên cây. Người vợ đứng dưới hứng dừa bằng vạt váy của mình. Hai đứa trẻ ôm thân cây và cũng muốn trèo lên cây dừa như cha. Tất cả cùng tạo nên một cảnh gia đình đoàn kết bên nhau.\n\nDòng tranh Đông Hồ dựa trên cuộc sống bình dị và thường mang ý nghĩa sâu xa qua từng bức tranh. Mặc dù việc hứng dừa như thế không xảy ra trong thực tế vì quả dừa rất nặng, nhưng nó tượng trưng cho cuộc sống gia đình đơn giản. Trong gia đình, mọi người chia sẻ khó khăn cho nhau. Người chồng, người cha là trụ cột của gia đình, đảm nhận công việc nặng nhọc và khó khăn nhất, và luôn có người vợ, người mẹ đứng dưới hỗ trợ và cổ vũ với tinh thần tốt nhất.\n\nNhững đứa trẻ cũng muốn trèo lên cây như cha để thể hiện ước mơ trở thành người đàn ông vĩ đại như cha mình. Đồng thời, họ cũng thể hiện sự đóng góp và gắn bó để cảm nhận phần nào khó khăn của cha.\n\nNgoài cảnh gia đình hạnh phúc, trong các bức tranh Đông Hồ cũng thể hiện triết lý âm dương và tín ngưỡng phồn thực của nền văn hóa nông nghiệp lúa nước, đi sâu vào tâm hồn mỗi người dân.\n\nTranh Đông Hồ Hứng Dừa là một tác phẩm mang ý nghĩa về sự đoàn kết gia đình và hy vọng cho một cuộc sống hạnh phúc. Nó thể hiện tinh thần tương thân tương ái, sự chia sẻ và quan tâm trong gia đình. Tranh có thể trang trí trong nhà vào dịp Tết và là một món quà ý nghĩa cho người thân yêu.",
+      "description": "Bức tranh sinh hoạt gia đình dí dỏm, chàng trai trèo dừa thả quả cho vợ con vén váy hứng bên dưới, ca ngợi tình cảm vợ chồng đầm ấm, thuận hòa và tươi vui.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hung-dua-37x52.jpg",
+        "/art/tranh-giay-dong-ho-hung-dua-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Khỉ Đón Xuân",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Khỉ Đón Xuân\" là tác phẩm chúc phúc con giáp sinh động, kết tinh nghệ thuật chơi chữ độc đáo trong văn hóa phương Đông.\n\nHình ảnh chú khỉ tinh anh, lanh lợi ngồi bên cành đào thắm rực rỡ, tay cầm quả đào tiên trường thọ và mắt hướng về phía trước với vẻ hoan hỷ, tự tin đón chào mùa xuân mới.\n\nTrong Hán tự, chữ \"Hầu\" (con khỉ) đồng âm với tước \"Hầu\" quyền quý cao sang. Bức tranh là lời chúc đầu xuân tốt lành: chúc gia chủ thăng quan tiến chức, công danh rực rỡ, con cháu thông minh tài trí và gia đình trường thọ, an khang.",
+      "description": "Chú khỉ tinh anh ôm trái đào tiên bên cành đào nở rộ, tượng trưng cho chữ Hầu quyền quý, chúc năm mới thông minh lanh lợi và thăng quan tiến chức.",
+      "images": [
+        "/art/tranh-giay-dong-ho-khi-don-xuan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Lý Ngư Vọng Nguyệt",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Lý Ngư Vọng Nguyệt hay còn gọi là Cá Chép Trông Trăng đối với tín ngưỡng dân gian Việt Nam, hình ảnh \"cá chép hóa rồng\" hay \"cá chép vượt vũ môn\" được coi là biểu tượng của sự thành công và phát đạt. Cá chép là một loài cá đặc biệt, được cho là có khả năng bơi ngược dòng và vượt qua cửa nhỏ của cửa sông Hàn, biểu thị khả năng vượt qua khó khăn và trở thành người thành công. Cá chép hóa rồng thể hiện sự thăng tiến từ một con cá nhỏ đến trở thành một con rồng, biểu trưng cho sự phát triển và thành công.\n\nHình ảnh ánh trăng tròn in dưới đáy nước cũng mang ý nghĩa cầu mong sự thanh bình. Trong tín ngưỡng dân gian, ánh trăng thường được coi là biểu tượng của sự thanh tịnh và sự yên bình. Khi ánh trăng được phản chiếu trên mặt nước, nó tạo ra một cảnh tượng tĩnh lặng và mộc mạc, mang đến cảm giác bình yên và hòa quyện với thiên nhiên.\n\nHình ảnh \"cá chép \" và ánh trăng tròn in dưới đáy nước cùng nhau tượng trưng cho sự thành công và sự thanh bình. Nó thể hiện mong muốn của người xưa về sự phát triển và thịnh vượng cho con cái, cũng như mong muốn về sự hòa hợp và yên bình trong gia đình.\n\nQuy Cách Làm Tranh Dân Gian Đông Hồ",
+      "description": "Đôi cá chép ngắm bóng trăng tròn soi đáy nước, biểu tượng nghệ thuật đỉnh cao về sự thanh cao, minh triết và khát vọng vươn tới sự hoàn mỹ chân chính.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ly-ngu-vong-nguyet-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Lễ Hội Chọi Trâu",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Chọi Trâu là một tác phẩm nghệ thuật đặc biệt của Việt Nam, nổi tiếng với ý nghĩa sâu sắc và vẻ đẹp văn hóa đặc trưng. Bức tranh này thể hiện một tục lệ phổ biến trong lễ hội ở một số địa phương của Việt Nam, nơi mà hai con trâu được đưa vào trận đấu chọi nhau. Tuy nhiên, bức tranh không chỉ đơn thuần miêu tả hình ảnh chọi trâu mà còn chứa đựng những thông điệp ẩn sau những chi tiết trực tiếp trên tranh.\n\nTranh chọi trâu Đông Hồ được thể hiện qua các yếu tố trực tiếp trên bức tranh. Trung tâm của tranh là hai con trâu đang chọi nhau, thể hiện sự hấp dẫn và sức mạnh của cuộc đối đầu này. Phía trên tranh, có một lá cờ truyền thống gọi là cờ Ngũ sắc, xuất hiện thường xuyên trong các lễ hội dân gian. Trên lá cờ, có dòng chữ \"Hội chí lầu\". Đằng sau hai con trâu, có hai tấm bảng ghi chữ \"Đông xã\" và \"Tống xã\". Mặc dù có thể thấy hai tấm bảng và lá cờ này là chi tiết thừa, nhưng chúng mang ý nghĩa quan trọng để hiểu rõ nội dung của bức tranh.\n\nCác yếu tố trên bức tranh chứa đựng ý nghĩa sâu xa và liên quan đến nội dung chính của nó. Chữ \"xã\" trên tranh có bộ \"thổ\" mang nghĩa \"đất\"; chữ \"lầu\" đề cập đến nhà cửa; chữ \"chí\" trên lá cờ biểu thị sự cản trở, khó khăn phải vượt qua; và chữ \"hội\" thể hiện sự tập trung cho một mục đích chung.\n\nNhững ý nghĩa này kết hợp với hình tượng con trâu trong tranh có thể hiểu rằng hai tấm bảng và lá cờ muốn nhắc đến tính chất đối nghịch của Đông trạch và Tây trạch trong thuật Phong thủy.\n\nTheo quan niệm của thuật Phong thủy, địa bàn được chia làm tám hướng, trong đó có bốn hướng thuộc Đông trạch và bốn hướng thuộc Tây trạch. Gọi là Đông tứ trạch và Tây tứ trạch. Bức tranh chọi trâu Đông Hồ không chỉ đơn thuần là một cuốn sách dạy về thuật Phong thủy Đông phương phổ biến trên khắp thế giới. Mà nó còn mang ý nghĩa sâu xa hơn, nó đề cập đến sự cân bằng và đối nghịch giữa các yếu tố Đông và Tây, và tác động của chúng đến sự may mắn và điền trạch trong cuộc sống.\n\nBức tranh chọi trâu dân gian Đông Hồ không chỉ là một tác phẩm nghệ thuật đẹp mắt, mà còn mang đến ý nghĩa sâu sắc về văn hóa và tâm linh. Nó biểu thị sự đối nghịch và cân bằng giữa các yếu tố Đông và Tây trong thuật Phong thủy, và hướng đến sự may mắn và điền trạch cho mọi gia đình. Treo bức tranh chọi trâu Đông Hồ trong ngôi nhà của bạn không chỉ làm đẹp mà còn mang đến niềm tin vào sự hài hòa và thịnh vượng.\n\nQuy Cách Làm Tranh Dân Gian Đông Hồ",
+      "description": "Hình ảnh hai trâu chọi dũng mãnh quyết đấu trên sới vật rực rỡ cờ hoa, tái hiện lễ hội truyền thống cầu mong mưa thuận gió hòa và làng xã bình an.",
+      "images": [
+        "/art/tranh-giay-dong-ho-choi-trau-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Lễ Trí Em Bé Ôm Rùa",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Lễ Trí Em Bé Ôm Rùa Bức tranh đông hồ Lễ Trí - Em Bé Ôm Rùa có kích thước giấy 26cm x 37cm, Được thể hiện ở chữ “Lễ trí” – cầu mong em bé có được cái “lễ” để ứng xử phải phép với mọi người và cái “trí” giỏi giang sau này. Tranh này còn được gọi bằng một cái tên dân dã khác là “Gái sắc bế rùa xanh” với ý cầu cho bé gái lớn lên được xinh đẹp, nhu mì, hiền dịu, chăm chỉ, đảm đang như con rùa. Bức tranh đông hồ Lễ Trí - Em Bé Ôm Rùa thường đi cặp với bức tranh đông hồ Nhân Nghĩa - Em Bé Ôm Cóc .",
+      "description": "Bức tranh chúc tụng chúc con trẻ học hành lễ phép, thông minh tài trí và được hưởng tuổi thọ trường tồn viên mãn như linh quy.",
+      "images": [
+        "/art/tranh-dong-ho-le-tri-em-be-om-rua.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Lợn Ăn Cây Ráy",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Lợn Ăn Cây Ráy treo tường có nhiều ý nghĩa và thông điệp được truyền tải:\n\nÝ nghĩa về sự giàu có và sung túc: Hình ảnh chú lợn đồ sộ, mũm mĩm thể hiện mong muốn về sự phong phú, đầy đủ tài lộc và thuận lợi trong cuộc sống.\n\nÝ nghĩa về sự phát triển và thịnh vượng: Cái lưng võng bụng sa và viền đai màu khác trên lưng lợn biểu thị sự phát triển tốt, sự thành công trong công việc và sự ăn chóng lớn.\n\nÝ nghĩa về ước nguyện và niềm vui: Hình ảnh lợn ăn cây ráy màu xanh, đang ngậm chặt và dứt khoát thể hiện ước nguyện về sự thành đạt, vui vẻ và hạnh phúc trong cuộc sống.\n\nÝ nghĩa về tình cảm yêu thương và gắn bó: Lợn được xem như là biểu tượng của sự may mắn, niềm vui và tình cảm gia đình. Nghệ nhân đã truyền tải tình cảm yêu mến và gắn bó thiết tha của người dân với hình ảnh con lợn trong tranh.\n\nÝ nghĩa về cầu chúc và ước mơ: Bức tranh mong muốn mang lại sự phú quý, an lành và thành công trong công việc. Nó cũng là lời chúc cho cuộc sống và công việc luôn thịnh vượng, an nhàn và phát triển.\n\nBức tranh \"Lợn ăn cây ráy\" dân gian Đông Hồ không chỉ đẹp mắt và tỉ mỉ trong từng nét vẽ, mà còn chứa đựng những giá trị văn hóa, tâm hồn và tình cảm của người dân địa phương. Nó thể hiện lòng biết ơn với công ăn việc làm, khao khát vươn lên và thăng tiến trong cuộc sống, cũng như niềm hy vọng vào một tương lai tươi sáng và phồn vinh.",
+      "description": "Hình ảnh chú lợn khoang béo tròn đang ăn lá cây ráy xanh tươi, thể hiện sự no đủ, mộc mạc và nguồn thức ăn dồi dào nơi đồng quê dân dã.",
+      "images": [
+        "/art/tranh-giay-dong-ho-lan-an-cay-ray-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Lợn Đàn",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "52 × 37 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Lợn Đàn miêu tả về đàn lợn là một con vật biểu trưng cho nhiều giá trị và ý nghĩa trong văn hóa dân gian Việt Nam. Về mặt tính cách, lợn được liên kết với sự phồn thực, tính dục và sự nhàn nhã sung túc, tuy nhiên nó cũng được coi là một biểu tượng tài chính và đôi khi được liên kết với sự bẩn thỉu và phàm ăn.\n\nTrong nhiều tính toán liên quan đến Can-Chi của người Trung Quốc, Việt Nam, Nhật Bản, Triều Tiên v.v, lợn là một trong 12 con vật tượng trưng cho chu kỳ 12 năm của Địa chi, và gắn liền với địa chi Hợi.\n\nTrong văn hóa dân gian Việt Nam, tranh dân gian Đông Hồ là một trong những thể hiện rõ nét nhất về ý nghĩa của con lợn. Hình ảnh con lợn trong tranh Đông Hồ thường xuất hiện để thể hiện sự sung mãn, phồn thực và hạnh phúc. Màu sắc tươi sáng và nét vẽ tỉ mỉ của các họa sĩ đã tạo nên những bức tranh đẹp mắt, tràn đầy ý nghĩa.\n\nBên cạnh đó, trong tranh Đông Hồ , hình ảnh lợn đàn thường được thể hiện với sự phát triển, sinh sôi nảy nở. Lợn mẹ béo hồng mắt lim dim lờ đờ, mõm tũm tĩm, năm con lợn con, con xanh, con đỏ, con trắng, con tím lúc nhúc cả dưới chân, tất cả đều thể hiện sự no đủ, phồn thực và hạnh phúc trong cuộc sống.\n\nVới tất cả các ý nghĩa và giá trị đó, không có gì ngạc nhiên khi con lợn đã trở thành một trong những biểu tượng quen thuộc trong văn hóa dân gian Việt Nam, và được tôn vinh qua nghệ thuật đặc trưng của Đông Hồ và nhiều nơi khác nhau trên khắp đất nước.",
+      "description": "Lợn mẹ nằm cho đàn con bụ bẫm vây quanh bú no nê, biểu tượng sâu sắc cho sự sinh sôi nảy nở, tài sản tích lũy dồi dào và gia đình sum vầy đầm ấm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-52x37.jpg",
+        "/art/tranh-giay-dong-ho-lon-dan-26x37cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Lợn Độc Bên Máng Thức Ăn",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Lợn Độc Bên Máng Thức Ăn\" là một trong những tác phẩm tiêu biểu của dòng tranh chúc tụng dân gian làng Đông Hồ.\n\nHình tượng chú lợn đực vạm vỡ, béo tròn đứng bên máng ăn đầy ắp cám, trên mình điểm xuyết những xoáy âm dương ngũ hành hài hòa. Nét khắc gỗ chắc khỏe cùng sắc màu tự nhiên từ lá chàm, hoa hòe và than hoa tôn lên vẻ trù phú, sung túc của vật nuôi gắn bó thân thiết với nhà nông.\n\nBức tranh là lời chúc phúc đầu xuân cho gia đình quanh năm ấm no, việc chăn nuôi gặp nhiều may mắn, của cải tích lũy đầy nhà và cuộc sống luôn sung túc, đủ đầy.",
+      "description": "Chú lợn độc vạm vỡ bên máng ăn đầy ắp với họa tiết xoáy âm dương đặc trưng, chúc cho việc chăn nuôi bội thu, cuộc sống ấm no sung túc.",
+      "images": [
+        "/art/tranh-giay-dong-ho-lon-doc-ben-mang-26x37-tg006h.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Mã Giám",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Mã Giám\" là tác phẩm khắc họa hình tượng chiến mã kiêu dũng, mang hào khí và khát vọng chinh phục của dòng tranh Đông Hồ.\n\nHình tượng chú ngựa chiến dũng mãnh với vóc dáng săn chắc, bờm tung bay trước gió và thần thái quật cường, kiêu hãnh. Từng đường khắc nét chìm nổi trên ván gỗ thể hiện sức mạnh phi thường và sự nhanh nhẹn của loài tuấn mã.\n\nBức tranh là biểu tượng của lòng trung kiên, sức bền bỉ và ý chí vượt qua mọi gian truân, thường được các bậc nho sĩ và thương gia xưa treo trong nhà để cầu chúc cho sự nghiệp hanh thông, bứt phá ngoạn mục.",
+      "description": "Hình tượng chiến mã kiên cường bờm tung bay trước gió, tượng trưng cho ý chí bền bỉ, sức mạnh phi thường và khát vọng bứt phá trên đường công danh.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ma-giam-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Mã Đáo Thành Công",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Quy cách làm Tranh Dân Gian Đông Hồ Mã Đáo Thành Công",
+      "description": "Đoàn tuấn mã phi nước đại tràn đầy sinh lực trên thảo nguyên, chúc cho mọi dự định kinh doanh và hành trình sự nghiệp đều gặt hái thắng lợi rực rỡ.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngua-ma-dao-thanh-cong-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Mèo Bên Cây Cau",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Mèo Bên Cây Cau\" là một thi phẩm ngụ ngôn hóm hỉnh, sâu sắc của kho tàng nghệ thuật tranh dân gian Đông Hồ.\n\nTranh khắc họa chú mèo khoang tinh nghịch đang thoăn thoắt trèo trên thân cây cau cao vút, ánh mắt tò mò ngước nhìn lên những tán lá và buồng cau sai trĩu quả trên nền trời xanh biếc.\n\nBức tranh tái hiện sinh động câu ca dao dân gian quen thuộc \"Con mèo trèo lên cây cau...\", mượn hình tượng loài vật gần gũi để gửi gắm triết lý sống khéo léo, sự thận trọng và nhắc nhở con người biết kính trên nhường dưới trong ứng xử gia đình, làng xóm.",
+      "description": "Bức tranh ngụ ngôn dân gian dí dỏm với chú mèo leo thoăn thoắt trên thân cau, nhắc nhở triết lý sống thận trọng, khéo léo và biết kính trên nhường dưới.",
+      "images": [
+        "/art/tranh-giay-dong-ho-meo-cau-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Múa Lân",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đống Hồ Múa Lân là một tác phẩm nghệ thuật truyền thống của người dân tại làng Đông Hồ, tỉnh Bắc Ninh, Việt Nam. Tranh được vẽ trên giấy dó (giấy thơm) bằng các màu tự nhiên từ các loại nguyên liệu như tro, đất sét và các loại lá cây. Tranh múa lân thường được sử dụng làm đồ trang trí treo tường trong ngày Tết và các dịp lễ hội.\n\nÝ nghĩa của tranh múa lân dân gian Đông Hồ là mang lại sự may mắn, hạnh phúc và tài lộc cho gia đình. Hình ảnh đội múa lân múa chúc vui, rước may mắn vào nhà là một biểu tượng phổ biến trong văn hóa dân gian của Việt Nam. Đội múa lân thường bao gồm một người đứng bên trong chiếc đầu lân bằng giấy, điều khiển các điệu bộ múa lân theo nhịp trống. Đuôi lân dài bằng vải màu được cầm và phất phất theo nhịp múa của lân.\n\nCùng với đầu lân, các thành viên trong đội múa lân còn bao gồm trống thanh la, não bạt, đèn màu và cờ ngũ sắc. Các màn múa của lân thường kết hợp với nhịp trống, âm nhạc và những bước nhảy uyển chuyển, tạo nên một bộ môn nghệ thuật rất ấn tượng và đặc sắc.\n\nNgoài ra, ông Địa cũng là một biểu tượng không thể thiếu trong đội múa lân. Ông Địa thường được coi là vị thần bảo vệ lân, đảm bảo rằng múa lân sẽ không gặp rủi ro trong suốt buổi biểu diễn và mang lại may mắn cho gia đình và cộng đồng.\n\nTranh múa lân dân gian Đông Hồ không chỉ thể hiện nghệ thuật truyền thống mà còn là một phần không thể thiếu trong ngày Tết và các dịp lễ hội của người dân Việt Nam, thể hiện lòng hiếu khách và mong muốn mang lại điềm lành, tài lộc cho gia đình và xã hội.",
+      "description": "Đội múa lân rực rỡ sắc màu uốn lượn theo tiếng trống rộn rã, mang lại điềm lành, sự may mắn thịnh vượng và xua đuổi tà khí trong dịp tết đến xuân về.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-lan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Múa Rồng",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Con Rồng đã trở thành linh vật quen thuộc trong tâm thức của người dân Việt, kết nối với niềm tin về “Con Rồng Cháu Tiên”. Trong bức Tranh Đông Hồ Múa Rồng này, ta được chứng kiến quang cảnh đám múa rồng đầy màu sắc diễn ra trong ngày Hội Xuân.\n\nMột biểu tượng gần gũi khác của nền văn minh lúa nước ở vùng Đông Á, Con Rồng cũng thể hiện quyền uy của tự nhiên và xã hội. Múa Rồng là một trò trình diễn kết hợp tài khéo (xũ) và sức mạnh (võ), phổ biến trong nhiều nước ở vùng Đông Á. Tại Việt Nam, Múa Rồng cũng được ưa chuộng trong các dịp lễ hội, ngoài ra còn có cả Múa Rắn được biểu diễn tại làng Lệ Mật (Gia Lâm) và Múa Lân, đặc biệt trong dịp Tết Trung thu.\n\nQuy cách làm Tranh Dân Gian Đông Hồ",
+      "description": "Điệu múa rồng uy dũng ngày hội xuân với đoàn người rước đuốc rộn ràng, biểu trưng cho sự thăng hoa, khí phách hào sảng và mưa thuận gió hòa.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-rong-26cmx37cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Ngày Mùa Bách Mẫu Dư Điền",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Ngày Mùa Bách Mẫu Dư Điền\" là biểu tượng tối cao cho ước vọng thịnh vượng, no ấm của cư dân nông nghiệp lúa nước Việt Nam.\n\nToàn cảnh bức tranh mở ra không gian đồng ruộng mênh mông vàng rực rỡ trong ngày thu hoạch. Bông lúa trĩu hạt, người gặt lúa hăng say, người gánh từng bó lúa nặng trĩu về làng trong niềm hân hoan rạng ngời.\n\n\"Bách mẫu dư điền\" nghĩa là trăm mẫu ruộng phì nhiêu có của ăn của để. Treo bức tranh trong ngày Tết là gửi gắm ước nguyện mưa thuận gió hòa, đất đai màu mỡ, gia quyến tích lũy được nhiều điền sản và đời đời con cháu ấm no, sung túc.",
+      "description": "Cảnh ngày mùa rộn ràng trên trăm mẫu ruộng phì nhiêu lúa trĩu hạt, gửi gắm lời chúc gia đình có điền sản mênh mông, quanh năm no đủ ấm êm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-bach-mau-du-dien-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Ngày Mùa Thu Hoạch",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Ngày Mùa Thu Hoạch\" là bức họa chân thực và giàu cảm xúc về ngày mùa rộn ràng nơi đồng quê Việt Nam.\n\nKhung cảnh từ đồng ruộng đến sân phơi ngập tràn sắc vàng óng ả của rơm rạ và thóc mẩy. Người gặt, người đập lúa, người sàng sảy thóc dưới ánh nắng thu vàng ấm áp, tất cả hòa quyện thành bản hòa ca lao động hăng say, tràn trề sức sống.\n\nBức tranh ngợi ca giá trị thiêng liêng của hạt gạo làng ta và công sức lao động chân chính của nhà nông, đem lại cảm giác yên bình, no đủ và viên mãn cho mỗi gia đình người Việt.",
+      "description": "Khung cảnh làng quê rực vàng sắc lúa mùa gặt hái, tôn vinh giọt mồ hôi lao động chân chính và niềm vui hưởng mùa màng bội thu của nhà nông.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngay-mua-thu-hoach-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Ngô Quyền Đánh Giặc",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Dân Gian Đông Hồ Ngô Quyền đại phá quân Nam Hán là một tác phẩm nghệ thuật mang ý nghĩa lịch sử sâu sắc. Trong tranh, ta thấy vị tướng quân Ngô Quyền đang đứng trên chiếc thuyền, dùng chân đạp vào cây chèo, tay nắm ngọn giáo, đang dẫn dắt quân đội của mình đánh bại quân Nam Hán trên sông Bạch Đằng. Tranh tuyệt đẹp này thể hiện sức mạnh và tài năng lãnh đạo của Ngô Quyền cùng với tinh thần chiến đấu bất khuất của dân tộc Việt Nam.\n\nTranh Đông Hồ Ngô Quyền đại phá quân Nam Hán có ý nghĩa quan trọng về mặt lịch sử. Trận đánh trên sông Bạch Đằng đã chứng tỏ sức mạnh và tài năng lãnh đạo của người Việt Nam trong việc đánh bại quân xâm lược. Trận đánh này đã đánh dấu sự khởi đầu của một thời kỳ độc lập và tự chủ cho dân tộc Việt Nam, thoát khỏi nghìn năm đô hộ của phương Bắc.\n\nTranh Ngô Quyền đại phá quân Nam Hán còn là biểu tượng cho tinh thần kiên cường và bất khuất của dân tộc Việt Nam trong việc bảo vệ đất nước. Điều này càng được thể hiện qua câu \"Đằng Giang tự cổ huyết do hồng\", nói về sự hy sinh của các anh hùng trong cuộc chiến chống quân xâm lược.\n\nNhìn vào tranh Ngô Quyền đại phá quân Nam Hán, ta cảm nhận được sức mạnh, tinh thần và lòng yêu nước của dân tộc Việt Nam. Nó không chỉ là một tác phẩm nghệ thuật đẹp mà còn là một biểu tượng của sự tự hào dân tộc.\n\nQuy Cách Làm Tranh Dân Gian Đông Hồ",
+      "description": "Tranh lịch sử tái hiện chiến thắng oanh liệt trên sông Bạch Đằng cọc nhọn năm 938, mở ra kỷ nguyên độc lập tự chủ lâu dài cho non sông Đại Việt.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngo-quyen-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Nhà Nông Làm Ruộng",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Nhà Nông Làm Ruộng\" tái hiện trọn vẹn quy trình canh tác truyền thống nghìn đời của nền văn minh lúa nước sông Hồng.\n\nHình ảnh con trâu đi trước cái cày theo sau, người nông dân tay cầm roi tay giữ cày thoăn thoắt trên luống đất phù sa màu mỡ. Đằng xa là cảnh cấy lúa, tát nước gàu sòng nhịp nhàng dưới tán tre làng xanh mát.\n\nTác phẩm thể hiện lòng biết ơn sâu sắc đối với đất mẹ thiên nhiên và con trâu - \"đầu cơ nghiệp\", đồng thời tôn vinh đức tính cần cù, kiên nhẫn vượt khó của người nông dân Việt Nam.",
+      "description": "Tái hiện sinh động cảnh cày bừa, cấy lúa truyền thống cùng con trâu đầu cơ nghiệp, ca ngợi tinh thần cần cù và sự gắn bó giữa con người với đất đai.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nha-nong-lam-ruong-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Nhân Nghĩa - Em Bé Ôm Cóc",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Nhân Nghĩa - Em Bé Ôm Cóc\" là tác phẩm chúc tụng trẻ thơ kinh điển, thường đi đôi cùng bức \"Lễ Trí - Em Bé Ôm Rùa\" trong bộ tranh giáo dục nhân cách truyền thống.\n\nTranh khắc họa một em bé bụ bẫm, khỏe mạnh, vầng trán cao thông minh đang tươi cười ôm chú cóc tía thân thiết. Trong quan niệm dân gian, con cóc là loài vật linh thiêng mang lại mưa thuận gió hòa và tượng trưng cho lòng dũng cảm phi thường. Phía trên tranh đề hai chữ \"Nhân Nghĩa\" bằng chữ Hán nôm trang trọng.\n\nBức tranh gửi gắm ước nguyện sâu sắc của cha ông: mong con cháu lớn lên không chỉ khỏe mạnh, thông minh mà trước hết phải sống có nhân nghĩa, biết yêu thương, chia sẻ và giữ trọn đạo lý làm người.",
+      "description": "Em bé kháu khỉnh ôm chú cóc tía biểu trưng cho sự dũng cảm và linh ứng trời đất, chúc cho thế hệ tương lai giàu lòng nhân nghĩa, sống có đức độ.",
+      "images": [
+        "/art/tranh-dong-ho-nhan-nghia-em-be-om-coc-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Nông Nhàn",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Nông Nhàn\" ghi lại khoảnh khắc thanh bình, thảnh thơi quý báu của người thôn quê khi mùa màng đã gặt hái xong xuôi.\n\nBức tranh miêu tả các bác nông dân ngồi trò chuyện rôm rả bên ấm nước chè xanh dưới bóng đa râm mát cạnh cổng làng. Thóc đã đầy bồ, rơm đã vun đống, niềm vui no đủ ánh lên trong từng nụ cười chân chất, mộc mạc.\n\nBức tranh mang lại cảm giác bình yên thư thái cho tâm hồn, nhắc nhở con người biết tận hưởng thành quả sau những ngày tháng dãi dầu mưa nắng và trân quý cuộc sống giản dị, thuận hòa.",
+      "description": "Cảnh các bác nông dân ngồi thưởng trà chuyện trò rôm rả dưới bóng cây râm mát, phản ánh vẻ đẹp an nhiên, thanh bình sau những ngày mùa vất vả.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nong-nhan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Nông Nhàn Nữ",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Nông Nhàn Nữ\" là nét chấm phá thanh tao về cuộc sống nội tâm và nét đẹp dịu dàng của người phụ nữ nông thôn Bắc Bộ xưa.\n\nTrong gian nhà gỗ ấm cúng, người thiếu nữ Kinh Bắc ngồi tỉ mẩn bên khung thêu, đường chỉ nhịp nhàng hoặc khẽ vuốt mái tóc mây suôn mượt. Khung cảnh toát lên sự ngăn nắp, thanh tịnh và đức hạnh đoan chính.\n\nBức tranh ca ngợi sự đảm đang, khéo léo của người phụ nữ Việt Nam: lúc mùa màng thì tần tảo ngoài đồng ruộng, khi nông nhàn lại chăm chút nếp nhà êm ấm, giữ lửa hạnh phúc cho gia đình.",
+      "description": "Người phụ nữ thôn quê đoan trang ngồi thêu may bên thềm nhà ấm cúng, tôn vinh nét dịu dàng, khéo léo và cuộc sống thanh tịnh nơi làng quê.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nong-nhan-nu-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Phú Quý - Em Bé Ôm Vịt",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Phú Quý – Em bé ôm vịt là một tác phẩm nghệ thuật dân gian Đông Hồ, có ý nghĩa và thông điệp sâu sắc. Bức tranh này thể hiện ước mong cho một cuộc sống giàu sang, phú quý, hạnh phúc và tình yêu thương trong gia đình.\n\nTrong tranh, bé gái ôm vịt và cử chỉ của cô bé tươi cười, rạng ngời, đáng yêu, tượng trưng cho sự vui tươi, niềm hy vọng và ước mơ. Con vịt trong tranh biểu tượng cho sự sung túc, ấm no, tài lộc và may mắn. Bông sen phía sau cô bé tượng trưng cho sự trong trắng, thanh khiết, tinh khôi của bé gái, đặc biệt là phẩm chất đáng quý, thanh tao “gần bùn mà chẳng hôi tanh mùi bùn”. Điều này nhấn mạnh sự tinh tế, đẹp đẽ và giá trị tâm linh của một gia đình hạnh phúc.\n\nVới bố cục đơn giản, màu sắc tươi vui, các nét vẽ uyển chuyển, tranh Đông Hồ Phú Quý – Em bé ôm vịt là một trong những tác phẩm nghệ thuật dân gian đẹp nhất và được yêu thích nhất của người Việt Nam. Tranh được treo trong gia đình vào dịp Tết để tạo ra không khí vui tươi, hân hoan và cầu mong sự phú quý, an lành cho gia đình.\n\nTranh Đông Hồ Phú Quý – Em bé ôm vịt là một tác phẩm nghệ thuật dân gian đầy ý nghĩa và cảm xúc. Nó thể hiện sự ước mong cho một cuộc sống giàu sang, phú quý, hạnh phúc và tình yêu thương trong gia đình.\n\nTranh đông hồ Em Bé Ôm Vịt là dòng tranh chúc tục thuộc bộ tứ quý tranh đông hồ được mọi người yêu thích bao gồm :\n\nVinh Hóa - Em Bé Ôm Gà; Phú Quý - Em Bé Ôm Vịt; Nhân Nghĩa - Em Bé Ôm Cóc; Lễ Trí - Em Bé Ôm Rùa.\n\nQuy cách làm Tranh Dân Gian Đông Hồ",
+      "description": "Bé gái bụ bẫm ôm chú vịt trắng béo tròn bên đóa hoa sen thanh khiết, mang lời chúc cho gia đình con cái ngoan hiền, phú quý an khang.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phu-quy-em-be-om-vit-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Phú Quý Em Bé Ôm Vịt",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 52 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Phú Quý – Em bé ôm vịt là một tác phẩm nghệ thuật dân gian Đông Hồ, có ý nghĩa và thông điệp sâu sắc. Bức tranh này thể hiện ước mong cho một cuộc sống giàu sang, phú quý, hạnh phúc và tình yêu thương trong gia đình.\n\nTrong tranh, bé gái ôm vịt và cử chỉ của cô bé tươi cười, rạng ngời, đáng yêu, tượng trưng cho sự vui tươi, niềm hy vọng và ước mơ. Con vịt trong tranh biểu tượng cho sự sung túc, ấm no, tài lộc và may mắn. Bông sen phía sau cô bé tượng trưng cho sự trong trắng, thanh khiết, tinh khôi của bé gái, đặc biệt là phẩm chất đáng quý, thanh tao “gần bùn mà chẳng hôi tanh mùi bùn”. Điều này nhấn mạnh sự tinh tế, đẹp đẽ và giá trị tâm linh của một gia đình hạnh phúc.\n\nVới bố cục đơn giản, màu sắc tươi vui, các nét vẽ uyển chuyển, tranh Đông Hồ Phú Quý – Em bé ôm vịt là một trong những tác phẩm nghệ thuật dân gian đẹp nhất và được yêu thích nhất của người Việt Nam. Tranh được treo trong gia đình vào dịp Tết để tạo ra không khí vui tươi, hân hoan và cầu mong sự phú quý, an lành cho gia đình.\n\nTranh Đông Hồ Phú Quý – Em bé ôm vịt là một tác phẩm nghệ thuật dân gian đầy ý nghĩa và cảm xúc. Nó thể hiện sự ước mong cho một cuộc sống giàu sang, phú quý, hạnh phúc và tình yêu thương trong gia đình.",
+      "description": "Bản tranh khổ lớn khắc họa bé gái ôm vịt với đường nét sống động, biểu trưng cho ước vọng giàu sang phú quý và cuộc sống sung túc tròn đầy.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phu-quy-em-be-om-vit-37x52.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Phúc Lộc Song Toàn",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Phúc Lộc Song Toàn là một bức tranh mang ý nghĩa sâu sắc và phối hợp hình ảnh cân đối. Tranh bao gồm các yếu tố phong thủy và truyền thống văn hóa cổ truyền của dân tộc Việt Nam.\n\nPhần chữ của tranh, từ \"Phúc\" cho đến \"Bách phúc\", đại diện cho sự may mắn và thành công. \"Lộc\" có nghĩa là phúc khí, tốt lành và bổng lộc. Chữ Lộc trong tranh có cấu trúc trái phải, gồm bộ Thị ở bên trái và chữ Lục ở bên phải.\n\nPhần hình ảnh của tranh Phúc Lộc Song Toàn cũng mang ý nghĩa sâu sắc. Mỗi em bé trong tranh ôm một thú vật tượng trưng cho triết lý sâu sắc. Một em bé ôm cá chép tượng trưng cho sự hiển vinh, công thành danh toại của gia đình, dòng họ. Ngỗng tượng trưng cho trời, cho lộc trời ban. Bông sen thơm ở phía sau hình ảnh cân đối và mang ý nghĩa sự tinh khiết đến từ trẻ thơ.\n\nTranh Phúc Lộc Song Toàn còn gắn điển tích và câu chuyện của dân tộc. Tất cả các yếu tố này được kết hợp để tạo ra một bức tranh độc đáo và mang ý nghĩa sâu sắc.\n\nVới sự phát triển của xã hội, các giá trị văn hóa cổ truyền của dân tộc ngày càng được tôn vinh và trân trọng.\n\nTranh Dân Gian Đông Hồ Phúc Lộc Song Toàn không chỉ là một tác phẩm nghệ thuật, mà còn là biểu tượng của văn hóa cổ truyền của dân tộc Việt Nam.\n\nQuy cách làm Tranh Dân Gian Đông Hồ",
+      "description": "Bức tranh chúc tết kinh điển mang đến sự vẹn toàn cả về phúc đức lẫn tài lộc, chúc gia chủ phúc như đông hải, lộc tựa thiên hà.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phuc-loc-song-toan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Phúc Lộc Song Toàn - Bé Trai Bé Giá Ôm Cá",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Phúc Lộc Song Toàn\" là tác phẩm chúc phúc hoàn mỹ, thường được treo trang trọng theo cặp trong các dịp lễ Tết cổ truyền.\n\nTranh miêu tả bé trai và bé gái kháu khỉnh, khỏe khoắn với gương mặt rạng rỡ, một bé ôm chú cá chép hồng hào tượng trưng cho sự dư dả (Dư dả = Ngư), một bé ôm cành hoa sen thanh khiết tượng trưng cho sự liên tục, trường cửu (Liên = Sen).\n\nBức tranh thể hiện khát vọng \"đủ nếp đủ tẻ\", con đàn cháu đống ngoan ngoãn hiếu thảo, gia đạo sum vầy thuận hòa và phúc lộc dồi dào trọn vẹn từ đời này sang đời khác.",
+      "description": "Đôi bé trai gái khỏe khoắn ôm cá chép và hoa sen, tượng trưng cho hạnh phúc đủ nếp đủ tẻ, con cháu sum vầy và phúc thọ vững bền.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phuc-loc-song-toan-26x37-1.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Tam Dương Khai Thái",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Tam Dương Khai Thái là một tác phẩm nghệ thuật đặc biệt của làng Đông Hồ, nổi tiếng với dòng tranh dân gian của Việt Nam. Bức tranh miêu tả hai con gà trống đứng đối diện nhau, phần đuôi xòe rộng và một mặt trời đỏ rực trên lưng của chúng. Giữa hai con gà là hình ảnh của hoa cỏ tươi tốt. Đường nét và màu sắc của bức tranh khá đơn giản nhưng chắc khỏe.\n\nMặc dù bức tranh chỉ miêu tả những hình ảnh về những con vật gắn liền với nghề nông, cuộc sống lao động của những người dân bình dị và phong tục tập quán của người Việt xưa, nhưng nó ẩn chứa những ý nghĩa sâu xa và tốt đẹp nhất.\n\nBức tranh đông hồ \"Tam Dương Khai Thái\" được làm từ giấy đó, một loại giấy mềm, mỏng, dễ hút màu mà không bị nhòe, làm từ vỏ cây. Quy trình sản xuất tranh bao gồm việc sáng tác mẫu, khắc ván và in lên giấy. Sau đó, còn rất nhiều công đoạn khác để có thể biến hóa thành một bức tranh đẹp.\n\nLàng Đông Hồ, nơi sản xuất bức tranh, nằm tại xã Song Hồ, huyện Thuận Thành, tỉnh Bắc Ninh và được xem là một ngôi làng nổi tiếng với dòng tranh dân gian đặc trưng của Việt Nam. Những bức tranh này thể hiện một cách chi tiết nhất xã hội nông nghiệp Việt xưa và vẫn mang đến giá trị văn hóa quan trọng cho người Việt đến ngày nay.\n\n\"Tam Dương Khai Thái\" là một trong những bức tranh nổi tiếng của làng Đông Hồ và được rất nhiều người chọn để treo trong nhà hoặc mua để bỏ ví với hy vọng mang đến tài lộc và vận may cho bản thân và gia đình.\n\nQuy cách làm Tranh Dân Gian Đông Hồ",
+      "description": "Hình tượng ba chú dê hiền hòa đứng dưới cội tùng xanh, lấy từ quẻ Thái trong Kinh Dịch chúc cho năm mới vạn sự hanh thông, điềm lành mở lối.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tam-duong-khai-thai-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Thánh Gióng",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Thánh Gióng được các nghệ nhân làng Hồ khắc họa lại dựa trên câu truyện dân gian Việt Nam.\n\nTheo câu chuyện, Thánh Gióng là một cậu bé chậm nói, không biết cười, nhưng khi nghe tin có giặc xâm lược đến, cậu bé bỗng nhiên trưởng thành nhanh chóng. Với sự giúp đỡ của người dân làng Gióng, Gióng trở thành một chiến sĩ hùng mạnh, cầu nguyện được áo giáp sắt, ngựa sắt và roi sắt để đánh giặc. Gióng đi khắp nơi, đánh tan quân giặc đến đâu, khi roi sắt gãy, Gióng nhổ cây tre để quật vào quân giặc.\n\nSau khi đánh tan quân giặc, Thánh Gióng trở về núi Sóc Sơn và bay lên trời. Câu chuyện về Thánh Gióng là biểu tượng của lòng yêu nước và tinh thần chiến đấu cho sự tự do và độc lập của người Việt Nam.\n\nCâu chuyện về Thánh Gióng đã được truyền lại từ đời này sang đời khác, và được biểu diễn trên nhiều hình thức nghệ thuật như múa rối, ca trù, hát xẩm và Tranh Dân Gian Đông Hồ . Đây là một phần quan trọng trong văn hóa dân gian Việt Nam và đóng vai trò quan trọng trong việc giữ gìn và phát triển nghệ thuật dân gian của đất nước.",
+      "description": "Tác phẩm lịch sử hào hùng khắc họa người anh hùng làng Gióng cưỡi ngựa sắt nhổ tre đánh tan giặc Ân, biểu tượng cho sức mạnh quật cường của tuổi trẻ Việt Nam.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thanh-giong-danh-giac-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Thư Hùng Gia Đình Gà",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 26 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ gà \"Thư hùng\" là một tác phẩm nghệ thuật truyền thống của người Việt Nam, được vẽ trên giấy Dó là sản phẩm của làng Đông Hồ, thuộc xã Song Hồ, huyện Thuận Thành, tỉnh Bắc Ninh.\n\nTranh miêu tả một gia đình gà bao gồm gà trống, gà mái và đàn con. Trên bức tranh, dòng chữ nôm \"lắm con nhiều cháu, giống cánh giống lông\" (lấy ý từ câu \"Con nhà tông không giống lông cũng giống cánh\") thể hiện sự đoàn kết, liên kết và sự ấm áp trong gia đình.\n\nGà mái có bố cục theo đường xoắn ốc, tạo nên sự mềm mại, thân thiện. Gà trống được đặt trong một hình thang, với đáy lớn nằm trên, tạo nên tư thế chủ gia đình, che chở cho gà mái và đàn con. Bức tranh gợi lên không khí hạnh phúc, đầm ấm trong gia đình, một gia đình sum vầy, ấm no, hạnh phúc bên nhau.\n\nBức tranh Đông Hồ gà Thư hùng thuộc dòng tranh chúc tụng trong tranh Đông Hồ, thường được dùng để tặng người thân, bạn bè hoặc những người mà mình yêu quý. Ngoài ý nghĩa về sức mạnh, thịnh vượng, tranh còn là ý nghĩa về hạnh phúc, đoàn viên và hòa thuận trong gia đình.\n\nBức tranh Đông Hồ Thư Hùng Gia Đình Gà là một tác phẩm nghệ thuật đẹp và ý nghĩa, thể hiện tinh thần đoàn kết, tình cảm gia đình và ước mong hạnh phúc, bình an trong cuộc sống.",
+      "description": "Cảnh gà trống oai phong cùng gà mái chăm chút đàn con quây quần hạnh phúc, ngợi ca tình yêu thương gia đình và sự chở che mẫu tử thiêng liêng.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thu-hung-gia-dinh-ga-37x26cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Thầy Đồ Cóc",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "52 × 37 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Trong bức tranh \"Thầy đồ Cóc\" thuộc dòng tranh dân gian làng Đông Hồ, chúng ta được đưa vào một thế giới nhộn nhịp của cóc, nhái và ễnh ương trong một lớp học. Trong tranh, có một thầy Cóc lớn đang ngồi chễm chệ trên chiếc sập và dạy học. Mặc dù hình ảnh của các sinh vật, nhưng chúng lại có hành động nhân cách hóa giống như con người.\n\nTrên tranh, có dòng chữ \"Lão Oa độc giảng\", có nghĩa là ông Cóc một mình giảng dạy. Dùng từ \"Oa\" trong tiếng Việt có thể được dịch là \"ếch\", nhưng trong ngôn ngữ dân gian, tranh này vẫn được gọi là \"Thầy đồ Cóc\". Từ \"độc\" trong dòng chữ có thể được dịch là \"đọc\", nhưng cũng có cùng âm với từ \"độc\" nghĩa là \"cô độc\" hay \"một mình\".\n\nHình tượng con cóc đã tồn tại và phổ biến từ lâu trong nền văn hiến Lạc Việt. Những người nghiên cứu hoặc những ai đã từng thấy những chiếc trống đồng, thạp đồng Lạc Việt sẽ không thể quên hình ảnh con cóc trên các vật thể này. Trong văn hóa dân gian Việt Nam, cóc từng được coi là \"cậu ông trời\" trong các câu chuyện. Tuy nhiên, trong bức tranh dân gian này, con cóc chỉ đóng vai trò là một ông giáo già khiêm tốn ngồi dạy học.",
+      "description": "Bức tranh ngụ ngôn trào phúng lừng danh với thầy đồ cóc ngồi giảng bài và các chú cóc học trò lễ phép, tôn vinh truyền thống hiếu học của dân tộc.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thay-do-coc-52x37.jpg",
+        "/art/tranh-giay-dong-ho-thay-do-coc-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Thổ Công Vị",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Thổ Công Vị\" là tác phẩm thuộc dòng tranh thờ tâm linh dân gian cổ truyền, mang giá trị văn hóa và tín ngưỡng sâu sắc của người Việt.\n\nHình tượng thần Thổ Công ngự trang nghiêm trên sập thờ, dung mạo đôn hậu mà uy nghi, áo mão tề chỉnh. Hai bên có câu đối chữ Hán ca ngợi công đức gìn giữ cõi đất trần thế, trước mặt là lư hương và mâm hoa quả thanh tịnh.\n\nThờ tranh Thổ Công là sự thể hiện lòng thành kính đối với vị thần cai quản bản thổ đất đai, cầu mong thần phù hộ độ trì cho gia trạch được bình an, xua đuổi tà khí và đem lại may mắn, hanh thông cho các thành viên trong gia đình.",
+      "description": "Bức tranh thờ trang nghiêm vị thần Thổ Công cai quản bản thổ đất đai, cầu mong ngài che chở cho gia trạch yên bình, xua trừ tà khí và đón phúc lộc.",
+      "images": [
+        "/art/tranh-dong-ho-tho-cong-vi-26x37cm-1.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Tiến Lộc",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh \"Tiến Lộc\" là bức tranh chúc tụng kinh điển trong văn hóa Đông Hồ, thường được treo kết hợp đối xứng cùng bức \"Tiến Tài\".\n\nBức tranh vẽ vị quan nhân hoặc đồng tử phúc hậu mang nét mặt rạng rỡ, hai tay nâng niu mâm ngọc chứa cành lộc biếc đâm chồi nảy lộc và thỏi vàng lấp lánh dâng lên chúc mừng gia chủ.\n\n\"Tiến Lộc\" là lời cầu chúc đầu xuân cho bổng lộc triền miên, chức tước thăng tiến, công việc hanh thông phát đạt và may mắn luôn gõ cửa gia đình trong suốt cả năm.",
+      "description": "Vị quan nhân dâng cành lộc biếc đơm hoa kết trái cùng mâm vàng, chúc cho gia chủ năm mới bổng lộc dồi dào, thăng quan phát tài và may mắn.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-loc-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Tiến Tài",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh \"Tiến Tài\" là tuyệt tác tranh Tết Đông Hồ, biểu trưng cho ước vọng tài chính dồi dào, hưng thịnh của mỗi gia đình Việt Nam.\n\nTranh khắc họa vị thần tài hoặc đồng tử hân hoan tay cầm cuốn thư đề chữ \"Tiến Tài\" cùng gậy như ý cát tường, xung quanh là tiền vàng và châu báu sung túc. Màu sắc tranh tươi sáng, rực rỡ trên nền giấy điệp óng ánh.\n\nBức tranh mang theo lời chúc tốt đẹp nhất: chúc gia chủ năm mới làm ăn phát đạt, tiền tài tấn tới, vạn sự hanh thông như ý và buôn may bán đắt quanh năm.",
+      "description": "Thần tài hoan hỷ mang theo gậy như ý và châu ngọc quý giá, là lời chúc đầu xuân cho tiền tài sinh sôi, kinh doanh phát đạt và vạn sự cát tường.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-tai-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Trê Cóc Kiện Nhau",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Chê Cóc Kiện Nhau trong truyện nôm \"Chê cóc\" là một trong những truyện nôm khuyết danh nổi tiếng và được coi là hay nhất còn tồn tại đến ngày nay. Câu chuyện này chứa đựng những ý nghĩa sâu sắc mà các nhà học hiền triết đã từng suy ngẫm. Đại ý của câu truyện là cóc đẻ trứng xuống ao, trê tưởng con mình nên đem cả đàn về nuôi. Cóc và Trê đưa nhau ra công đường để giải quyết tranh chấp. Tính bi hài kịch của câu chuyện xuất phát từ sự ngu dốt của dân đen và tham nhũng của quan lại.\n\n\"Trê kia chớ có huyên hoa, Hùm dầu có cánh ta đà chẳng ghê.\n\nQuả tình nào có hồ nghi, Ra điều bán dạ lâm trì khó coi.\n\nPhù sinh mấy kiếp ở đời, Làm cho rắn cắn được voi còn chầy.\n\nChỉ nghề dạy khỉ leo cây, Xui nguyên dục bị, chỉ hay bày trò.\n\nAi ngờ xã thử thành hồ, Chỉ điều cậy thế làm cho hại người.\n\nBiết rằng hươu chết tay ai, Mỏ chim, nanh chuột tranh hơi còn nhiều.\" Hình vẽ \"Trê cóc kiện nhau\" trong tranh Đông Hồ, bản cổ nhất về đề tài này, miêu tả cảnh cóc đang đưa đơn kiện tới một quan thái thú - là một con cá chép to bự đang nằm trên sập. Câu chuyện được tái hiện trong lời mắng mỏ của Cóc đối với Trê trên công đường. Cóc lên án Trê vì sự hùa theo, sự hai lòng, và sự lừa dối. Đoạn trích này thể hiện sự châm biếm và chính xác của câu chuyện. Nó sử dụng các thành ngữ trong tiếng Việt như \"hùm dầu có cánh\", \"bán dạ lâm trì\", \"rắn cắn voi\", \"dạy khỉ leo cây\", \"xã thử thành hồ\", \"hươu chết tay ai\"... để mắng mỏ một cách tinh tế. \"Thầy đồ cóc\" có khác biệt, và câu chuyện này rất thông minh trong việc sử dụng ngôn ngữ. Nó chỉ ra rằng trong cuộc sống không thể thay đổi sự thật bằng cách sử dụng quyền lực.",
+      "description": "Bức tranh minh họa truyện thơ Nôm dân gian sâu sắc, gửi gắm bài học đạo lý về sự công bằng, chính trực và phê phán thói quan tham gian xảo.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tre-coc-kien-nhau-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Táo Quân",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Táo Quân là bức tranh nói về tết ông Công, ông Táo là một trong những ngày Tết quan trọng nhất trong năm của người Việt, diễn ra vào ngày 23 tháng Chạp (Tháng Mười Hai). Lễ cúng Táo quân có ý nghĩa chuyển giao từ năm cũ sang năm mới, và từ ngày cúng Táo Quân, người dân bắt đầu chuẩn bị kỹ lưỡng cho một năm mới sắp đến.\n\nTheo tín ngưỡng cổ truyền, ngày Táo Quân là ngày Táo Quân cưỡi cá chép vàng lên trời để báo cáo với Ngọc Hoàng Thượng đế về những điều xảy ra trên trần gian. Tất cả những việc tốt, xấu, những thành tựu và những chưa hoàn thành của con người dưới thế gian đều được báo cáo một cách trung thực và khách quan.\n\nTáo Quân, theo truyền thuyết, là vua bếp, bao gồm táo bà và hai táo ông. Việc thờ thần bếp trong mỗi gia đình là một tín ngưỡng tồn tại từ xa xưa, với mong muốn có một cuộc sống luôn đầm ấm, hạnh phúc, và mọi người luôn yêu thương và quý trọng nhau.\n\nLễ cúng Táo Quân bao gồm ba bộ mã, hai bộ đàn ông tượng trưng cho hai Táo ông và một bộ đàn bà tượng trưng cho Táo bà. Ngoài ra, còn có vàng mã, hương, hoa, oản, quả, cau, trầu và một mâm cỗ được chuẩn bị cẩn thận và đầy đủ. Những vật phẩm \"vàng mã\" sẽ được đốt sau lễ cúng ông Táo vào ngày 23 tháng Chạp, cùng với bài vị cũ. Sau đó, người ta lập bài vị mới cho Táo Quân.\n\nTrong ngày cúng ông Táo, người dân còn chuẩn bị một đôi hoặc ba con cá chép sống, thả vào chậu nước và cúng cùng với các đồ lễ khác. Sau khi cúng xong, cá chép sẽ được thả vào sông, ao, hồ, như một hình thức \"phóng sinh\" để đưa ông Táo trở về trời. Tuy lễ cúng cá chép chỉ thực hiện ở miền Bắc.",
+      "description": "Khung cảnh ba vị Táo quân ngự tòa trang nghiêm trước ngày chầu trời, mang đậm nét văn hóa tâm linh về sự giám sát việc thiện ác trong mỗi gia đình.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tao-quan-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Tăng Phúc Thần Tài",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Tăng Phúc Thần Tài là bức tranh vẽ về vị Thần Tài là một vị thần quan trọng trong tín ngưỡng của Việt Nam và nhiều nước phương Đông khác. Theo truyền thuyết, Thần Tài được cho là Triệu Công Minh, một người thời nhà Thương. Ông đã rời bỏ cuộc sống thế tục để tu hành tại núi Chung Nam. Sau khi đắc đạo, ông được phong làm Chính Nhất Huyền Đàn Nguyên Soái. Vị trí này cho phép ông có khả năng đuổi trừ các yếu tố tiêu cực, chữa lành bệnh tật và giúp đỡ những người bị oan ức. Do đó, Thần Tài trở thành biểu tượng của sự may mắn và giàu có.\n\nHình tượng của Thần Tài thường được miêu tả như một người đàn ông có khuôn mặt đen, râu rậm, tay cầm roi và cưỡi trên lưng một con hổ đen. Dân gian còn gọi ông là Tài Bạch Tinh Quân hoặc Triệu Công Nguyên Soái. Trong các nghi lễ và nghi thức, người ta thường thờ cúng Thần Tài bằng cách đặt một tấm đĩa kim loại trên bàn thờ.\n\nThờ cúng Thần Tài đã trở thành một phong tục phổ biến trong văn hóa dân gian Việt Nam. Người ta tin rằng, bằng cách tôn kính và cầu nguyện với Thần Tài, họ sẽ thu hút sự may mắn, thịnh vượng và thành công trong cuộc sống và công việc kinh doanh. Việc vẽ và treo tranh Thần Tài cũng được xem là một biểu tượng của sự tôn trọng và kính trọng đối với vị thần này.\n\nTreo tranh Đông Hồ Thần Tài là biểu tượng của may mắn và giàu có. Thờ cúng và tôn trọng Thần Tài được coi là một phần của văn hóa dân gian và niềm tin trong sự thành công và thịnh vượng.\n\nQuy Cách Làm Tranh Dân Gian Đông Hồ",
+      "description": "Hình tượng Thần Tài Triệu Công Minh uy nghiêm tay nâng đĩnh vàng, ban phát tài lộc, bình an và vận khí hưng thịnh cho bá tánh muôn nơi.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tang-phuc-than-tai-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Tố Nữ",
+      "category": "Tứ quý",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Tố Nữ thể hiện sở trường đàn ca của bốn người con gái đẹp. Bức tranh này thuộc dòng tranh dân gian Đông Hồ truyền thống, được in khắc bằng các bản khắc gỗ và tuân theo cách làm tranh dân gian truyền thống. Bộ tranh Đông Hồ tứ quý có những gam màu đen trắng đơn giản, nhưng rất được yêu thích.\n\n\"Cụm từ 'Tố nữ' ở đây có nghĩa là chỉ 'người con gái đẹp', không chỉ đẹp về tâm hồn mà còn đẹp về tài năng. Thông thường, các bức tranh Tứ quý Tố nữ thể hiện bốn đức tính của người phụ nữ xưa, đó là: Cầm, kỳ, thi, họa (tức là giỏi đánh đàn, giỏi đánh cờ, biết làm thơ và biết vẽ tranh). Tuy nhiên, ở bộ tranh Tứ quý Tố nữ thuộc dòng tranh Đông Hồ , hình ảnh bốn cô gái đẹp đều chơi nhạc cụ. Điều này làm nổi bật và khác biệt bộ tranh Tứ quý Đông Hồ này.",
+      "description": "Bộ tranh tứ bình tứ quý khắc họa bốn thiếu nữ giai nhân đang chơi đàn ca, sáo nhị, biểu trưng cho vẻ đẹp nghệ thuật thanh tao và bốn mùa tươi thắm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-to-nu-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Tứ Linh",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Tứ Linh là một trong những dòng tranh dân gian tiêu biểu của làng Đông Hồ (Bắc Ninh, Việt Nam). Tranh Tứ Linh thường gồm bốn linh vật trong văn hóa phương Đông:\n\nLong (Rồng), Lân (Kỳ lân), Quy (Rùa), Phụng (Phượng hoàng) , tượng trưng cho sức mạnh, trí tuệ, sự trường tồn và cao quý. Đặc điểm tranh Đông Hồ Tứ Linh:\n\nNội dung : Mỗi linh vật mang một ý nghĩa tốt lành:\n\nLong (Rồng) : Biểu tượng của quyền uy, sức mạnh và mưa thuận gió hòa.\n\nLân (Kỳ lân) : Tượng trưng cho sự thịnh vượng, điềm lành.\n\nQuy (Rùa) : Biểu tượng của sự trường thọ, bền vững.\n\nPhụng (Phượng hoàng) : Đại diện cho vẻ đẹp, sự thanh cao và hòa bình.\n\nMàu sắc : Sử dụng gam màu rực rỡ, tươi sáng từ bột màu thiên nhiên như đỏ, vàng, xanh, đen.\n\nChất liệu : Giấy điệp đặc trưng, có độ bền cao, tạo nên nét mộc mạc, dân dã.\n\nKỹ thuật in : Dùng ván khắc gỗ, mỗi màu sẽ in một lớp khác nhau, tạo nên hiệu ứng đặc biệt.\n\nÝ nghĩa của tranh Tứ Linh:\n\nMang lại may mắn, bình an, hạnh phúc và phát đạt cho gia chủ.\n\nLà biểu tượng phong thủy giúp cân bằng năng lượng, tăng cường vượng khí.\n\nThường được treo trong nhà dịp Tết, lễ hội để cầu mong một năm mới thuận lợi.\n\nTranh Dân Gian Đông Hồ Tứ Linh 26cm x 37cm",
+      "description": "Bốn linh vật Long - Lân - Quy - Phụng cùng xuất hiện uy nghiêm trên nền điệp, biểu tượng phong thủy tối thượng cho quyền lực, trường thọ và cát tường.",
+      "images": [
+        "/art/tranh-dong-ho-tu-linh-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Uy Trấn Sơn Hà - Con Hổ",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức Tranh Đông Hồ Uy Trấn Sơn Hà là bức tranh đông hồ được nghệ nhân làng nghề sáng tác cho năm Con Hổ với ý nghĩa :\n\n- Thứ nhất, việc treo tranh có liên quan đến mặt tâm linh, và nhiều gia đình hiện nay vẫn tuân theo tục lệ thờ hổ hay \"Ông ba mươi\". Trong quan niệm dân gian, hổ được coi là biểu tượng của sức mạnh. Theo quan điểm dân gian và tâm linh, người dân đã tôn thờ và thần thánh hóa hổ, coi nó như một thực thể có sức mạnh thiêng liêng có thể đẩy lùi và diệt trừ ma quỷ. Do đó, tranh hổ cũng được thờ cúng ở các đền, điện và được coi là \"thần tướng gác đền\".\n\n- Thứ hai, việc chọn tranh phù hợp với năm sinh và con giáp của mỗi người cũng mang ý nghĩa quan trọng. Người ta tin rằng việc lựa chọn tranh phù hợp sẽ mang lại sự hợp mệnh và may mắn trong cuộc sống. Theo quan niệm này, tranh được xem như một biểu tượng đại diện cho vận mệnh và tượng trưng cho các yếu tố tốt lành, giúp thu hút may mắn và thành công.",
+      "description": "Hình tượng chúa sơn lâm dũng mãnh đứng gầm vang giữa núi non hùng vĩ, biểu trưng cho sức mạnh vô song, quyền uy bảo vệ non sông và trừ tà sát quỷ.",
+      "images": [
+        "/art/tranh-giay-dong-ho-uy-tran-son-ha-con-ho-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Vinh Hoa Em Bé Ôm Gà",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Vinh Hoa Em Bé Ôm Gà với hình ảnh cậu bé ôm gà trống và chậu hoa cúc nở hoa phía sau, mang đến thông điệp về sự may mắn, vinh quang và sự thành đạt trong cuộc sống.\n\nHình ảnh con gà trống là biểu tượng cho sự dũng cảm, lòng trung thực và tinh thần lạc quan, đó là những đức tính đáng quý của con người. Đồng thời, tên gọi \"Đại Kê\" còn có âm là \"Đại Cát\", ngụ ý mang lại sự thịnh vượng, may mắn và tốt lành cho gia đình.\n\nBên cạnh đó, hình ảnh cậu bé ôm gà trống và chậu hoa cúc nở hoa phía sau biểu thị sự mong muốn có một cuộc sống khỏe mạnh, thịnh vượng và thành đạt, Gà Trống còn là biểu tượng cho lòng dũng cảm và năm đức tính đáng qúy của con người: Nhân – Nghĩa – Lễ – Trí – Tín",
+      "description": "Cậu bé bụ bẫm ôm chú gà trống lớn bên chậu hoa cúc rực rỡ, tượng trưng cho phẩm chất quân tử và lời chúc vinh hoa hiển đạt cho gia đình.",
+      "images": [
+        "/art/tranh-giay-dong-ho-vinh-hoa-em-be-om-ga-37x52.jpg",
+        "/art/tranh-giay-dong-ho-vinh-hoa-em-be-om-ga-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Vinh Quy Bái Tổ",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "52 × 37 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh vinh quy bái tổ trong dòng tranh lịch sử của tranh dân gian Đông Hồ đã được tạo ra nhằm tôn vinh và bày tỏ lòng kính trọng đối với tổ tiên.\n\nBức Tranh Đông Hồ Vinh Quy Bái Tổ Dán Mành là nói về lễ vinh quy bái tổ đã có nguồn gốc từ năm 1484, khi Vua Lê Thánh Tôn ban hành lệ \"Bia Đá Đề Danh\" để ghi danh danh tánh các tân khoa tiến sĩ trong các kỳ thi. Các tên của những tân khoa tiến sĩ cùng với thông tin về quê hương và danh tánh của các quan trường chấm thi được khắc trên các bia đá, và đặt ở Văn Miếu, nơi được coi là tượng trưng cho việc học hành và phục vụ đất nước. Mặc dù đã trải qua những cuộc chiến tranh và thiên tai, nhưng đến nay, Văn Miếu Hà Nội vẫn còn giữ được 82 trong tổng số 117 bia đá. Theo sử sách, tính đến năm 1800, đã có 2266 vị tiến sĩ trong lịch sử đất nước.\n\nKể từ năm 1484, nhà vua cũng đã bắt đầu tổ chức các buổi tiệc mừng cho các tân khoa, trao tặng mũ áo, cân đai và đưa họ về nơi sinh quán trong lễ \"Vinh Quy Bái Tổ\". Cộng đồng dân chúng trong các tỉnh huyện, làng xã rất tự hào và háo hức đón rước các tân khoa về, sử dụng cờ, lọng, chiêng, trống để tạo ra tiếng ồn ào và vui mừng. Nếu tân khoa đã có gia đình, vợ chồng sẽ được đón rước cùng nhau theo truyền thống \"ngựa anh đi trước, võng nàng theo sau\". Khi về đến làng, tân khoa sẽ đến thờ tổ của gia đình và đình làng để bày tỏ lòng biết ơn đối với tổ tiên, thầy dạy và cha mẹ.\n\nTranh đông hồ vinh quy bái tổ không chỉ mang ý nghĩa vinh dự cho tân khoa, gia đình, làng xóm, mà còn thể hiện lòng biết ơn sâu sắc đối với tổ tiên, cha mẹ và thầy cô theo đạo lý Việt Nam truyền thống: \"Công cha, nghĩa mẹ, ơn thầy\".",
+      "description": "Đoàn rước tân trạng nguyên đỗ đạt mũ áo vinh quy về làng tạ ơn tổ tiên và thầy dạy, biểu tượng sáng ngời cho truyền thống hiếu học và trọng đạo.",
+      "images": [
+        "/art/tranh-dong-ho-vinh-quy-bai-to-52x37.jpg",
+        "/art/tranh-dong-ho-vinh-quy-bai-to-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Đinh Tiên Hoàng",
+      "category": "Lịch sử & dân gian",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Đinh Tiên Hoàng còn được gọi là Đinh Bộ Lĩnh, là vị vua sáng lập triều đại nhà Đinh và trở thành hoàng đế đầu tiên của Đại Cồ Việt sau 1000 năm bị đô hộ bởi Trung Quốc. Ông được tôn vinh vì công lao đánh bại 12 sứ quân và thống nhất đất nước.\n\nNgoài các tài liệu lịch sử, văn học Việt Nam cũng có nhiều tác phẩm nổi tiếng về Đinh Tiên Hoàng, ví dụ như: \"Cờ lau dựng nước\", \"Trận chiến trong thung lũng\", \"Hoàng đế cờ lau\", \"Sử ca Đinh Bộ Lĩnh\", truyền thuyết về sông Hoàng Long, truyền thuyết về con ngựa đá, và \"Bóng cờ lau\". Một số tác phẩm này đã được chuyển thể thành phim, ví dụ như \"Trận chiến trong thung lũng\" và \"Hoàng đế cờ lau\". Đinh Tiên Hoàng cũng được miêu tả trong tranh Đông Hồ.\n\nTrong dân gian, Đinh Tiên Hoàng còn được gọi với nhiều biệt danh, như: \"Anh hùng Vạn Thắng Vương\", \"Đại Thắng Minh Hoàng đế\", và \"Hoàng đế cờ lau\". Hình ảnh của ông khi còn trẻ đã xuất hiện trong thơ ca tuổi trẻ của người Việt Nam, ví dụ như bài thơ sau:\n\n\"Bé thì chăn nghé, chăn trâu Trận bày đã lấy bông lau làm cờ Lớn lên xây dựng cơ đồ Mười hai sứ tướng bây giờ đều thua",
+      "description": "Tác phẩm lịch sử ca ngợi vị anh hùng cờ lau Đinh Bộ Lĩnh dẹp loạn 12 sứ quân, thống nhất non sông và xưng đế lập nên vương triều nhà Đinh.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dinh-tien-hoang-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Đinh Tài Tương Vượng",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Đinh Tài Tương Vượng là bức tranh đông hồ chúc tụng, với hình ảnh hai đứa trẻ, đứa lớn ẵm đứa bé, trên tay cầm sách có chữ \" Đinh Tài Tương Vượng\" với lời chúc sớm sinh được quý tử và giàu sang thịnh vượng, bên cạnh đó còn có một cái hũ có đề chữ Kim ( tức vàng, bạc) trên thân hũ cũng ngụ ý chúc người treo tranh được sung túc có của ăn của để.",
+      "description": "Hai đứa trẻ bụ bẫm ẵm nhau vui tươi trên nền điệp óng ả, gửi gắm lời chúc nhân đinh phát triển hưng thịnh, tài lộc dồi dào và gia đình sum vầy.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dinh-tai-tuong-vuong-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Đàn Lợn Âm Dương",
+      "category": "Chúc tụng",
+      "type": "general",
+      "dimensions": "52 × 37 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Bức tranh Đông Hồ Đàn Lợn Âm Dương tượng trưng cho sự sinh sôi, nảy nở, ấm no và phát triển trong tín ngưỡng dân gian. Trong nông thôn Việt Nam, nuôi heo là một phương thức mưu sinh, thu thập sản phẩm dư thừa để tích góp tiền lớn, cung cấp phân bón hữu cơ và cung cấp thịt cho gia đình. Hình ảnh đàn lợn khỏe mạnh thể hiện ước muốn về sự phồn thịnh, tăng gia sản xuất và đời sống ấm no, hạnh phúc và thanh bình. Trong tranh, lợn mẹ và lợn con đều có hai xoáy vòng tròn âm dương, thể hiện của sự vận động không ngừng và chuyển hóa qua lại giữa âm và dương. Sự kết hợp âm - dương đem lại sự cân bằng và phát triển tốt đẹp, tương tự như sự cân bằng giữa người vợ và người chồng trong gia đình. Nếu mỗi người thực hiện đúng thiên chức của mình, gia đình sẽ luôn hài hòa và tạo môi trường tốt để phúc khí sinh sôi, phát triển. Treo tranh Đông Hồ Đàn Lợn Âm Dương không chỉ để cầu may mắn mà còn để nhắc nhở về giá trị của sự cân bằng và phát triển trong cuộc sống.\n\nTreo tranh Đông Hồ đàn lợn không phải chỉ là để cầu may mắn và tài lộc mà còn là để nhắc nhở về giá trị và ý nghĩa của sự cân bằng trong cuộc sống. Bức tranh Đông Hồ đàn lợn được xem là biểu tượng của sự phồn thịnh và sự phát triển. Đàn lợn thể hiện sự sinh sôi, nảy nở, ấm no và phát triển. Hình ảnh này được coi là một thông điệp về sự phát triển bền vững trong cuộc sống, không chỉ cho cá nhân mà còn cho cả gia đình và xã hội.\n\nTrên mình lợn mẹ và lợn con trong tranh đều có hai xoáy vòng tròn âm dương, thể hiện của sự vận động không ngừng và chuyển hóa qua lại giữa âm và dương. Sự kết hợp âm - dương sẽ đem tới sự cân bằng và phát triển tốt đẹp. Thế nên một gia đình, cũng là một sự kết hợp âm dương giữa người vợ và người chồng, phải đạt tới sự cân bằng hỗ trợ lẫn nhau mà vẫn đảm bảo duy trì đặc tính thiên âm, thiên dương hay thiên chức của mỗi người.\n\nNgười phụ nữ được xem là biểu tượng của đất, là cái tổ, hình trăng lưỡi liềm võng xuống trong ngôn ngữ nòng nọc trên trống đồng Đông Sơn. Người phụ nữ vì thế cần như đất, dịu dàng, nuôi nấng, dưỡng thành vạn vật. Người đàn ông được xem là biểu tượng của trời, mái vòm, hình trăng lưỡi liềm võng lên. Người đàn ông cần như trời, công chính, cao vang, chở che vạn vật. Mỗi người thực hiện đúng thiên chức của mình sẽ xây dựng gia đình luôn hài hòa, năng lượng luôn tích cực, tất sẽ là môi trường tốt để phúc khí sinh sôi, phát triển.",
+      "description": "Đàn lợn nái cùng bầy con mũm mĩm mang họa tiết xoáy âm dương hài hòa, tượng trưng cho sự sinh sôi nảy nở, ấm no sung túc và ngũ hành hòa hợp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-am-duong-52x37.jpg",
+        "/art/tranh-dong-ho-dan-lon-am-duong-26x37cm.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Đám Cưới Chuột",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "52 × 37 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Nhắc đến tranh Đông Hồ, không ai có thể quên được bức tranh Đông Hồ Đám Cưới Chuột - tác phẩm nghệ thuật đem đến cảm giác tưng bừng rộn rã và hóm hỉnh vui tươi. Ngay từ cái nhìn đầu tiên, lũ chuột đang tham dự lễ cưới trong tranh toát lên sự hớn hở, như mang hương xuân, sắc tết đến từng gia đình.\n\nQuên đi những giải thích về ngữ nghĩa từ các nhà nghiên cứu hiện đại, cho rằng bức tranh này có tính chất đả kích, châm biếm và phê phán cuộc sống. Ý nghĩa thâm thúy của tranh dân gian ẩn chứa bên trong nó một câu chuyện vô cùng tết.\n\nTranh Đông Hồ Đám Cưới Chuột kể về sự no đủ và hạnh phúc. Con mèo đủ ăn với cống lễ, thậm chí còn lễ cống hiến mạng sống của chuột. Nhưng dưới đó, đám cưới tưng bừng thể hiện sự hạnh phúc tràn đầy. Tranh gửi thông điệp về sự tạm thời và thiên định của cuộc sống. Nó cũng thể hiện ý nghĩa của sự hòa bình giữa các loài. Đừng chỉ nhìn về sự châm biếm, hãy nhìn sâu hơn để thấy giá trị thực sự của bức tranh.",
+      "description": "Kiệt tác tranh ngụ ngôn trào phúng bậc nhất làng Đông Hồ, mượn đám rước họ nhà chuột cống nạp mèo già để châm biếm sâu cay thói hư tật xấu thời phong kiến.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dam-cuoi-chuot-52x37.jpg",
+        "/art/tranh-dong-ho-dam-cuoi-chuot-26x37.jpg"
+      ],
+      "published": true
+    },
+    {
+      "name": "Đánh Ghen",
+      "category": "Sinh hoạt",
+      "type": "general",
+      "dimensions": "37 × 52 cm · 26 × 37 cm",
+      "material": "Giấy Dó truyền thống",
+      "story": "Tranh Đông Hồ Đánh Ghen thuộc dòng tranh truyền thống từ làng nghề làm tranh Đông Hồ tại Thuận Thành, Bắc Ninh. Tranh được vẽ trên giấy dó hay còn gọi là giấy điệp và từng mảng màu trong tranh được in bản khắc gỗ một lần. Các nghệ nhân đã tỉ mẩn vẽ bản mẫu và khắc trên bản gỗ. Số lần in tương đương với số lượng màu sắc trong tranh. Đây là đặc trưng riêng của tranh Đông Hồ, còn được gọi là tranh in bản khắc gỗ.\n\nBức tranh Đánh Ghen là một trong 10 bức tranh dân gian Đông Hồ nổi tiếng thường được treo ở phòng khách. Bức tranh này thuộc chủ đề tranh sinh hoạt trong dân gian Đông Hồ. Cái hay của tranh là nghệ thuật trào phúng và châm biếm rất thú vị.",
+      "description": "Bức tranh sinh hoạt gia đình trào phúng độc đáo, cảnh vợ cả kéo tóc vợ lẽ trong khi người chồng can ngăn, nhắc nhở bài học sâu sắc về sự hòa thuận gia đình.",
+      "images": [
+        "/art/tranh-giay-dong-ho-danh-ghen-37x52.jpg",
+        "/art/tranh-giay-dong-ho-danh-ghen-26x37.jpg"
+      ],
+      "published": true
+    }
+  ],
+  "workshopListings": [
+    {
+      "artworkName": "Đám Cưới Chuột",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 280000,
+      "description": "Bản in truyền thống màu tự nhiên trên giấy điệp.",
+      "images": [
+        "/art/tranh-dong-ho-dam-cuoi-chuot-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đàn Lợn Âm Dương",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-am-duong-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gà Đại Cát",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-dai-cat-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Vinh Hoa Em Bé Ôm Gà",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-vinh-hoa-em-be-om-ga-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phú Quý Em Bé Ôm Vịt",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phu-quy-em-be-om-vit-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hiếu Học Chăn Trâu Đọc Sách",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hieu-hoc-chan-trau-doc-sach-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hội Đu",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-dong-ho-hoi-du-26x37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hội Đu",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-dong-ho-hoi-du-26x37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hội Đu",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-hoi-du-26x37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chim Công Thiên Hạ Thái Bình",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chim-cong-thien-ha-thai-binh-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đánh Ghen",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-danh-ghen-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đánh Ghen",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-danh-ghen-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hứng Dừa",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hung-dua-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hứng Dừa",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hung-dua-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hứng Dừa",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hung-dua-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hiếu Học Chăn Trâu Đọc Sách",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hieu-hoc-chan-trau-doc-sach-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gà Đàn",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-dan-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gà Đại Cát",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-dai-cat-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gà Đại Cát",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-dai-cat-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gà Dạ Xướng",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-da-xuong-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Cá Đàn",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ca-dan-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Cá Đàn",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ca-dan-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Đàn",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 285000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Đàn",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Đàn",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đàn Lợn Âm Dương",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dan-lon-am-duong-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chăn Trâu Thả Diều",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chan-trau-tha-dieu-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chăn Trâu Thổi Sáo",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chan-trau-thoi-sao-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chăn Trâu Thổi Sáo",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chan-trau-thoi-sao-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chăn Trâu Thổi Sáo",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chan-trau-thoi-sao-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Vinh Hoa Em Bé Ôm Gà",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-vinh-hoa-em-be-om-ga-37x52.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thầy Đồ Cóc",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thay-do-coc-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thầy Đồ Cóc",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thay-do-coc-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thầy Đồ Cóc",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thay-do-coc-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đám Cưới Chuột",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dam-cuoi-chuot-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đám Cưới Chuột",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dam-cuoi-chuot-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Vinh Quy Bái Tổ",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-vinh-quy-bai-to-52x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Múa Lân",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-lan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Múa Lân",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-lan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Múa Lân",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-lan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Ăn Cây Ráy",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-lan-an-cay-ray-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tiến Lộc",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-loc-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tiến Lộc",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 285000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-loc-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tiến Tài",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-tai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tiến Tài",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-tai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tiến Tài",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tien-tai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Trê Cóc Kiện Nhau",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tre-coc-kien-nhau-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Trê Cóc Kiện Nhau",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tre-coc-kien-nhau-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đinh Tài Tương Vượng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dinh-tai-tuong-vuong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Táo Quân",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 285000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tao-quan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Táo Quân",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tao-quan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Táo Quân",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tao-quan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gái Làng Hồ",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-gai-lang-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thổ Công Vị",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-tho-cong-vi-26x37cm-1.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thổ Công Vị",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-dong-ho-tho-cong-vi-26x37cm-1.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Uy Trấn Sơn Hà - Con Hổ",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-uy-tran-son-ha-con-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Uy Trấn Sơn Hà - Con Hổ",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-uy-tran-son-ha-con-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Uy Trấn Sơn Hà - Con Hổ",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-uy-tran-son-ha-con-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Khỉ Đón Xuân",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-khi-don-xuan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Khỉ Đón Xuân",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-khi-don-xuan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phúc Lộc Song Toàn - Bé Trai Bé Giá Ôm Cá",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phuc-loc-song-toan-26x37-1.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Bà Nguyệt Se Duyên",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ba-nguyet-se-duyen-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Bà Nguyệt Se Duyên",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ba-nguyet-se-duyen-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Bà Nguyệt Se Duyên",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ba-nguyet-se-duyen-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Bà Triệu Cưỡi Voi",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ba-trieu-cuoi-voi-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lý Ngư Vọng Nguyệt",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ly-ngu-vong-nguyet-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lý Ngư Vọng Nguyệt",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ly-ngu-vong-nguyet-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tăng Phúc Thần Tài",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tang-phuc-than-tai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tăng Phúc Thần Tài",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tang-phuc-than-tai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tăng Phúc Thần Tài",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tang-phuc-than-tai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lễ Hội Chọi Trâu",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-choi-trau-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lễ Hội Chọi Trâu",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-choi-trau-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tố Nữ",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-to-nu-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hát Quan Họ",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hat-quan-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hát Quan Họ",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hat-quan-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hát Quan Họ",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hat-quan-ho-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Nông Nhàn",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nong-nhan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Cóc Ôm Bóng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-em-be-om-bong-om-coc-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Cóc Ôm Bóng",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-em-be-om-bong-om-coc-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phúc Lộc Song Toàn",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 285000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phuc-loc-song-toan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phúc Lộc Song Toàn",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phuc-loc-song-toan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phúc Lộc Song Toàn",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phuc-loc-song-toan-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Nông Nhàn Nữ",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nong-nhan-nu-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Nông Nhàn Nữ",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nong-nhan-nu-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Đinh Tiên Hoàng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-dinh-tien-hoang-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thánh Gióng",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thanh-giong-danh-giac-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thánh Gióng",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thanh-giong-danh-giac-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thánh Gióng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thanh-giong-danh-giac-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Gà Hoa Hồng",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ga-hoa-hong-26x37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Cá Chậu",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ca-chau-26x37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Cá Chậu",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ca-chau-26x37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thư Hùng Gia Đình Gà",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thu-hung-gia-dinh-ga-37x26cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thư Hùng Gia Đình Gà",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thu-hung-gia-dinh-ga-37x26cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Thư Hùng Gia Đình Gà",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-thu-hung-gia-dinh-ga-37x26cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hội Đấu Vật",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hoi-dau-vat-37x26cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hội Đấu Vật",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hoi-dau-vat-37x26cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hội Kéo Co",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hoi-keo-co-37x26cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tam Dương Khai Thái",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tam-duong-khai-thai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tam Dương Khai Thái",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tam-duong-khai-thai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tam Dương Khai Thái",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-tam-duong-khai-thai-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Mã Đáo Thành Công",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngua-ma-dao-thanh-cong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Múa Rồng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-rong-26cmx37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Múa Rồng",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 285000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-mua-rong-26cmx37cm.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chuột Múa Rồng",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chuot-mua-rong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chuột Múa Rồng",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chuot-mua-rong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chuột Múa Rồng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-chuot-mua-rong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phú Quý - Em Bé Ôm Vịt",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phu-quy-em-be-om-vit-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Phú Quý - Em Bé Ôm Vịt",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-phu-quy-em-be-om-vit-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Mã Giám",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ma-giam-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngô Quyền Đánh Giặc",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 285000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngo-quyen-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngô Quyền Đánh Giặc",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngo-quyen-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngô Quyền Đánh Giặc",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngo-quyen-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chợ Quê",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-cho-que-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Bịt Mắt Bắt Dê",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-bit-mat-bat-de-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Bịt Mắt Bắt Dê",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-bit-mat-bat-de-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngày Mùa Thu Hoạch",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngay-mua-thu-hoach-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngày Mùa Thu Hoạch",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngay-mua-thu-hoach-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngày Mùa Thu Hoạch",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-ngay-mua-thu-hoach-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Nhà Nông Làm Ruộng",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 232000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nha-nong-lam-ruong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Nhà Nông Làm Ruộng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-nha-nong-lam-ruong-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Ngày Mùa Bách Mẫu Dư Điền",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-bach-mau-du-dien-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hai Bà Trưng Đánh Giặc",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 240000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hai-ba-trung-danh-giac-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hai Bà Trưng Đánh Giặc",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hai-ba-trung-danh-giac-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Hai Bà Trưng Đánh Giặc",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-hai-ba-trung-danh-giac-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Mèo Bên Cây Cau",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 244000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-meo-cau-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Cá",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 240000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-ca-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Cá",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-ca-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Tôm",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 255000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-tom-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Tôm",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-tom-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Em Bé Ôm Tôm",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 220000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-em-be-om-tom-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lễ Trí Em Bé Ôm Rùa",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 256000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-dong-ho-le-tri-em-be-om-rua.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lễ Trí Em Bé Ôm Rùa",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-le-tri-em-be-om-rua.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Tứ Linh",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 200000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-tu-linh-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Độc Bên Máng Thức Ăn",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 270000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-giay-dong-ho-lon-doc-ben-mang-26x37-tg006h.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Độc Bên Máng Thức Ăn",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 220000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-giay-dong-ho-lon-doc-ben-mang-26x37-tg006h.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Lợn Độc Bên Máng Thức Ăn",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 230000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-giay-dong-ho-lon-doc-ben-mang-26x37-tg006h.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Nhân Nghĩa - Em Bé Ôm Cóc",
+      "workshopName": "Xưởng Sắc Điệp",
+      "price": 268000,
+      "description": "Giấy điệp quét tay thủ công phủ bột vỏ sò nghiền mịn tạo ánh xà cừ óng ánh, phối màu sỏi son và hoa hòe tươi tắn, giữ màu bền đẹp.",
+      "images": [
+        "/art/tranh-dong-ho-nhan-nghia-em-be-om-coc-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chim Lồng",
+      "workshopName": "Xưởng Hồn Quê",
+      "price": 210000,
+      "description": "Bản in mộc bản theo đúng phong cách dân gian nguyên bản làng Đông Hồ, màu in mộc mạc giàu chất kể chuyện quê hương, thích hợp làm quà tặng và sưu tầm.",
+      "images": [
+        "/art/tranh-dong-ho-chim-long-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    },
+    {
+      "artworkName": "Chim Lồng",
+      "workshopName": "Xưởng Nét Mộc",
+      "price": 300000,
+      "description": "Bản in khắc gỗ thủ công trên nền giấy điệp dày dặn, ván in khắc gỗ thị lâu năm, sử dụng mực tự nhiên từ tro rơm bếp và lá chàm truyền thống.",
+      "images": [
+        "/art/tranh-dong-ho-chim-long-26x37.jpg"
+      ],
+      "inStock": true,
+      "published": true
+    }
+  ],
+  "batchLinks": [
+    {
+      "code": "DH-DEMO-001",
+      "artworkName": "Đám Cưới Chuột",
+      "workshopName": "Xưởng Nét Mộc"
+    },
+    {
+      "code": "DH-DEMO-002",
+      "artworkName": "Đàn Lợn Âm Dương",
+      "workshopName": "Xưởng Sắc Điệp"
+    },
+    {
+      "code": "DH-DEMO-003",
+      "artworkName": "Gà Đại Cát",
+      "workshopName": "Xưởng Hồn Quê"
+    }
+  ]
+}
