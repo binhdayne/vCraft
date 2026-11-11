@@ -1,0 +1,101 @@
+// Original vector illustration for the landing-page film. No production data is used.
+// Render at t = 0..12 seconds; all motion has a seamless twelve-second period.
+const ink = '#362a20';
+const tau = Math.PI * 2;
+const wave = (time, cycles = 1, phase = 0) => Math.sin(time / 12 * tau * cycles + phase);
+
+function mouse(time, { x, y, scale = 1, color = '#a94a35', kind = 'horn', phase = 0 }) {
+  const walk = wave(time, 12, phase);
+  const bob = Math.abs(wave(time, 12, phase)) * 3;
+  const leg = walk * 13;
+  const arm = wave(time, 6, phase) * 4;
+  return `<g transform="translate(${x} ${y - bob}) scale(${scale})" stroke="${ink}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-34-38C-96-35-112-64-91-76C-78-84-67-72-78-64" fill="none" stroke-width="4"/>
+    <path d="M-25-21L${-33 + leg} 5L${-18 + leg} 7M3-20L${11 - leg} 4L${27 - leg} 7" fill="none" stroke-width="7"/>
+    <path d="M-39-79Q-57-58-42-23Q-17-8 16-25L13-79Z" fill="${color}"/>
+    <path d="M-37-75L-15-58L11-77M-13-58L-8-27" fill="none" stroke="#e2bb6f" stroke-width="3"/>
+    <path d="M-31-96Q-50-126-24-140Q-2-153 20-129L55-109Q68-100 52-94L18-96Q3-76-18-86Z" fill="#b4a17c"/>
+    <circle cx="-23" cy="-130" r="19" fill="#b4a17c"/>
+    <circle cx="-23" cy="-130" r="10" fill="#d5af94" stroke-width="1.5"/>
+    <path d="M-12-144L-8-162L26-155L31-137Z" fill="${kind === 'parasol' ? '#8c4034' : '#33483b'}"/>
+    <path d="M-13-141L33-136" stroke="#d8bb73" stroke-width="3"/>
+    <circle cx="24" cy="-119" r="3.3" fill="${ink}" stroke="none"/>
+    <circle cx="57" cy="-104" r="4" fill="${ink}" stroke="none"/>
+    <path d="M40-101L66-117M42-97L72-100M39-93L64-84" fill="none" stroke-width="1.3"/>
+    ${kind === 'horn' ? `<path d="M6-78Q28-61 40-88" fill="none" stroke="#b4a17c" stroke-width="10"/>
+      <path d="M49-99L95-100L110-120L115-76L96-91L49-92Z" fill="#d1a448" stroke-width="2.5"/>
+      <path d="M126-109Q135-100 128-89M139-115Q151-100 141-83" fill="none" stroke="#936343" stroke-width="2" opacity="${.2 + .7 * Math.abs(wave(time, 6))}"/>` : ''}
+    ${kind === 'drum' ? `<path d="M-22-75L17-35L49-69" fill="none" stroke="#dfb56b" stroke-width="3"/>
+      <path d="M15-64L62-62L59-24L17-25Z" fill="#b94d33"/>
+      <ellipse cx="38" cy="-64" rx="24" ry="10" fill="#eed7a0"/>
+      <path d="M23-52L53-30M51-52L26-30" stroke="#d6b45f" stroke-width="2"/>
+      <path d="M-24-76Q-3-56 14-71M4-81Q20-72 33-75" fill="none" stroke="#b4a17c" stroke-width="9"/>
+      <path d="M14-71L${30 + arm}-91M33-75L${49 - arm}-98" fill="none" stroke-width="4"/>` : ''}
+    ${kind === 'parasol' ? `<path d="M-7-75Q26-51 46-82M4-37Q23-36 46-47" fill="none" stroke="#b4a17c" stroke-width="9"/>
+      <path d="M47-28V-240" fill="none" stroke="#8b633a" stroke-width="6"/>
+      <g transform="rotate(${wave(time, 3) * 2} 47 -240)">
+        <path d="M-40-241Q-5-280 47-284Q101-279 136-241Q122-225 106-238Q90-219 73-236Q48-214 25-236Q6-218-10-237Q-24-225-40-241Z" fill="#a54632"/>
+        <path d="M47-284L25-237M47-284L73-237M47-284L-10-239M47-284L106-240M-39-244H134" fill="none" stroke="#e6c180" stroke-width="2"/>
+        <path d="M47-295V-284" stroke-width="5"/><circle cx="47" cy="-298" r="4" fill="#deb45a"/>
+        <path d="M-9-234V-219M26-234V-216M73-234V-216M106-234V-219" stroke="#dfb866" stroke-width="2.5"/>
+      </g>` : ''}
+    ${kind === 'gift' ? `<path d="M-12-73Q16-47 39-70" fill="none" stroke="#b4a17c" stroke-width="9"/>
+      <path d="M12-72Q37-104 62-76Q42-48 12-72Z" fill="#c6aa66"/>
+      <path d="M61-76L77-94V-57Z" fill="#c6aa66"/><circle cx="21" cy="-75" r="2" fill="${ink}"/>
+      <path d="M33-86L42-72L33-59M44-85L51-73L44-61" fill="none" stroke-width="1.3"/>` : ''}
+  </g>`;
+}
+
+function cat(time) {
+  const blink = Math.cos(time / 12 * tau * 4) > .975 ? 1 : 4;
+  const tail = wave(time, 2) * 7;
+  return `<g transform="translate(935 347)" stroke="${ink}" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 51Q91 100 93 31Q88 2 ${78 + tail} 10Q54 26 69 43" fill="none" stroke="#967049" stroke-width="20"/>
+    <path d="M11 51Q91 100 93 31Q88 2 ${78 + tail} 10Q54 26 69 43" fill="none" stroke="${ink}" stroke-width="2.5"/>
+    <path d="M-55-14Q-89 32-62 65Q-23 84 32 62Q43 13 6-19Z" fill="#c7a052" stroke-width="3.5"/>
+    <path d="M-42 7Q-52 34-28 58L-9 18Z" fill="#e8ce89" stroke-width="2"/>
+    <path d="M-51-77L-62-122L-26-105Q-4-109 14-96L47-112L36-62Q47-27 13-12Q-26 5-51-32Q-64-55-51-77Z" fill="#ba9050" stroke-width="3.5"/>
+    <path d="M-51-87L-52-106L-34-95M24-87L38-101L32-77" fill="#c87758" stroke-width="2"/>
+    <path d="M-43-42Q-41-18-18-23Q2-13 21-39Q5-58-12-49Q-30-56-43-42Z" fill="#e4c68c" stroke-width="1.5"/>
+    <path d="M-35-102L-27-85L-20-106M-11-105L-8-85L2-102M-59-67L-43-61L-57-52M36-62L21-55L36-48" fill="none" stroke-width="5"/>
+    <ellipse cx="-30" cy="-68" rx="4.5" ry="${blink}" fill="${ink}" stroke="none"/>
+    <ellipse cx="9" cy="-66" rx="4.5" ry="${blink}" fill="${ink}" stroke="none"/>
+    <path d="M-16-45L-7-43L-12-36ZM-12-36V-27M-12-28Q-21-20-25-29M-12-28Q-4-20 0-28" fill="${ink}" stroke-width="1.7"/>
+    <path d="M-29-38L-75-48M-31-33L-79-31M0-35L43-42M0-30L46-26" fill="none" stroke-width="1.5"/>
+    <path d="M-69 17Q-92 0-93-19Q-89-34-77-25L-60-5" fill="#c7a052" stroke-width="3"/>
+    <path d="M-91-24L-95-34M-86-26L-86-36M-80-24L-77-34" fill="none" stroke-width="1.5"/>
+    <path d="M-55 63L-64 77H-28L-25 64M0 64L1 77H38L28 62" fill="#c7a052" stroke-width="3"/>
+    <path d="M-21 16L-4 23M-19 28L-2 34M16 28L29 34" fill="none" stroke-width="3"/>
+  </g>`;
+}
+
+export function mouseWeddingScene(time = 0) {
+  const drift = wave(time) * 13;
+  const march = wave(time) * 10;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="630" viewBox="0 0 1120 630">
+    <rect width="1120" height="630" fill="#e8dfc8"/>
+    <circle cx="823" cy="153" r="64" fill="#d8b77c" opacity=".27"/>
+    <circle cx="823" cy="153" r="51" fill="none" stroke="#b68e57" stroke-width="1" opacity=".4"/>
+    <g transform="translate(${drift} 0)" fill="none" stroke="#9a774d" stroke-width="1.2" opacity=".43">
+      <path d="M82 146H135C109 139 114 114 134 117C143 90 177 96 178 121C195 99 221 117 213 140H252M101 157H242M117 168H205"/>
+      <path d="M425 108H463C447 100 455 81 470 84C479 65 507 73 506 91C521 77 543 94 534 108H572M446 119H560"/>
+    </g>
+    <g stroke="#7d7650" stroke-width="2" fill="none" opacity=".65">
+      <path d="M1007 477Q1042 311 1032 177M1026 313L1084 254M1032 226L990 186M1016 402L1069 346"/>
+      <path d="M1033 198Q1010 160 1007 142Q1034 157 1033 198M1039 292Q1057 254 1084 254Q1070 280 1039 292M1044 293Q1087 283 1096 290Q1077 307 1044 293M1024 394Q1043 346 1069 346Q1058 378 1024 394M1025 237Q985 219 980 199Q1014 205 1025 237" fill="#7d7650" stroke-width="1"/>
+    </g>
+    <path d="M58 497Q289 466 542 488T1063 492M75 516Q425 501 674 517T1048 517" fill="none" stroke="#ac9162" stroke-width="1" opacity=".65"/>
+    <g fill="#aa8051" opacity=".43"><path d="M159 513l-7-9 1 11-8-5M377 502l7-8-1 13 9-4M743 518l-7-9 1 11-8-5M987 509l7-8-1 13 9-4"/></g>
+    <g transform="translate(${march} 0)">
+      ${mouse(time, { x: 152, y: 469, scale: 1.04, color: '#b55a3d', kind: 'horn' })}
+      ${mouse(time, { x: 344, y: 471, scale: 1.01, color: '#67734d', kind: 'drum', phase: 1.4 })}
+      ${mouse(time, { x: 555, y: 472, scale: 1.05, color: '#53695c', kind: 'parasol', phase: 2.1 })}
+      ${mouse(time, { x: 755, y: 469, scale: .96, color: '#b06942', kind: 'gift', phase: 3.5 })}
+    </g>
+    ${cat(time)}
+    <g transform="translate(559 116) rotate(${wave(time, 3) * 4})" stroke="#9f583a" fill="none" opacity=".76">
+      <path d="M-29 0H29M0-29V29M-21-21L21 21M-21 21L21-21" stroke-width="1"/><circle r="17" stroke-width=".8"/><circle r="5" fill="#b48550" stroke="none"/>
+    </g>
+    <g fill="#b6935c" opacity="${.45 + Math.abs(wave(time, 4)) * .2}"><circle cx="283" cy="257" r="2"/><circle cx="852" cy="233" r="2.5"/><circle cx="431" cy="288" r="1.5"/></g>
+  </svg>`.replace(/[ \t]+$/gm, '');
+}
