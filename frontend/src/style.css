@@ -305,3 +305,344 @@ h1,h2,h3{overflow-wrap:break-word}
   color:var(--ink);
   font-weight:600;
 }
+
+/* Navigation Auth Buttons & User Chip */
+.nav-auth-group{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.nav-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 16px;
+  font-size:12.5px;
+  font-weight:500;
+  border-radius:3px;
+  text-decoration:none;
+  transition:all 0.2s ease;
+  white-space:nowrap;
+  line-height:1.2;
+}
+.nav-btn-outline{
+  border:1px solid #bba686;
+  background:transparent;
+  color:var(--ink);
+}
+.nav-btn-outline:hover{
+  border-color:var(--red);
+  color:var(--red);
+  background:#f2ebd9;
+}
+.nav-btn-primary{
+  border:1px solid var(--red);
+  background:var(--red);
+  color:#fff9ef;
+  box-shadow:0 2px 6px rgba(146,60,46,0.2);
+}
+.nav-btn-primary:hover{
+  background:#7a2c20;
+  border-color:#7a2c20;
+  color:#ffffff;
+}
+
+.nav-user-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#f2ebd9;
+  border:1px solid var(--line);
+  padding:4px 6px 4px 6px;
+  border-radius:24px;
+  transition:all 0.2s ease;
+}
+.nav-user-chip:hover{
+  border-color:#cfc09d;
+  background:#eee4cf;
+}
+.user-profile-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  text-decoration:none;
+  color:inherit;
+  padding-right:4px;
+}
+.user-avatar{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:var(--red);
+  color:#fff7eb;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--serif);
+  font-size:14px;
+  font-weight:600;
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
+}
+.user-details{
+  display:flex;
+  flex-direction:column;
+  line-height:1.15;
+}
+.user-name{
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink);
+}
+.user-role-tag{
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:0.3px;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.logout-btn{
+  color:var(--muted);
+  border-radius:50%;
+  padding:6px;
+  transition:all 0.2s ease;
+}
+.logout-btn:hover{
+  color:var(--red);
+  background:#e5dac4;
+}
+
+/* Account Profile Styles */
+.account-container{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+.account-hero-card{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  background:#faf6ed;
+  border:1px solid var(--line);
+  padding:28px 32px;
+}
+.account-avatar-circle{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:var(--red);
+  color:#fff9ef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--serif);
+  font-size:32px;
+  font-weight:600;
+  box-shadow:0 4px 12px rgba(146,60,46,0.25);
+  flex-shrink:0;
+}
+.account-hero-info h2{
+  font-size:28px;
+  margin:0 0 10px;
+}
+.account-hero-meta{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.meta-item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.active-status{
+  color:var(--green);
+  font-weight:500;
+}
+.account-sections-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:24px;
+}
+.account-sections-grid .panel{
+  margin-bottom:0;
+  background:#fffdfa;
+}
+.account-sections-grid .panel h3{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  font-size:20px;
+  margin-bottom:6px;
+}
+.account-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:20px;
+}
+.account-form-grid .wide{
+  grid-column:1/-1;
+}
+.account-form-grid label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:12px;
+  color:var(--ink);
+  font-weight:500;
+}
+.disabled-input{
+  background:#f1ece0 !important;
+  color:#857e70 !important;
+  cursor:not-allowed;
+}
+.account-feedback{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px;
+  border-radius:3px;
+  font-size:12.5px;
+  margin-top:14px;
+  margin-bottom:14px;
+}
+.feedback-success{
+  background:#edf5e9;
+  border:1px solid #c2deba;
+  color:#316327;
+}
+.feedback-error{
+  background:#faece9;
+  border:1px solid #eec0b8;
+  color:#a12e22;
+}
+
+/* Users Admin Table Styles */
+.users-filter-bar{
+  display:flex;
+  gap:16px;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.filter-selects{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.users-table-shell{
+  border:1px solid var(--line);
+  background:#fffdfa;
+  border-radius:4px;
+  overflow-x:auto;
+}
+.users-table{
+  width:100%;
+  border-collapse:collapse;
+  text-align:left;
+  font-size:12.5px;
+}
+.users-table th{
+  background:#f3ecde;
+  color:#5a5446;
+  font-weight:600;
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  font-size:11.5px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.users-table td{
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  vertical-align:middle;
+}
+.users-table tr:last-child td{
+  border-bottom:none;
+}
+.users-table tr:hover td{
+  background:#fbf8f0;
+}
+.row-inactive td{
+  background:#f9f5ed;
+  opacity:0.75;
+}
+.user-table-cell{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.user-table-avatar{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#dfd4bd;
+  color:#4f483c;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:14px;
+  flex-shrink:0;
+}
+.user-table-email{
+  display:block;
+  font-size:11.5px;
+  color:var(--muted);
+}
+.me-pill{
+  display:inline-block;
+  background:var(--red);
+  color:white;
+  font-size:10px;
+  padding:1px 6px;
+  border-radius:10px;
+  margin-left:6px;
+  font-weight:500;
+}
+.user-contact-cell{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.user-contact-cell small{
+  color:var(--muted);
+  max-width:200px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:block;
+}
+.btn.danger{
+  color:#9e2c21;
+  border-color:#d49f96;
+}
+.btn.danger:hover{
+  background:#faebe8;
+  color:#822117;
+  border-color:#9e2c21;
+}
+
+@media(max-width:800px){
+  .account-sections-grid{
+    grid-template-columns:1fr;
+  }
+  .account-hero-card{
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
+  }
+  .account-hero-meta{
+    justify-content:center;
+  }
+  .nav-btn{
+    padding:7px 11px;
+    font-size:11.5px;
+  }
+}

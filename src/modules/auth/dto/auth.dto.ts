@@ -23,3 +23,20 @@ export const loginInputSchema = z
   })
   .strict();
 export type LoginDto = z.output<typeof loginInputSchema>;
+
+export const updateProfileSchema = z
+  .object({
+    name: text(100).optional(),
+    phone: z.string().trim().max(20).optional(),
+    address: z.string().trim().max(300).optional(),
+  })
+  .strict();
+export type UpdateProfileDto = z.output<typeof updateProfileSchema>;
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1).max(72),
+    newPassword: z.string().min(10).max(72),
+  })
+  .strict();
+export type ChangePasswordDto = z.output<typeof changePasswordSchema>;
