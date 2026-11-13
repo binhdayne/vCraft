@@ -1,5 +1,5 @@
 import React,{createContext,useContext,useState,useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import {X,Upload,ArrowUpRight,LoaderCircle,ChevronLeft,ChevronRight,ShoppingCart,Trash2,Plus,Minus,Check,ShieldCheck,AlertCircle} from 'lucide-react';
 export const CATEGORIES=['Chúc tụng','Sinh hoạt','Lịch sử & dân gian','Tứ quý'];
 export const STATUS={draft:'Bản nháp',sent:'Đã gửi tới xưởng',bidding:'Đang nhận chào giá',accepted:'Đã chấp nhận',in_production:'Đang sản xuất',delivered:'Đã giao hàng',ready:'Sẵn sàng giao'};
@@ -82,289 +82,155 @@ export function CartProvider({children}){
 
 export function CartDialog({isOpen,onClose}){
   const {cart,updateCartItem,removeCartItem,clearCart}=useCart();
-  const {user,notify}=useApp();
-  const [step,setStep]=useState('cart');
-  const [busy,setBusy]=useState(false);
-  const studios=useLoad('/workshops');
-  const [checkoutData,setCheckoutData]=useState({title:'',deadline:'',fullName:'',phoneNumber:'',shippingAddress:'',packagingNote:'',targetType:'bidding',targetWorkshopId:''});
-
-  useEffect(()=>{
-    if(isOpen){
-      setStep('cart');
-      if(user){
-        setCheckoutData({
-          title:'Lô tranh đặt in - '+new Date().toLocaleDateString('vi-VN'),
-          deadline:new Date(Date.now()+14*86400000).toISOString().slice(0,10),
-          fullName:user.name||'',
-          phoneNumber:user.phone||'',
-          shippingAddress:user.address||'',
-          packagingNote:'',
-          targetType:'bidding',
-          targetWorkshopId:'',
-        });
-      }
-    }
-  },[isOpen,user]);
+  const navigate=useNavigate();
 
   if(!isOpen)return null;
-  const selectedItems=(cart?.items||[]).filter(i=>i.selected);
   const hasConflict=(cart?.customWorkshopCount||0)>1;
-
-  const handleCheckoutSubmit=async(e)=>{
-    e.preventDefault();
-    if(busy)return;
-    if(selectedItems.length===0){notify('Vui lòng chọn ít nhất 1 tác phẩm để tạo đơn');return;}
-    if(hasConflict){notify('Không thể gộp tranh độc bản của nhiều xưởng vào cùng một đơn');return;}
-    if(!cart.hasCustomArtwork&&checkoutData.targetType==='direct'&&!checkoutData.targetWorkshopId){
-      notify('Vui lòng chọn xưởng chế tác nhận đơn');
-      return;
-    }
-    try{
-      setBusy(true);
-      const isCustom=cart.hasCustomArtwork;
-      const targetType=isCustom?'direct':checkoutData.targetType;
-      const targetWorkshopId=isCustom?cart.targetWorkshopId:(checkoutData.targetType==='direct'?checkoutData.targetWorkshopId:null);
-
-      const payload={
-        title:checkoutData.title,
-        deadline:checkoutData.deadline,
-        description:checkoutData.packagingNote||'Yêu cầu đặt in lô tranh theo thỏa thuận',
-        targetType,
-        targetWorkshopId,
-        customerInfo:{
-          fullName:checkoutData.fullName,
-          phoneNumber:checkoutData.phoneNumber,
-          shippingAddress:checkoutData.shippingAddress,
-          packagingNote:checkoutData.packagingNote,
-        },
-        items:selectedItems.map(i=>({productId:i.productId,quantity:i.quantity,note:i.note||''})),
-      };
-      const created=await api('/quotes',{method:'POST',body:payload});
-      await clearCart(true);
-      notify('Tạo yêu cầu đặt lô thành công!');
-      onClose();
-      window.location.hash='#/quotes/'+created._id;
-    }catch(err){
-      notify(err.message||'Không thể tạo đơn hàng');
-    }finally{
-      setBusy(false);
-    }
-  };
 
   return (
     <div className="modal-backdrop">
       <section role="dialog" aria-modal="true" aria-labelledby="cart-dialog-title" className="modal cart-modal">
         <div className="modal-head">
-          <h2 id="cart-dialog-title">{step==='cart'?`Giỏ hàng tác phẩm (${cart?.totalItems||0})`:'Xác nhận thông tin đặt lô'}</h2>
+          <h2 id="cart-dialog-title">Giỏ hàng tác phẩm ({cart?.totalItems||0})</h2>
           <button className="icon-btn" aria-label="Đóng" onClick={onClose}><X size={20}/></button>
         </div>
 
-        {step==='cart'?(
-          <div className="cart-body">
-            {!cart?.items?.length?(
-              <div className="cart-empty-box">
-                <div className="cart-empty-icon-wrap">
-                  <ShoppingCart size={34} strokeWidth={1.3}/>
-                </div>
-                <h3>Giỏ hàng đang trống</h3>
-                <p>Khám phá bộ sưu tập và chọn những tác phẩm bạn muốn đặt in.</p>
-                <Link to="/tranh" className="btn outline" onClick={onClose}>Khám phá bộ sưu tập</Link>
+        <div className="cart-body">
+          {!cart?.items?.length?(
+            <div className="cart-empty-box">
+              <div className="cart-empty-icon-wrap">
+                <ShoppingCart size={34} strokeWidth={1.3}/>
               </div>
-            ):(
-              <>
-                {cart.hasCustomArtwork&&(
-                  <div className={'cart-copyright-banner '+(hasConflict?'banner-conflict':'banner-direct')}>
-                    {hasConflict?(
-                      <>
-                        <AlertCircle size={17}/>
-                        <div><strong>Xung đột xưởng chế tác:</strong> Không thể gộp tranh độc bản của nhiều xưởng trong cùng một đơn. Vui lòng bỏ tick chọn tranh để tách theo từng xưởng.</div>
-                      </>
-                    ):(
-                      <>
-                        <ShieldCheck size={17}/>
-                        <div><strong>Tranh độc bản:</strong> Đơn hàng sẽ được gửi trực tiếp tới xưởng sở hữu ván in chế tác (không qua đấu thầu công khai).</div>
-                      </>
-                    )}
-                  </div>
-                )}
+              <h3>Giỏ hàng đang trống</h3>
+              <p>Khám phá bộ sưu tập và chọn những tác phẩm bạn muốn đặt in.</p>
+              <Link to="/tranh" className="btn outline" onClick={onClose}>Khám phá bộ sưu tập</Link>
+            </div>
+          ):(
+            <>
+              {cart.hasCustomArtwork&&(
+                <div className={'cart-copyright-banner '+(hasConflict?'banner-conflict':'banner-direct')}>
+                  {hasConflict?(
+                    <>
+                      <AlertCircle size={17}/>
+                      <div><strong>Xung đột xưởng chế tác:</strong> Không thể gộp tranh độc bản của nhiều xưởng trong cùng một đơn. Vui lòng bỏ tick chọn tranh để tách theo từng xưởng.</div>
+                    </>
+                  ):(
+                    <>
+                      <ShieldCheck size={17}/>
+                      <div><strong>Tranh độc bản:</strong> Đơn hàng sẽ được gửi trực tiếp tới xưởng sở hữu ván in chế tác (không qua đấu thầu công khai).</div>
+                    </>
+                  )}
+                </div>
+              )}
 
-                <div className="cart-table-shell">
-                  <table className="cart-table">
-                    <thead>
-                      <tr>
-                        <th style={{width:44, textAlign:'center'}}>
-                          <input type="checkbox" checked={cart.items.length>0&&cart.items.every(i=>i.selected)} onChange={e=>{
-                            const checked=e.target.checked;
-                            cart.items.forEach(i=>{if(i.selected!==checked)updateCartItem(i.productId,{selected:checked});});
-                          }}/>
-                        </th>
-                        <th>Tác phẩm</th>
-                        <th style={{width:160, textAlign:'center'}}>Số lượng</th>
-                        <th style={{width:52, textAlign:'center'}}></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cart.items.map(item=>(
-                        <tr key={item.productId} className={item.selected?'is-selected':''}>
-                          <td style={{textAlign:'center'}}>
-                            <input type="checkbox" checked={item.selected} onChange={e=>updateCartItem(item.productId,{selected:e.target.checked})}/>
-                          </td>
-                          <td>
-                            <div className="cart-item-info-cell">
+              <div className="cart-table-shell">
+                <table className="cart-table">
+                  <thead>
+                    <tr>
+                      <th style={{width:44, textAlign:'center'}}>
+                        <input type="checkbox" checked={cart.items.length>0&&cart.items.every(i=>i.selected)} onChange={e=>{
+                          const checked=e.target.checked;
+                          cart.items.forEach(i=>{if(i.selected!==checked)updateCartItem(i.productId,{selected:checked});});
+                        }}/>
+                      </th>
+                      <th>Tác phẩm</th>
+                      <th style={{width:160, textAlign:'center'}}>Số lượng</th>
+                      <th style={{width:52, textAlign:'center'}}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cart.items.map(item=>(
+                      <tr key={item.productId} className={item.selected?'is-selected':''}>
+                        <td style={{textAlign:'center'}}>
+                          <input type="checkbox" checked={item.selected} onChange={e=>updateCartItem(item.productId,{selected:e.target.checked})}/>
+                        </td>
+                        <td>
+                          <div className="cart-item-info-cell">
+                            <Link
+                              to={'/tranh/' + item.productId}
+                              onClick={onClose}
+                              className="cart-thumbnail-link"
+                              title="Xem chi tiết tác phẩm"
+                            >
+                              <img src={item.image||'/art/in-tranh.jpg'} alt={item.artworkName} className="cart-thumbnail"/>
+                            </Link>
+                            <div>
                               <Link
                                 to={'/tranh/' + item.productId}
                                 onClick={onClose}
-                                className="cart-thumbnail-link"
+                                className="cart-item-name-link"
                                 title="Xem chi tiết tác phẩm"
                               >
-                                <img src={item.image||'/art/in-tranh.jpg'} alt={item.artworkName} className="cart-thumbnail"/>
+                                <h4 className="cart-item-name">{item.artworkName}</h4>
                               </Link>
-                              <div>
-                                <Link
-                                  to={'/tranh/' + item.productId}
-                                  onClick={onClose}
-                                  className="cart-item-name-link"
-                                  title="Xem chi tiết tác phẩm"
-                                >
-                                  <h4 className="cart-item-name">{item.artworkName}</h4>
-                                </Link>
-                                <div className="cart-item-tags">
-                                  <span>{item.category}</span>
-                                  <span>·</span>
-                                  <span>{item.dimensions}</span>
-                                  {item.type==='custom'?(
-                                    <span className="cart-tag-custom">Độc bản · {item.workshopName||'Xưởng'}</span>
-                                  ):(
-                                    <span className="cart-tag-general">Di sản</span>
-                                  )}
-                                </div>
+                              <div className="cart-item-tags">
+                                <span>{item.category}</span>
+                                <span>·</span>
+                                <span>{item.dimensions}</span>
+                                {item.type==='custom'?(
+                                  <span className="cart-tag-custom">Độc bản · {item.workshopName||'Xưởng'}</span>
+                                ):(
+                                  <span className="cart-tag-general">Di sản</span>
+                                )}
                               </div>
                             </div>
-                          </td>
-                          <td style={{textAlign:'center'}}>
-                            <div className="cart-counter">
-                              <button type="button" disabled={item.quantity<=1} onClick={()=>updateCartItem(item.productId,{quantity:Math.max(1,item.quantity-1)})}>
-                                <Minus size={13}/>
-                              </button>
-                              <input type="number" min={1} max={1000000} value={item.quantity} onChange={e=>{
-                                const val=Math.max(1,parseInt(e.target.value)||1);
-                                updateCartItem(item.productId,{quantity:val});
-                              }}/>
-                              <button type="button" onClick={()=>updateCartItem(item.productId,{quantity:item.quantity+1})}>
-                                <Plus size={13}/>
-                              </button>
-                            </div>
-                          </td>
-                          <td style={{textAlign:'center'}}>
-                            <button type="button" className="icon-btn delete-btn" title="Bỏ tranh khỏi giỏ" onClick={()=>removeCartItem(item.productId)}>
-                              <Trash2 size={16}/>
+                          </div>
+                        </td>
+                        <td style={{textAlign:'center'}}>
+                          <div className="cart-counter">
+                            <button type="button" disabled={item.quantity<=1} onClick={()=>updateCartItem(item.productId,{quantity:Math.max(1,item.quantity-1)})}>
+                              <Minus size={13}/>
                             </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                            <input type="number" min={1} max={1000000} value={item.quantity} onChange={e=>{
+                              const val=Math.max(1,parseInt(e.target.value)||1);
+                              updateCartItem(item.productId,{quantity:val});
+                            }}/>
+                            <button type="button" onClick={()=>updateCartItem(item.productId,{quantity:item.quantity+1})}>
+                              <Plus size={13}/>
+                            </button>
+                          </div>
+                        </td>
+                        <td style={{textAlign:'center'}}>
+                          <button type="button" className="icon-btn delete-btn" title="Bỏ tranh khỏi giỏ" onClick={()=>removeCartItem(item.productId)}>
+                            <Trash2 size={16}/>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="cart-footer-bar">
+                <div className="cart-summary-text">
+                  Đã chọn: <strong>{cart.selectedItems}</strong> tác phẩm · <strong>{cart.selectedQuantity}</strong> bản in
                 </div>
-
-                <div className="cart-footer-bar">
-                  <div className="cart-summary-text">
-                    Đã chọn: <strong>{cart.selectedItems}</strong> tác phẩm · <strong>{cart.selectedQuantity}</strong> bản in
-                  </div>
-                  <div className="cart-actions-group">
-                    <button
-                      type="button"
-                      className="btn ghost small"
-                      disabled={cart.selectedItems===0}
-                      onClick={()=>clearCart(true)}
-                    >
-                      <Trash2 size={13}/>
-                      <span>Xóa khỏi giỏ hàng</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="btn small"
-                      disabled={cart.selectedItems===0||hasConflict}
-                      onClick={()=>setStep('checkout')}
-                    >
-                      Tiến hành đặt lô
-                    </button>
-                  </div>
+                <div className="cart-actions-group">
+                  <button
+                    type="button"
+                    className="btn ghost small"
+                    disabled={cart.selectedItems===0}
+                    onClick={()=>clearCart(true)}
+                  >
+                    <Trash2 size={13}/>
+                    <span>Xóa khỏi giỏ hàng</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn small"
+                    disabled={cart.selectedItems===0||hasConflict}
+                    onClick={()=>{
+                      onClose();
+                      navigate('/batch-order');
+                    }}
+                  >
+                    Tiến hành đặt lô
+                  </button>
                 </div>
-              </>
-            )}
-          </div>
-        ):(
-          <form className="cart-checkout-form" onSubmit={handleCheckoutSubmit}>
-            <div className="checkout-summary-pill">
-              Lô đặt in: <strong>{cart.selectedItems} tác phẩm</strong> (Tổng cộng <strong>{cart.selectedQuantity} bản in</strong>)
-            </div>
-
-            <div className="form-grid">
-              <label className="wide">
-                <span>Tiêu đề đơn yêu cầu đặt lô *</span>
-                <input required maxLength={150} value={checkoutData.title} onChange={e=>setCheckoutData({...checkoutData,title:e.target.value})}/>
-              </label>
-
-              {cart.hasCustomArtwork?(
-                <div className="direct-lock-notice wide">
-                  <ShieldCheck size={16}/>
-                  <span>Đơn hàng được gửi trực tiếp tới xưởng <strong>{cart.items.find(i=>i.type==='custom')?.workshopName||'chế tác'}</strong> (do có tác phẩm độc bản).</span>
-                </div>
-              ):(
-                <>
-                  <label className="wide">
-                    <span>Phương thức điều phối sản xuất *</span>
-                    <select value={checkoutData.targetType} onChange={e=>setCheckoutData({...checkoutData,targetType:e.target.value,targetWorkshopId:''})}>
-                      <option value="bidding">Đấu thầu công khai (Các xưởng cùng chào giá cạnh tranh)</option>
-                      <option value="direct">Gửi trực tiếp tới 1 xưởng chỉ định</option>
-                    </select>
-                  </label>
-                  {checkoutData.targetType==='direct'&&(
-                    <label className="wide">
-                      <span>Chọn xưởng chế tác nhận đơn *</span>
-                      <select required value={checkoutData.targetWorkshopId} onChange={e=>setCheckoutData({...checkoutData,targetWorkshopId:e.target.value})}>
-                        <option value="">-- Chọn xưởng làng nghề --</option>
-                        {studios.data?.map(s=>(
-                          <option key={s._id} value={s._id}>{s.name} ({s.address||'Làng Đông Hồ'})</option>
-                        ))}
-                      </select>
-                    </label>
-                  )}
-                </>
-              )}
-
-              <label>
-                <span>Hạn giao hàng mong muốn *</span>
-                <input type="date" required min={new Date().toISOString().slice(0,10)} value={checkoutData.deadline} onChange={e=>setCheckoutData({...checkoutData,deadline:e.target.value})}/>
-              </label>
-
-              <label>
-                <span>Người liên hệ / nhận hàng *</span>
-                <input required maxLength={100} value={checkoutData.fullName} onChange={e=>setCheckoutData({...checkoutData,fullName:e.target.value})}/>
-              </label>
-
-              <label>
-                <span>Số điện thoại liên hệ *</span>
-                <input required type="tel" maxLength={20} value={checkoutData.phoneNumber} onChange={e=>setCheckoutData({...checkoutData,phoneNumber:e.target.value})}/>
-              </label>
-
-              <label className="wide">
-                <span>Địa chỉ nhận hàng mặc định *</span>
-                <input required maxLength={300} value={checkoutData.shippingAddress} onChange={e=>setCheckoutData({...checkoutData,shippingAddress:e.target.value})}/>
-              </label>
-
-              <label className="wide">
-                <span>Ghi chú chung cho toàn bộ đơn lô</span>
-                <textarea rows={3} maxLength={1000} placeholder="Yêu cầu về bao gói, hộp quà, chứng chỉ xuất xưởng, vận chuyển..." value={checkoutData.packagingNote} onChange={e=>setCheckoutData({...checkoutData,packagingNote:e.target.value})}/>
-              </label>
-            </div>
-
-            <div className="modal-actions">
-              <button type="button" className="btn ghost" disabled={busy} onClick={()=>setStep('cart')}>Quay lại giỏ hàng</button>
-              <button type="submit" className="btn" disabled={busy}>{busy?'Đang gửi yêu cầu…':'Gửi yêu cầu đặt tranh'}</button>
-            </div>
-          </form>
-        )}
+              </div>
+            </>
+          )}
+        </div>
       </section>
     </div>
   );

@@ -29,6 +29,7 @@ import {
   News,
   Login,
   NotFound,
+  BatchOrder,
 } from './public';
 import { Dashboard, QuoteDetail } from './workspace';
 import './fonts.css';
@@ -278,6 +279,7 @@ function Layout() {
           <Route path="/dang-nhap" element={<Login />} />
           <Route path="/dang-ky" element={<Login initialRegister={true} />} />
           <Route path="/workspace" element={<Dashboard />} />
+          <Route path="/batch-order" element={<BatchOrder />} />
           <Route path="/quotes/:id" element={<QuoteDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
