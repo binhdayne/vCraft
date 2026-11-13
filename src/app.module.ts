@@ -9,6 +9,7 @@ import { HealthModule } from "./modules/health/health.module";
 import { MediaModule } from "./modules/media/media.module";
 import { NewsModule } from "./modules/news/news.module";
 import { QuotesModule } from "./modules/quotes/quotes.module";
+import { CartModule } from "./modules/cart/cart.module";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, validate: validateEnvironment }),
@@ -16,6 +17,7 @@ import { QuotesModule } from "./modules/quotes/quotes.module";
     CatalogModule,
     AdminModule,
     QuotesModule,
+    CartModule,
     BatchesModule,
     NewsModule,
     MediaModule,
