@@ -204,7 +204,6 @@ export class QuotesService {
       version: 0,
       bids: [],
       allocations: [],
-      proposedAllocations: [],
       history: [
         {
           status: "draft",
@@ -344,24 +343,9 @@ export class QuotesService {
     return this.cas(
       q,
       version,
-      { status: "bidding", bids, proposedAllocations: [] },
+      { status: "bidding", bids },
       actor,
       "Xưởng gửi chào giá",
-    );
-  }
-
-  async plan(actor: Actor, key: string, body: unknown) {
-    role(actor, "admin");
-    const data = parse(allocationInput, body);
-    const q = await this.load(key, actor);
-    this.state(q, ["bidding"]);
-    await this.allocations(q, data.allocations);
-    return this.cas(
-      q,
-      data.version,
-      { proposedAllocations: data.allocations },
-      actor,
-      "BQL đề xuất phân bổ cho khách hàng",
     );
   }
 

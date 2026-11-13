@@ -71,7 +71,6 @@ export const QuotationSchema = new Schema(
         status: String,
       },
     ],
-    proposedAllocations: [{ workshopId: String, quantity: Number }],
     history: [{ status: String, at: Date, actor: String, note: String }],
   },
   { timestamps: true, strict: true },
