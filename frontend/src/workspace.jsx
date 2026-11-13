@@ -936,4 +936,263 @@ function UsersAdmin(){const state=useLoad('/admin/users'),[search,setSearch]=use
 function AccountProfile(){const {user,setUser,notify}=useApp(),state=useLoad('/auth/me');const [name,setName]=useState(''),[phone,setPhone]=useState(''),[address,setAddress]=useState(''),[savingProfile,setSavingProfile]=useState(false),[profileMsg,setProfileMsg]=useState({text:'',type:''});const [curPass,setCurPass]=useState(''),[newPass,setNewPass]=useState(''),[cfmPass,setCfmPass]=useState(''),[savingPass,setSavingPass]=useState(false),[passMsg,setPassMsg]=useState({text:'',type:''});useEffect(()=>{if(state.data){setName(state.data.name||'');setPhone(state.data.phone||'');setAddress(state.data.address||'');}},[state.data]);async function handleProfile(e){e.preventDefault();setSavingProfile(true);setProfileMsg({text:'',type:''});try{const updated=await api('/auth/profile',{method:'PATCH',body:{name,phone,address}});setUser(current=>({...current,...updated}));state.reload();setProfileMsg({text:'Đã lưu thông tin tài khoản thành công',type:'success'});notify('Đã cập nhật thông tin cá nhân');}catch(err){setProfileMsg({text:err.message,type:'error'});}finally{setSavingProfile(false);}}async function handlePassword(e){e.preventDefault();setPassMsg({text:'',type:''});if(newPass!==cfmPass){setPassMsg({text:'Mật khẩu xác nhận không khớp với mật khẩu mới',type:'error'});return;}if(newPass.length<10){setPassMsg({text:'Mật khẩu mới phải có tối thiểu 10 ký tự',type:'error'});return;}setSavingPass(true);try{await api('/auth/change-password',{method:'POST',body:{currentPassword:curPass,newPassword:newPass}});setCurPass('');setNewPass('');setCfmPass('');setPassMsg({text:'Đổi mật khẩu thành công! Hãy ghi nhớ mật khẩu mới.',type:'success'});notify('Đã đổi mật khẩu thành công');}catch(err){setPassMsg({text:err.message,type:'error'});}finally{setSavingPass(false);}}const roleTitle=user?.role==='admin'?'Ban quản lý':user?.role==='artisan'?'Nghệ nhân':'Khách hàng';return <><PageTitle eyebrow="THÔNG TIN CÁ NHÂN & BẢO MẬT" title="Hồ sơ tài khoản">Quản lý thông tin định danh, số điện thoại liên hệ, địa chỉ nhận hàng và mật khẩu đăng nhập.</PageTitle><LoadState {...state}/>{state.data&&<div className="account-container"><div className="panel account-hero-card"><div className="account-avatar-circle">{state.data.name?.charAt(0).toUpperCase()||'U'}</div><div className="account-hero-info"><h2>{state.data.name}</h2><div className="account-hero-meta"><span className={'badge status-'+(state.data.role==='admin'?'delivered':state.data.role==='artisan'?'in_production':'bidding')}>{roleTitle}</span><span className="meta-item"><Mail size={14}/> {state.data.email}</span>{state.data.createdAt&&<span className="meta-item"><Calendar size={14}/> Thành viên từ {date(state.data.createdAt)}</span>}<span className="meta-item active-status"><CheckCircle2 size={14}/> Tài khoản hoạt động</span></div></div></div><div className="account-sections-grid"><div className="panel"><h3><User size={18}/> Thông tin cá nhân & Liên hệ</h3><p className="muted">Thông tin này được dùng khi liên hệ trao đổi báo giá và giao nhận tranh.</p>{profileMsg.text&&<div className={'account-feedback feedback-'+profileMsg.type}>{profileMsg.type==='success'?<CheckCircle2 size={16}/>:<AlertCircle size={16}/>}<span>{profileMsg.text}</span></div>}<form onSubmit={handleProfile} className="account-form-grid"><label><span>Họ và tên *</span><input required maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Họ và tên"/></label><label><span>Số điện thoại liên hệ</span><input type="tel" maxLength={20} value={phone} onChange={e=>setPhone(e.target.value)} placeholder="0912 345 678"/></label><label><span>Email đăng nhập (cố định)</span><input disabled value={state.data.email} className="disabled-input" title="Email định danh không thể thay đổi"/></label><label><span>Vai trò tài khoản</span><input disabled value={roleTitle} className="disabled-input" title="Vai trò được cấp bởi hệ thống"/></label><label className="wide"><span>Địa chỉ nhận hàng / Liên hệ mặc định</span><textarea rows={3} maxLength={300} value={address} onChange={e=>setAddress(e.target.value)} placeholder="Số nhà, đường/phố, thôn/xã, quận/huyện, tỉnh/thành phố"/></label><div className="wide button-row"><button className="btn" disabled={savingProfile}>{savingProfile?'Đang lưu…':'Lưu thay đổi'}</button></div></form></div><div className="panel"><h3><Lock size={18}/> Đổi mật khẩu</h3><p className="muted">Mật khẩu mới yêu cầu tối thiểu 10 ký tự để đảm bảo an toàn.</p>{passMsg.text&&<div className={'account-feedback feedback-'+passMsg.type}>{passMsg.type==='success'?<CheckCircle2 size={16}/>:<AlertCircle size={16}/>}<span>{passMsg.text}</span></div>}<form onSubmit={handlePassword} className="account-form-grid"><label className="wide"><span>Mật khẩu hiện tại *</span><input type="password" required value={curPass} onChange={e=>setCurPass(e.target.value)} placeholder="Nhập mật khẩu hiện tại"/></label><label className="wide"><span>Mật khẩu mới * (tối thiểu 10 ký tự)</span><input type="password" required minLength={10} maxLength={72} value={newPass} onChange={e=>setNewPass(e.target.value)} placeholder="Nhập mật khẩu mới"/></label><label className="wide"><span>Xác nhận mật khẩu mới *</span><input type="password" required minLength={10} maxLength={72} value={cfmPass} onChange={e=>setCfmPass(e.target.value)} placeholder="Nhập lại mật khẩu mới"/></label><div className="wide button-row"><button className="btn outline" disabled={savingPass}>{savingPass?'Đang xử lý…':'Cập nhật mật khẩu'}</button></div></form></div></div></div>}</>;}
 
 export function QuoteDetail(){const {user,loading}=useApp();if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;return <QuoteContent/>;}
-function QuoteContent(){const {id}=useParams(),{user,notify}=useApp(),state=useLoad('/quotes/'+id),[dialog,setDialog]=useState(null),[alloc,setAlloc]=useState({}),[busy,setBusy]=useState(false),[error,setError]=useState('');const studio=useLoad(user.role==='artisan'?'/studio':'/auth/me');const q=state.data,own=!!q&&user.role==='buyer'&&q.buyerId===user.id;async function act(action,body={}){setBusy(true);setError('');try{await api('/quotes/'+id+'/'+action,{method:'POST',body:{version:q.version,...body}});state.reload();notify('Đã cập nhật yêu cầu');}catch(e){setError(e.message);state.reload();}finally{setBusy(false);}}if(!q)return <section className="wrap page"><LoadState {...state}/></section>;const studioName=key=>q.workshops.find(s=>s._id===key)?.name||'Xưởng';const mine=q.allocations.find(a=>a.workshopId===studio.data?._id);const sequence=['draft','sent','bidding','accepted','in_production','delivered'];const allocations=q.bids.map(b=>({workshopId:b.workshopId,quantity:Number(alloc[b.workshopId]||0)})).filter(a=>a.quantity>0);const total=allocations.reduce((s,a)=>s+a.quantity,0);return <section className="wrap page"><Link className="back-link" to="/workspace">← Không gian làm việc</Link><PageTitle eyebrow="YÊU CẦU ĐẶT TRANH" title={q.title} action={<button className="btn outline" onClick={state.reload}><RefreshCw size={16}/> Làm mới</button>}/><div className="status-steps">{sequence.map((s,i)=><div className={sequence.indexOf(q.status)>=i?'reached':''} key={s}><span>{i+1}</span>{STATUS[s]}</div>)}</div>{error&&<p className="error" role="alert">{error}</p>}<div className="quote-detail-grid"><div><div className="panel"><Badge status={q.status}/><h2>Thông tin đặt tranh</h2><dl><div><dt>Phân loại</dt><dd>{q.category}</dd></div><div><dt>Số lượng</dt><dd>{q.quantity.toLocaleString('vi-VN')} bản</dd></div><div><dt>Hạn giao</dt><dd>{date(q.deadline)}</dd></div></dl><p className="prose">{q.description}</p><div className="button-row">{own&&q.status==='draft'&&<><button className="btn" disabled={busy} onClick={()=>act('send')}><Send size={17}/> Gửi tới xưởng phù hợp</button><button className="text-link" onClick={()=>setDialog('edit')}>Sửa bản nháp</button></>}{user.role==='artisan'&&['sent','bidding'].includes(q.status)&&<button className="btn" onClick={()=>setDialog('bid')}>Gửi / cập nhật chào giá <ArrowUpRight size={17}/></button>}{mine?.status==='accepted'&&<button className="btn" disabled={busy} onClick={()=>act('production',{action:'start'})}>Bắt đầu sản xuất phần việc</button>}{mine?.status==='in_production'&&<button className="btn" disabled={busy} onClick={()=>act('production',{action:'ready'})}>Báo hoàn thành phần việc</button>}{own&&q.status==='in_production'&&<button className="btn" disabled={busy||q.allocations.some(a=>a.status!=='ready')} onClick={()=>act('deliver')}>Xác nhận đã nhận đủ hàng</button>}</div></div><div className="panel"><div className="section-head"><h2>Chào giá từ các xưởng</h2><span className="muted">{q.bids.length} chào giá</span></div>{!q.bids.length&&<Empty title="Chưa có chào giá"><p>Các xưởng phù hợp sẽ phản hồi sau khi yêu cầu được gửi.</p></Empty>}{q.bids.map(b=><article className="bid-card" key={b.workshopId}><div><h3>{studioName(b.workshopId)}</h3><p>{b.quantity} bản có thể nhận · {b.days} ngày</p><p>{b.note}</p></div><strong>{money(b.unitPrice)}<small>/ bản</small></strong>{(own||user.role==='admin')&&q.status==='bidding'&&<label>Phân bổ<input aria-label={'Số lượng phân bổ cho '+studioName(b.workshopId)} type="number" min="0" max={b.quantity} step="1" value={alloc[b.workshopId]||''} onChange={e=>setAlloc({...alloc,[b.workshopId]:e.target.value})}/></label>}</article>)}{(own||user.role==='admin')&&q.status==='bidding'&&<div className="allocation-summary">{q.proposedAllocations?.length>0&&<button className="text-link" onClick={()=>setAlloc(Object.fromEntries(q.proposedAllocations.map(a=>[a.workshopId,a.quantity])))}>Áp dụng đề xuất phân bổ của BQL</button>}<p>Đã phân bổ <strong>{total} / {q.quantity} bản</strong></p><p>Tổng giá: <strong>{money(allocations.reduce((s,a)=>s+a.quantity*q.bids.find(b=>b.workshopId===a.workshopId).unitPrice,0))}</strong></p><button className="btn" disabled={busy||total!==q.quantity||!allocations.length} onClick={()=>act(own?'accept':'plan',{allocations})}>{own?'Chấp nhận chào giá & phân bổ':'Gửi đề xuất phân bổ cho khách'}</button></div>}</div>{q.allocations.length>0&&<div className="panel"><h2>Tiến độ từng xưởng</h2>{q.allocations.map(a=><div className="allocation-row" key={a.workshopId}><div><h3>{studioName(a.workshopId)}</h3><p>{a.quantity} bản × {money(a.unitPrice)}</p></div><Badge status={q.status==='delivered'?'delivered':a.status}/></div>)}</div>}</div><aside className="panel history-panel"><span className="eyebrow">NHẬT KÝ YÊU CẦU</span><h2>Các mốc cập nhật</h2>{[...q.history].reverse().map((h,i)=><div className="history-item" key={i}><span/><div><strong>{h.note}</strong><p>{new Date(h.at).toLocaleString('vi-VN')}</p></div></div>)}<p className="muted">Mọi thay đổi trạng thái được lưu lại trên hệ thống.</p></aside></div>{dialog==='edit'&&<FormDialog title="Sửa bản nháp" fields={quoteFields} initial={pick(q,quoteFields)} onClose={()=>setDialog(null)} onSubmit={async body=>{await api('/quotes/'+id,{method:'PATCH',body:{...body,version:q.version}});state.reload();notify('Đã lưu bản nháp');}}/>}{dialog==='bid'&&<FormDialog title="Chào giá từ xưởng" fields={[field('unitPrice','Đơn giá mỗi bản (VNĐ)','number',{min:1}),field('quantity','Số lượng có thể nhận','number',{min:1,max:q.quantity,step:1}),field('days','Số ngày hoàn thành','number',{min:1,max:365,step:1}),field('note','Ghi chú / cam kết','textarea',{required:false,wide:true,maxLength:2000})]} initial={{unitPrice:100000,quantity:q.quantity,days:7,note:''}} onClose={()=>setDialog(null)} submitLabel="Gửi chào giá" onSubmit={async body=>{await api('/quotes/'+id+'/bids',{method:'POST',body:{...body,version:q.version}});state.reload();notify('Đã gửi chào giá');}}/>}</section>;}
+function QuoteContent(){
+  const {id}=useParams(),{user,notify}=useApp(),state=useLoad('/quotes/'+id),[dialog,setDialog]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
+  const studio=useLoad(user.role==='artisan'?'/studio':'/auth/me');
+  const q=state.data,own=!!q&&user.role==='buyer'&&q.buyerId===user.id;
+
+  async function act(action,body={}){
+    setBusy(true);setError('');
+    try{
+      await api('/quotes/'+id+'/'+action,{method:'POST',body:{version:q.version,...body}});
+      state.reload();
+      notify('Đã cập nhật yêu cầu');
+    }catch(e){
+      setError(e.message);
+      state.reload();
+    }finally{
+      setBusy(false);
+    }
+  }
+
+  if(!q)return <section className="wrap page"><LoadState {...state}/></section>;
+
+  const studioName=key=>q.workshops?.find(s=>s._id===key)?.name||'Xưởng';
+  const mine=q.allocations?.find(a=>a.workshopId===studio.data?._id);
+  const sequence=['draft','sent','bidding','accepted','in_production','delivered'];
+  const isDirect=q.targetType==='direct';
+  const isTargetArtisan=!q.targetWorkshopId||studio.data?._id===q.targetWorkshopId;
+  const mineBid=q.bids?.find(b=>b.workshopId===studio.data?._id);
+
+  const handleSelectWorkshop=async(workshopId,wName)=>{
+    if(!window.confirm(`Xác nhận trao toàn bộ 100% lô tranh này cho xưởng "${wName}" thực hiện trọn gói?`))return;
+    await act('accept',{workshopId});
+  };
+
+  return (
+    <section className="wrap page">
+      <Link className="back-link" to="/workspace">← Không gian làm việc</Link>
+      <PageTitle
+        eyebrow="YÊU CẦU ĐẶT TRANH ĐA TÁC PHẨM"
+        title={q.title}
+        action={<button className="btn outline" onClick={state.reload}><RefreshCw size={16}/> Làm mới</button>}
+      />
+
+      <div className="status-steps">
+        {sequence.map((s,i)=>(
+          <div className={sequence.indexOf(q.status)>=i?'reached':''} key={s}>
+            <span>{i+1}</span>{STATUS[s]}
+          </div>
+        ))}
+      </div>
+
+      {error&&<p className="error" role="alert">{error}</p>}
+
+      {isDirect?(
+        <div className="cart-copyright-banner banner-direct" style={{margin:'0 0 20px'}}>
+          <ShieldCheck size={18}/>
+          <div><strong>Đơn hàng gửi trực tiếp xưởng:</strong> Lô tranh được gửi chỉ định tới <strong>{studioName(q.targetWorkshopId)}</strong> sở hữu ván in chế tác độc bản.</div>
+        </div>
+      ):(
+        <div className="bidding-mode-notice" style={{margin:'0 0 20px'}}>
+          <Layers size={18}/>
+          <div><strong>Đấu thầu công khai:</strong> Các xưởng làng nghề tham gia chào giá cạnh tranh. Khách hàng lựa chọn 1 xưởng duy nhất để nhận trọn gói 100% lô tranh.</div>
+        </div>
+      )}
+
+      <div className="quote-detail-grid">
+        <div>
+          {/* Panel Thông tin chung của lô tranh */}
+          <div className="panel">
+            <Badge status={q.status}/>
+            <h2>Thông tin đơn đặt lô</h2>
+            <dl>
+              <div><dt>Phân loại chính</dt><dd>{q.category}</dd></div>
+              <div><dt>Tổng số bản in</dt><dd><strong style={{color:'var(--red)'}}>{q.quantity?.toLocaleString('vi-VN')}</strong> bản</dd></div>
+              <div><dt>Hạn giao hàng</dt><dd>{date(q.deadline)}</dd></div>
+              <div><dt>Hình thức điều phối</dt><dd>{isDirect?'Gửi trực tiếp 1 xưởng':'Đấu thầu công khai'}</dd></div>
+            </dl>
+            <p className="prose">{q.description}</p>
+
+            <div className="button-row">
+              {own&&q.status==='draft'&&(
+                <>
+                  <button className="btn" disabled={busy} onClick={()=>act('send')}><Send size={17}/> Gửi yêu cầu tới xưởng</button>
+                  <button className="text-link" onClick={()=>setDialog('edit')}>Sửa bản nháp</button>
+                </>
+              )}
+              {user.role==='artisan'&&['sent','bidding'].includes(q.status)&&isTargetArtisan&&(
+                <button className="btn" onClick={()=>setDialog('bid')}><Send size={17}/> {mineBid?'Cập nhật chào giá':'Gửi chào giá lô tranh'} <ArrowUpRight size={17}/></button>
+              )}
+              {mine?.status==='accepted'&&(
+                <button className="btn" disabled={busy} onClick={()=>act('production',{action:'start'})}>Bắt đầu sản xuất toàn bộ lô</button>
+              )}
+              {mine?.status==='in_production'&&(
+                <button className="btn" disabled={busy} onClick={()=>act('production',{action:'ready'})}>Báo hoàn thành lô tranh</button>
+              )}
+              {own&&q.status==='in_production'&&(
+                <button className="btn" disabled={busy||q.allocations?.some(a=>a.status!=='ready')} onClick={()=>act('deliver')}>Xác nhận đã nhận đủ hàng</button>
+              )}
+            </div>
+          </div>
+
+          {/* Panel Danh sách tác phẩm thành phần trong lô */}
+          {q.items&&q.items.length>0&&(
+            <div className="panel quote-items-panel">
+              <div className="section-head">
+                <div>
+                  <span className="eyebrow">DANH SÁCH TÁC PHẨM TRONG LÔ ({q.items.length})</span>
+                  <h2>Các bức tranh chế tác</h2>
+                </div>
+                <span className="badge">Tổng {q.quantity?.toLocaleString('vi-VN')} bản in</span>
+              </div>
+              <div className="cart-table-shell">
+                <table className="cart-table">
+                  <thead>
+                    <tr>
+                      <th style={{width:56}}>Ảnh</th>
+                      <th>Tác phẩm</th>
+                      <th style={{width:130}}>Kích thước</th>
+                      <th style={{width:110}}>Số lượng</th>
+                      <th>Ghi chú in</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {q.items.map((it,idx)=>(
+                      <tr key={it.productId||idx}>
+                        <td>
+                          <Link to={'/tranh/' + it.productId} title="Xem chi tiết tác phẩm" style={{display:'block'}}>
+                            <img src={it.image||'/art/in-tranh.jpg'} alt={it.artworkName} className="cart-thumbnail" style={{width:48,height:48}}/>
+                          </Link>
+                        </td>
+                        <td>
+                          <div className="quote-item-info">
+                            <Link to={'/tranh/' + it.productId} title="Xem chi tiết tác phẩm" style={{textDecoration:'none',color:'inherit'}}>
+                              <h4 style={{margin:'0 0 3px',fontFamily:'var(--serif)',fontSize:'14.5px'}}>{it.artworkName}</h4>
+                            </Link>
+                            <div className="cart-item-tags">
+                              <span>{it.category}</span>
+                              {it.type==='custom'?(
+                                <span className="cart-tag-custom">Độc bản · {it.workshopName||'Xưởng'}</span>
+                              ):(
+                                <span className="cart-tag-general">Di sản</span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td style={{fontSize:'12.5px',color:'var(--muted)'}}>{it.dimensions||'Tiêu chuẩn'}</td>
+                        <td>
+                          <strong style={{fontSize:'14px',color:'var(--ink)'}}>{it.quantity?.toLocaleString('vi-VN')}</strong>{' '}
+                          <span style={{fontSize:'12px',color:'var(--muted)'}}>bản</span>
+                        </td>
+                        <td style={{fontSize:'12px',color:it.note?'var(--ink)':'var(--muted)'}}>{it.note||'—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Panel Thông tin giao hàng của khách */}
+          {q.customerInfo&&(q.customerInfo.fullName||q.customerInfo.shippingAddress)&&(
+            <div className="panel customer-info-panel">
+              <h2>Thông tin nhận hàng</h2>
+              <dl>
+                <div><dt>Người nhận</dt><dd>{q.customerInfo.fullName||'—'}</dd></div>
+                <div><dt>Số điện thoại</dt><dd>{q.customerInfo.phoneNumber||'—'}</dd></div>
+                <div className="wide"><dt>Địa chỉ giao hàng</dt><dd>{q.customerInfo.shippingAddress||'—'}</dd></div>
+                {q.customerInfo.packagingNote&&(
+                  <div className="wide"><dt>Ghi chú đóng gói / quy cách</dt><dd>{q.customerInfo.packagingNote}</dd></div>
+                )}
+              </dl>
+            </div>
+          )}
+
+          {/* Panel Bids từ các xưởng - Tinh gọn, 1 xưởng nhận trọn gói 100% */}
+          <div className="panel">
+            <div className="section-head">
+              <h2>Chào giá từ các xưởng</h2>
+              <span className="muted">{q.bids?.length||0} chào giá</span>
+            </div>
+            {!q.bids?.length&&(
+              <Empty title="Chưa có chào giá nào">
+                <p>{isDirect?'Đang chờ xưởng chế tác phản hồi và gửi chào giá.':'Các xưởng phù hợp sẽ gửi chào giá trọn gói sau khi yêu cầu được chuyển tới.'}</p>
+              </Empty>
+            )}
+            {q.bids?.map(b=>{
+              const isAccepted=q.acceptedWorkshopId===b.workshopId;
+              const isWinning=q.allocations?.some(a=>a.workshopId===b.workshopId);
+              const totalPrice=b.unitPrice*q.quantity;
+              return (
+                <article className={'bid-card '+(isAccepted||isWinning?'bid-card-accepted':'')} key={b.workshopId}>
+                  <div style={{flex:1}}>
+                    <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:4}}>
+                      <h3 style={{margin:0}}>{studioName(b.workshopId)}</h3>
+                      {(isAccepted||isWinning)&&(
+                        <span className="badge status-accepted">Xưởng trúng thầu trọn gói 100%</span>
+                      )}
+                    </div>
+                    <p style={{margin:'4px 0',fontSize:'12.5px',color:'var(--muted)'}}>
+                      Thời gian hoàn thành: <strong>{b.days} ngày</strong> · Nhận tối đa {b.quantity?.toLocaleString('vi-VN')} bản
+                    </p>
+                    {b.note&&<p style={{margin:'4px 0',fontSize:'13px'}}>{b.note}</p>}
+                  </div>
+                  <div style={{textAlign:'right',display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6}}>
+                    <div style={{fontSize:'12px',color:'var(--muted)'}}>Đơn giá: {money(b.unitPrice)} / bản</div>
+                    <strong style={{fontSize:'18px',color:'var(--red)'}}>{money(totalPrice)}<small style={{fontSize:'11px',fontWeight:400,color:'var(--muted)'}}> / trọn gói</small></strong>
+                    {own&&['sent','bidding'].includes(q.status)&&(
+                      <button
+                        type="button"
+                        className="btn small"
+                        disabled={busy}
+                        onClick={()=>handleSelectWorkshop(b.workshopId,studioName(b.workshopId))}
+                      >
+                        Chọn xưởng này
+                      </button>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {/* Panel Tiến độ xưởng trúng thầu */}
+          {q.allocations?.length>0&&(
+            <div className="panel">
+              <h2>Xưởng đảm nhận sản xuất trọn gói</h2>
+              {q.allocations.map(a=>(
+                <div className="allocation-row" key={a.workshopId}>
+                  <div>
+                    <h3>{studioName(a.workshopId)}</h3>
+                    <p>Nhận 100% lô ({a.quantity?.toLocaleString('vi-VN')} bản in) · Đơn giá {money(a.unitPrice)}</p>
+                  </div>
+                  <Badge status={q.status==='delivered'?'delivered':a.status}/>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Cột bên phải: Lịch sử mốc cập nhật */}
+        <aside className="panel history-panel">
+          <span className="eyebrow">NHẬT KÝ YÊU CẦU</span>
+          <h2>Các mốc cập nhật</h2>
+          {[...(q.history||[])].reverse().map((h,i)=>(
+            <div className="history-item" key={i}>
+              <span/>
+              <div>
+                <strong>{h.note}</strong>
+                <p>{new Date(h.at).toLocaleString('vi-VN')}</p>
+              </div>
+            </div>
+          ))}
+          <p className="muted">Mọi thay đổi trạng thái được lưu lại minh bạch trên hệ thống.</p>
+        </aside>
+      </div>
+
+      {dialog==='edit'&&<FormDialog title="Sửa bản nháp" fields={quoteFields} initial={pick(q,quoteFields)} onClose={()=>setDialog(null)} onSubmit={async body=>{await api('/quotes/'+id,{method:'PATCH',body:{...body,version:q.version}});state.reload();notify('Đã lưu bản nháp');}}/>}
+      {dialog==='bid'&&<FormDialog title="Chào giá từ xưởng" fields={[field('unitPrice','Đơn giá mỗi bản (VNĐ)','number',{min:1}),field('quantity','Số lượng có thể nhận','number',{min:1,max:q.quantity,step:1}),field('days','Số ngày hoàn thành','number',{min:1,max:365,step:1}),field('note','Ghi chú / cam kết chế tác','textarea',{required:false,wide:true,maxLength:2000})]} initial={{unitPrice:100000,quantity:q.quantity,days:7,note:''}} onClose={()=>setDialog(null)} submitLabel="Gửi chào giá" onSubmit={async body=>{await api('/quotes/'+id+'/bids',{method:'POST',body:{...body,version:q.version}});state.reload();notify('Đã gửi chào giá');}}/>}
+    </section>
+  );
+}

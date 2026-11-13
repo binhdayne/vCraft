@@ -30,6 +30,10 @@ import {
   AccountModelName,
   AccountSchema,
 } from "../modules/users/schemas/users.schema";
+import {
+  CartModelName,
+  CartSchema,
+} from "../modules/cart/schemas/cart.schema";
 export const databaseModels = [
   { name: AccountModelName, schema: AccountSchema },
   { name: StudioModelName, schema: StudioSchema },
@@ -39,4 +43,5 @@ export const databaseModels = [
   { name: QuotationModelName, schema: QuotationSchema },
   { name: BulletinModelName, schema: BulletinSchema },
   { name: MediaAssetModelName, schema: MediaAssetSchema },
+  { name: CartModelName, schema: CartSchema },
 ];
