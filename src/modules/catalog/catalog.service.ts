@@ -10,6 +10,7 @@ import { Model } from "mongoose";
 import { role } from "../../common/authorization";
 import { id, parse } from "../../common/validation";
 import { Actor } from "../auth/interfaces/actor.interface";
+import { BatchesService } from "../batches/batches.service";
 import {
   productInput,
   updateWorkshopProductInput,
@@ -27,8 +28,7 @@ export class CatalogService {
     private readonly productsModel: Model<Record<string, any>>,
     @InjectModel("WorkshopProduct")
     private readonly workshopProductsModel: Model<Record<string, any>>,
-    @InjectModel("Batch")
-    private readonly batchesModel: Model<Record<string, any>>,
+    private readonly batchesService: BatchesService,
     @InjectModel("MediaAsset")
     private readonly assetsModel: Model<Record<string, any>>,
   ) {}
@@ -138,9 +138,7 @@ export class CatalogService {
         }));
     }
 
-    const batches = await this.batchesModel
-      .find({ productId: key, published: true })
-      .lean();
+    const batches = await this.batchesService.publicForProduct(key);
 
     return { ...item, workshop, workshopProducts, batches };
   }
@@ -223,7 +221,7 @@ export class CatalogService {
     const productIds = listings.map((l) => l.productId);
     const artworks = await this.productsModel
       .find({ _id: { $in: productIds } })
-      .select("name category dimensions material images story description type")
+      .select("name category dimensions material images story description type published")
       .lean();
     const artMap = new Map(artworks.map((a: any) => [String(a._id), a]));
 

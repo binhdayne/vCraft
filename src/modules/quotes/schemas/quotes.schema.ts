@@ -27,6 +27,7 @@ export const QuotationSchema = new Schema(
         quantity: Number,
         unitPrice: Number,
         status: String,
+        batchId: String,
       },
     ],
     proposedAllocations: [{ workshopId: String, quantity: Number }],

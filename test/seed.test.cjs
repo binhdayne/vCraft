@@ -27,7 +27,7 @@ test('demo seed creates related data, preserves edits on rerun and refuses produ
 
   try {
     await runSeed();
-    const expected = { users: 5, workshops: 3, products: 6, batches: 3, quotes: 1, news: 3 };
+    const expected = { users: 5, workshops: 3, products: 6, workshopProducts: 0, batches: 3, quotes: 1, news: 3 };
     assert.deepEqual(await counts(), expected);
     const buyer = await db.users.findOne({ email: 'buyer@vcraft.local' }).select('+passwordHash');
     assert.equal(buyer.role, 'buyer');

@@ -10,6 +10,7 @@ import { Model } from "mongoose";
 import { role } from "../../common/authorization";
 import { id, parse } from "../../common/validation";
 import { Actor } from "../auth/interfaces/actor.interface";
+import { BatchesService } from "../batches/batches.service";
 import {
   allocationInput,
   quoteInput,
@@ -29,6 +30,7 @@ export class QuotesService {
     private readonly workshopsModel: Model<Record<string, any>>,
     @InjectModel("Quotation")
     private readonly quotesModel: Model<Record<string, any>>,
+    private readonly batchesService: BatchesService,
   ) {}
   async list(actor: Actor) {
     const u: Actor = actor;
@@ -172,26 +174,32 @@ export class QuotesService {
     role(actor, "artisan");
     const data = parse(productionInputSchema, body);
     const q = await this.load(key, actor);
-    this.state(q, ["accepted", "in_production"]);
+    this.state(q, data.action === "ready" ? ["in_production", "delivered"] : ["accepted", "in_production"]);
     const s = await this.studio(actor);
     const allocations = q.allocations.map((a: any) => ({ ...a }));
     const own = allocations.find((a: any) => a.workshopId === String(s._id));
     if (!own) throw new ForbiddenException("Xưởng không được phân bổ đơn này");
     if (
       (data.action === "start" && own.status !== "accepted") ||
-      (data.action === "ready" && own.status !== "in_production")
+      (data.action === "ready" && (own.batchId || !["in_production", "ready"].includes(own.status)))
     )
       throw new ConflictException("Trạng thái phần việc không phù hợp");
+    if (q.version !== data.version) throw new ConflictException("Dữ liệu đã thay đổi. Vui lòng tải lại.");
+    let batch: any;
+    if (data.action === "ready") {
+      if (!data.landingPage) throw new BadRequestException("Điền thông tin landing page trước khi hoàn thành lô tranh");
+      batch = await this.batchesService.prepareCompletion(actor, String(q._id), own.quantity, q.category, data.landingPage);
+      own.batchId = String(batch._id);
+    }
     own.status = data.action === "start" ? "in_production" : "ready";
-    return this.cas(
-      q,
-      data.version,
-      { status: "in_production", allocations },
-      actor,
-      data.action === "start"
-        ? "Xưởng bắt đầu sản xuất"
-        : "Xưởng hoàn thành phần việc",
-    );
+    try {
+      return await this.cas(q, data.version,
+        { status: q.status === "delivered" ? "delivered" : "in_production", allocations }, actor,
+        data.action === "start" ? "Xưởng bắt đầu sản xuất" : "Xưởng hoàn thành phần việc và tạo trang truy xuất lô tranh");
+    } catch (error) {
+      if (batch) await this.batchesService.discardUnlinked(batch);
+      throw error;
+    }
   }
   async deliver(actor: Actor, key: string, body: unknown) {
     const { version } = parse(versionInput, body);

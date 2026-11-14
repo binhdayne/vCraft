@@ -1,0 +1,30 @@
+.batch-landing-backdrop{z-index:150}
+.batch-landing-dialog{width:900px}
+.batch-landing-dialog .modal-head{align-items:flex-start}
+.batch-landing-dialog .modal-head .eyebrow{font-size:10px;display:block;margin-bottom:8px}
+.batch-landing-intro{font-size:13px;line-height:1.8;color:var(--muted)}
+.batch-landing-summary{display:flex;flex-wrap:wrap;gap:20px 45px;padding:20px;background:#ebe3d1;margin:20px 0}
+.batch-landing-summary>div{display:grid;gap:7px;min-width:0}
+.batch-landing-summary span{font-size:10px;letter-spacing:1px;color:var(--muted)}
+.batch-landing-summary strong{font-size:14px;overflow-wrap:anywhere}
+.batch-landing-fields{border:0;padding:0;margin:25px 0 0;min-width:0}
+.batch-landing-fields>.form-grid>p{margin:0}
+.batch-field-label{font-size:13px;color:#6b604e}
+.batch-landing-dialog .muted{font-size:12px;line-height:1.7}
+.batch-milestones-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:35px}
+.batch-milestones-heading h3{font-size:26px;margin:8px 0}
+.batch-milestones-heading>span{font-size:12px;white-space:nowrap;color:var(--muted)}
+.batch-milestone{border:1px solid var(--line);padding:20px;margin:18px 0}
+.batch-milestone-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px}
+.batch-milestone-head>strong{color:var(--red);font-size:12px;letter-spacing:1px}
+.batch-milestone-head .text-link{font-size:12px}
+.batch-film-hint{padding:18px 0;margin-top:18px;border-top:1px solid var(--line);font-size:12px;line-height:1.7;color:var(--muted)}
+.batch-publish-check{display:flex;align-items:center;gap:12px}
+.batch-publish-check input{width:auto}
+.batch-landing-links{display:flex;gap:12px 22px;flex-wrap:wrap;margin-top:12px}
+.batch-landing-links .text-link{font-size:12px}
+.batch-landing-result{margin-top:20px;padding:18px;border:1px solid var(--line);background:#eee7d7}
+.batch-landing-result p{font-size:13px;line-height:1.7;margin:0}
+.allocation-row>div{min-width:0}
+.allocation-row .batch-landing-links{margin-top:10px}
+@media(max-width:540px){.batch-landing-dialog .modal-head h2{font-size:23px}.batch-milestone{padding:14px}.batch-landing-summary{gap:18px;padding:16px}.batch-landing-dialog .modal-actions{flex-direction:column-reverse}.batch-landing-dialog .modal-actions .btn{width:100%}.allocation-row{flex-wrap:wrap}}

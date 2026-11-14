@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { category, id, isoDate, text } from "../../../common/validation";
+import { landingContentSchema } from "../../batches/dto/batches.dto";
 export const quoteInput = z
   .object({
     title: text(150),
@@ -43,6 +44,7 @@ export const productionInputSchema = z
   .object({
     version: z.number().int().min(0),
     action: z.enum(["start", "ready"]),
+    landingPage: landingContentSchema.optional(),
   })
   .strict();
 export type ProductionDto = z.output<typeof productionInputSchema>;
