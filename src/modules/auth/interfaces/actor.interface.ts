@@ -3,4 +3,6 @@ export interface Actor {
   role: "buyer" | "artisan" | "admin";
   name: string;
   email: string;
+  phone?: string;
+  address?: string;
 }

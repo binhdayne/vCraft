@@ -157,20 +157,30 @@ export class BatchesService {
     return s;
   }
 
-  async prepareCompletion(actor: Actor, quoteId: string, quantity: number, category: string, input: unknown) {
+  async prepareCompletion(actor: Actor, quoteId: string, quantity: number, category: string, input: unknown, orderItems: any[] = []) {
     const d = parse(landingContentSchema, input);
     const s = await this.studio(actor.id);
     if (!s.approved) throw new ForbiddenException("Xưởng chưa được duyệt");
     const product = await this.productsModel.findOne({ _id: d.productId, published: true }).lean();
     const listed = await this.workshopProductsModel.exists({ productId: d.productId,
       workshopId: String(s._id), published: true });
-    if (!product || (product.workshopId !== String(s._id) && !listed))
+    if (orderItems.length && !orderItems.some(item => item.productId === d.productId))
+      throw new BadRequestException("Tác phẩm đại diện phải nằm trong danh sách tranh của đơn hàng");
+    if (orderItems.length && orderItems.reduce((sum, item) => sum + item.quantity, 0) !== quantity)
+      throw new BadRequestException("Đơn nhiều tác phẩm cần một xưởng thực hiện toàn bộ lô");
+    const assignedHeritage = orderItems.length && product?.type === "general" && !product.workshopId;
+    if (!product || (product.workshopId !== String(s._id) && !listed && !assignedHeritage))
       throw new ForbiddenException("Hãy chọn tranh đang công khai do xưởng sở hữu hoặc nhận in");
-    if (product.category !== category) throw new BadRequestException("Tác phẩm phải thuộc phân loại của yêu cầu đặt tranh");
+    if (!orderItems.length && product.category !== category)
+      throw new BadRequestException("Tác phẩm phải thuộc phân loại của yêu cầu đặt tranh");
+    if (orderItems.some(item => item.type === "custom" && item.workshopId !== String(s._id)))
+      throw new ForbiddenException("Tranh độc bản trong lô phải do chính xưởng sở hữu thực hiện");
     await this.ownedImages(actor.id, [...d.coverImages, ...d.events.flatMap(e => e.images)]);
     // Stage first; public reads also require the quotation's successful completion link.
     // This keeps publication safe on a standalone MongoDB without transactions.
     return this.batchesModel.create({ ...d, quoteId, quantity, workshopId: String(s._id),
+      items: orderItems.map(item => ({ productId: item.productId, artworkName: item.artworkName,
+        image: item.image, quantity: item.quantity, category: item.category, dimensions: item.dimensions })),
       productName: product.name, workshopName: s.name,
       code: "DH-" + randomUUID().slice(0, 8).toUpperCase(), published: true });
   }

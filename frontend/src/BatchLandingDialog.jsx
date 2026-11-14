@@ -33,14 +33,16 @@ export function BatchLandingDialog({ quote, allocation, studio, batch, onSubmit,
   const [error, setError] = useState('');
   const uploading = Object.values(uploads).some(Boolean);
   const locked = busy || uploading;
+  const ordered = quote?.items || batch?.items || [];
   const available = [...(custom.data || []).filter(p => p.published),
     ...(heritage.data || []).filter(item => item.published && item.product?.published)
       .map(item => item.product)].filter(p => !quote || p.category === quote.category);
-  const products = [...new Map(available.map(p => [p._id, p])).values()];
+  const choices = ordered.length ? ordered.map(item => ({ _id: item.productId, name: item.artworkName })) : available;
+  const products = [...new Map(choices.map(p => [p._id, p])).values()];
   const product = products.find(item => item._id === productId) || { name: batch?.productName || '' };
   const film = findArtworkFilm(product);
-  const loading = !editing && (custom.loading || heritage.loading);
-  const loadError = !editing && (custom.error || heritage.error);
+  const loading = !editing && !ordered.length && (custom.loading || heritage.loading);
+  const loadError = !editing && !ordered.length && (custom.error || heritage.error);
 
   useEffect(() => {
     const previous = document.activeElement;
@@ -107,16 +109,19 @@ export function BatchLandingDialog({ quote, allocation, studio, batch, onSubmit,
         {batch && <div><span>MÃ LÔ</span><strong>{batch.code}</strong></div>}
       </div>
       {quote && <p className="muted">Thuộc yêu cầu: {quote.title}. Số lượng lấy từ phân bổ đơn hàng.</p>}
+      {ordered.length > 0 && <div className="batch-ordered-items"><strong>Tác phẩm trong lô (lấy từ đơn hàng)</strong>
+        <ul>{ordered.map((item, index) => <li key={item.productId + ':' + index}>{item.artworkName} <span>{item.quantity.toLocaleString('vi-VN')} bản</span></li>)}</ul></div>}
       <LoadState loading={loading} error={loadError} retry={() => { custom.reload(); heritage.reload(); }} />
       <form onSubmit={submit} onChange={() => { if (error) setError(''); }}>
         <fieldset disabled={busy} className="batch-landing-fields">
           <div className="form-grid">
-            <label className="wide"><span>Tác phẩm trong lô *</span>{editing
+            <label className="wide"><span>{ordered.length > 1 ? 'Tác phẩm đại diện cho lô' : 'Tác phẩm trong lô'} *</span>{editing
               ? <input value={batch.productName || product.name} readOnly />
               : <select required value={productId} disabled={loading || Boolean(loadError) || locked} onChange={e => setProductId(e.target.value)}>
                 <option value="">Chọn tranh xưởng đang nhận in / sở hữu</option>
                 {products.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}
               </select>}</label>
+            {ordered.length > 1 && <p className="wide muted">Tác phẩm đại diện dùng cho phần mở đầu và hoạt họa. Landing page lưu toàn bộ danh sách tranh và số lượng của đơn.</p>}
             {!editing && !loading && !loadError && !products.length && <p className="wide error">Xưởng chưa có tranh công khai thuộc phân loại {quote?.category}. Hãy thêm tranh vào “Tranh của xưởng” rồi thử lại.</p>}
             <label className="wide"><span>Câu chuyện của lô tranh *</span><textarea required maxLength={5000} rows={4} value={story} onChange={e => setStory(e.target.value)}
               placeholder="Kể về lô tranh này: nguyên liệu, cách làm, người thực hiện và điểm riêng của thành phẩm…" /></label>

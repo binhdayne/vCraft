@@ -91,11 +91,12 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   q=await ok('/quotes/'+q._id+'/bids','POST',{version:q.version,unitPrice:110000,quantity:60,days:7,note:'B offer'},art2);
  });
  const allocation=()=>[{workshopId:studio1._id,quantity:50},{workshopId:studio2._id,quantity:50}];
- await t.test('allocation validates total, capacity and duplicate studios; admin can propose',async()=>{
+ await t.test('legacy allocation validates quantities and removed admin proposals stay unavailable',async()=>{
   assert.equal((await req('/quotes/'+q._id+'/accept','POST',{version:q.version,allocations:[{workshopId:studio1._id,quantity:50}]},buyer)).status,400);
   assert.equal((await req('/quotes/'+q._id+'/accept','POST',{version:q.version,allocations:[{workshopId:studio1._id,quantity:100}]},buyer)).status,400);
   assert.equal((await req('/quotes/'+q._id+'/accept','POST',{version:q.version,allocations:[{workshopId:studio1._id,quantity:50},{workshopId:studio1._id,quantity:50}]},buyer)).status,400);
-  q=await ok('/quotes/'+q._id+'/plan','POST',{version:q.version,allocations:allocation()},admin);assert.equal(q.status,'bidding');assert.equal(q.proposedAllocations.length,2);
+  assert.equal((await req('/quotes/'+q._id+'/plan','POST',{version:q.version,allocations:allocation()},admin)).status,404);
+  assert.equal((await ok('/quotes/'+q._id,'GET',undefined,buyer)).proposedAllocations,undefined);
   assert.equal((await req('/quotes/'+q._id+'/accept','POST',{version:q.version,allocations:allocation()},admin)).status,403);
  });
  await t.test('simultaneous accepts yield exactly one success and one conflict',async()=>{
@@ -189,6 +190,29 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   const result=await ok('/quotes/'+order._id+'/production','POST',{version:0,action:'ready',landingPage:landing(String(artwork._id),uploads[0])},art1);
   assert.equal((await ok('/trace/'+result.allocations[0].batchId)).product.name,'Heritage test');
   await conn.models.Artwork.updateOne({_id:artwork._id},{$set:{published:false}});
+ });
+ await t.test('multi-item orders complete with one page containing the full ordered lot',async()=>{
+  const artworks=await conn.models.Artwork.insertMany([
+   {name:'Ordered heritage A',category:'Chúc tụng',type:'general',published:true,images:['/art/dai-cat.jpg']},
+   {name:'Ordered heritage B',category:'Sinh hoạt',type:'general',published:true,images:['/art/dam-cuoi-chuot.jpg']},
+  ]);
+  let order=await ok('/quotes','POST',{title:'Mixed artwork lot',deadline:new Date(Date.now()+40*86400000).toISOString().slice(0,10),
+   description:'Two artworks, one order',items:artworks.map((art,index)=>({productId:String(art._id),quantity:index?70:30,note:'Private buyer note'})),
+   customerInfo:{fullName:'Private customer',shippingAddress:'Private shipping address'}},buyer);
+  assert.equal(order.category,'Đa thể loại');assert.equal(order.quantity,100);
+  order=await ok('/quotes/'+order._id+'/send','POST',{version:order.version},buyer);
+  order=await ok('/quotes/'+order._id+'/bids','POST',{version:order.version,unitPrice:100000,quantity:100,days:7,note:'Whole lot'},art1);
+  order=await ok('/quotes/'+order._id+'/accept','POST',{version:order.version,workshopId:studio1._id},buyer);
+  assert.equal(order.acceptedWorkshopId,studio1._id);
+  order=await ok('/quotes/'+order._id+'/production','POST',{version:order.version,action:'start'},art1);
+  assert.equal((await req('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready',landingPage:landing(p1._id,uploads[0])},art1)).status,400);
+  order=await ok('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready',landingPage:landing(String(artworks[1]._id),uploads[0])},art1);
+  const trace=await ok('/trace/'+order.allocations[0].batchId);
+  assert.equal(trace.quantity,100);assert.equal(trace.product.name,'Ordered heritage B');
+  assert.deepEqual(trace.items.map(item=>[item.artworkName,item.quantity]),[['Ordered heritage A',30],['Ordered heritage B',70]]);
+  assert.equal(trace.customerInfo,undefined);assert.ok(trace.items.every(item=>!('note' in item)));
+  assert.equal((await req('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready',landingPage:landing(String(artworks[0]._id),uploads[0])},art1)).status,409);
+  await conn.models.Artwork.updateMany({_id:{$in:artworks.map(art=>art._id)}},{$set:{published:false}});
  });
  await t.test('admin news CRUD and unapproved workshop visibility',async()=>{
   const news={title:'News test',body:'Test bulletin',category:'Thông báo',image:'',published:false};assert.equal((await req('/news','POST',news,buyer)).status,403);

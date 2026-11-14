@@ -14,5 +14,6 @@ exports.createDatabase = (connection) => {
     batches: models.Batch,
     quotes: models.Quotation,
     news: models.Bulletin,
+    carts: models.Cart,
   };
 };

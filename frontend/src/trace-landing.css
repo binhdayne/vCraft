@@ -313,3 +313,8 @@
   .trace-experience *, .trace-experience *::before, .trace-experience *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .trace-experience [data-reveal] { opacity: 1; transform: none; }
 }
+.trace-batch-artworks{margin:30px 0}
+.trace-batch-artworks ul{list-style:none;padding:0;margin:14px 0}
+.trace-batch-artworks li{display:flex;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px solid #c8bda5}
+.trace-batch-artworks li strong{font-weight:400;overflow-wrap:anywhere}
+.trace-batch-artworks li>span{white-space:nowrap;font-size:13px;color:var(--trace-red)}

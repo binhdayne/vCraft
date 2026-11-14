@@ -177,7 +177,7 @@ function TraceStory({ batch }) {
       </div>
 
       <div className="trace-hero-bottom trace-shell">
-        <div><span>TÁC PHẨM</span><strong>{product.name || 'Đang cập nhật'}</strong></div>
+        <div><span>{batch.items?.length > 1 ? 'TÁC PHẨM ĐẠI DIỆN' : 'TÁC PHẨM'}</span><strong>{product.name || 'Đang cập nhật'}</strong></div>
         <div><span>KHÔNG GIAN LÀM NGHỀ</span><strong>{workshop.name || 'Đang cập nhật'}</strong></div>
         <div><span>TRONG LÔ TRANH NÀY</span><strong>{Number(batch.quantity || 0).toLocaleString('vi-VN')} <small>bản in</small></strong></div>
         <button type="button" className="trace-scroll-cue" onClick={() => goTo('trace-process')} aria-label="Đi tới nhật ký sản xuất"><ArrowDown size={18} /><span>CUỘN ĐỂ KHÁM PHÁ</span></button>
@@ -192,6 +192,9 @@ function TraceStory({ batch }) {
         <span className="trace-kicker">MỖI BỨC TRANH, MỘT HÀNH TRÌNH</span>
         <h2 id="trace-story-title">Bạn thấy một bức tranh.<br /><em>Chúng tôi kể những dấu tay.</em></h2>
         <p className="trace-batch-story">{batch.story || 'Xưởng đang cập nhật câu chuyện cho lô tranh này.'}</p>
+        {batch.items?.length > 0 && <div className="trace-batch-artworks"><span className="trace-kicker">CÁC TÁC PHẨM TRONG LÔ</span>
+          <ul>{batch.items.map((item, index) => <li key={item.productId + ':' + index}><strong>{item.artworkName}</strong><span>{Number(item.quantity).toLocaleString('vi-VN')} bản in</span></li>)}</ul>
+        </div>}
         <div className="trace-story-facts">
           <div><strong>{number(events.length)}</strong><span>mốc nhật ký<br />được lưu lại</span></div>
           <div><strong>{Number(batch.quantity || 0).toLocaleString('vi-VN')}</strong><span>bản in<br />chung một câu chuyện</span></div>

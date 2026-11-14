@@ -23,6 +23,10 @@
 .batch-publish-check input{width:auto}
 .batch-landing-links{display:flex;gap:12px 22px;flex-wrap:wrap;margin-top:12px}
 .batch-landing-links .text-link{font-size:12px}
+.batch-ordered-items{font-size:12px;line-height:1.8;margin:20px 0}
+.batch-ordered-items ul{list-style:none;padding:0;margin:10px 0}
+.batch-ordered-items li{display:flex;justify-content:space-between;gap:18px;padding:8px 0;border-bottom:1px solid var(--line)}
+.batch-ordered-items li span{white-space:nowrap;color:var(--muted)}
 .batch-landing-result{margin-top:20px;padding:18px;border:1px solid var(--line);background:#eee7d7}
 .batch-landing-result p{font-size:13px;line-height:1.7;margin:0}
 .allocation-row>div{min-width:0}

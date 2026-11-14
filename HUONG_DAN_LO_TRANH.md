@@ -9,7 +9,7 @@
    | Thông tin | Cách cung cấp |
    | --- | --- |
    | Tên xưởng, số lượng | Hệ thống lấy từ xưởng đăng nhập và phần việc được phân bổ; không nhập lại. |
-   | Tác phẩm | Chọn tranh đang công khai của xưởng hoặc tranh di sản xưởng đang nhận in, cùng phân loại với đơn. |
+   | Tác phẩm | Đơn có danh sách tranh: chọn tác phẩm đại diện từ đơn; toàn bộ tranh và số lượng được lưu theo lô. Đơn cũ chưa có danh sách: chọn tranh công khai của xưởng hoặc tranh di sản đang nhận in, cùng phân loại với đơn. |
    | Câu chuyện lô tranh | Nội dung riêng về nguyên liệu, cách làm, người thực hiện và thành phẩm của lô này. |
    | Ảnh thành phẩm | Tải lên ít nhất một ảnh; ảnh đầu tiên làm ảnh chính của landing page. |
    | Câu chuyện người làm nghề | Gợi ý từ hồ sơ xưởng; có thể sửa riêng cho lô, không thay đổi hồ sơ xưởng. |
@@ -18,7 +18,7 @@
 4. Nhấn **Hoàn thành & xuất bản trang**. Hệ thống xác nhận hoàn thành phần việc và tạo lô, mã lô, landing page, QR của lô.
 5. Mở **Xem landing page của lô** hoặc **Tải mã QR của lô** ngay trong đơn hàng. Mọi bản tranh của cùng phần lô dùng chung QR.
 
-Nếu một đơn chia cho nhiều xưởng, mỗi xưởng có một lô và trang riêng, với đúng số lượng mình làm. Khách hàng vẫn chỉ xác nhận nhận đủ hàng khi tất cả xưởng đã hoàn thành. Một phần việc chỉ tạo một trang; gửi lại thao tác không tạo thêm lô.
+Đơn nhiều tác phẩm theo luồng mới giao cho một xưởng thực hiện trọn gói. Landing page lưu đủ danh sách tranh và số lượng từng loại; ảnh, câu chuyện và nhật ký thuộc toàn bộ lô. Tác phẩm đại diện dùng ở phần mở đầu và góc hoạt họa. Các đơn cũ từng chia cho nhiều xưởng vẫn có trang riêng cho phần lô của từng xưởng. Khách hàng xác nhận nhận đủ hàng khi các phần việc đều hoàn thành. Một phần việc chỉ tạo một trang; gửi lại thao tác không tạo thêm lô.
 
 ## Ảnh, ngày và hoạt họa
 

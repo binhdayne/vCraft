@@ -1,3 +1,352 @@
-import React from 'react';import {createRoot} from 'react-dom/client';import {HashRouter,Routes,Route,Link,NavLink,useLocation,useNavigate} from 'react-router-dom';import {Menu,X,ArrowUpRight,LogOut,UserRound} from 'lucide-react';import {useState,useEffect} from 'react';import {AppProvider,useApp} from './shared';import {Home,Catalog,Product,Workshops,Workshop,VillageMap,Trace,News,Login,NotFound} from './public';import {Dashboard,QuoteDetail} from './workspace';import './fonts.css';import './style.css';import './motion.css';
-function Layout(){const {user,logout}=useApp(),[menu,setMenu]=useState(false);const location=useLocation(),navigate=useNavigate();useEffect(()=>{setMenu(false);window.scrollTo(0,0);},[location.pathname]);return <><div className="announcement">TRIỂN LÃM SỐ LÀNG TRANH ĐÔNG HỒ <span>·</span> Gìn giữ nét xưa, kết nối hôm nay</div><header><div className="nav-shell"><Link to="/" className="brand"><span className="brand-stamp">東<br/>湖</span><span>vCraft<small>ĐÔNG HỒ</small></span></Link><button className="mobile-toggle icon-btn" aria-label="Mở menu" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button><nav className={menu?'open':''}><NavLink to="/" end>Trang chủ</NavLink><NavLink to="/tranh">Bộ sưu tập</NavLink><NavLink to="/xuong">Nghệ nhân & xưởng</NavLink><NavLink to="/ban-do">Bản đồ làng nghề</NavLink><NavLink to="/tin-tuc">Chuyện làng</NavLink></nav><div className="nav-user">{user?<><Link className="login-link" to="/workspace"><UserRound size={17}/><span>{user.name.split(' ').slice(-2).join(' ')}</span></Link><button className="icon-btn" title="Đăng xuất" aria-label="Đăng xuất" onClick={()=>{logout();navigate('/');}}><LogOut size={17}/></button></>:<Link className="login-link" to="/dang-nhap">Đăng nhập <ArrowUpRight size={16}/></Link>}</div></div></header><main key={location.pathname}><Routes><Route path="/" element={<Home/>}/><Route path="/tranh" element={<Catalog/>}/><Route path="/tranh/:id" element={<Product/>}/><Route path="/xuong" element={<Workshops/>}/><Route path="/xuong/:id" element={<Workshop/>}/><Route path="/ban-do" element={<VillageMap/>}/><Route path="/trace/:id" element={<Trace/>}/><Route path="/tin-tuc" element={<News/>}/><Route path="/dang-nhap" element={<Login/>}/><Route path="/workspace" element={<Dashboard/>}/><Route path="/quotes/:id" element={<QuoteDetail/>}/><Route path="*" element={<NotFound/>}/></Routes></main><footer><div className="footer-main"><Link className="brand" to="/"><span className="brand-stamp">東<br/>湖</span><span>vCraft<small>ĐÔNG HỒ</small></span></Link><h2>Nét mộc còn mãi.<br/><em>Câu chuyện còn xa.</em></h2><div><Link to="/tranh">Khám phá bộ sưu tập ↗</Link><Link to="/ban-do">Ghé thăm làng tranh ↗</Link><Link to="/workspace">Kết nối đặt tranh ↗</Link></div></div><div className="footer-bottom"><span>© 2026 vCraft · Đồ án triển lãm số Đông Hồ</span><span>Xưởng, giá, chứng nhận và nhật ký mẫu là dữ liệu demo.</span></div><details className="credits"><summary>Nguồn hình ảnh & bản quyền</summary><p>Tranh: Wikimedia Commons, phạm vi công cộng. Ảnh in tranh: <a href="https://commons.wikimedia.org/wiki/File:Kreado_de_pentra%C4%B5o_en_vila%C4%9Do_%C4%90%C3%B4ng_H%E1%BB%93_01.jpg" target="_blank" rel="noreferrer">RG72 / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a>. Ảnh cắt khung khi hiển thị, minh họa nghề, không đại diện cho danh tính xưởng demo. Danh sách nguồn chi tiết trong public/art/SOURCES.md.</p></details></footer></>;}
-createRoot(document.getElementById('root')).render(<React.StrictMode><HashRouter><AppProvider><Layout/></AppProvider></HashRouter></React.StrictMode>);
+import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  LogOut,
+  UserRound,
+  ShoppingCart,
+} from 'lucide-react';
+import { AppProvider, useApp, CartProvider, useCart } from './shared';
+import {
+  Home,
+  Catalog,
+  Product,
+  Workshops,
+  Workshop,
+  VillageMap,
+  Trace,
+  News,
+  Login,
+  NotFound,
+  BatchOrder,
+} from './public';
+import { Dashboard, QuoteDetail } from './workspace';
+import './fonts.css';
+import './style.css';
+import './motion.css';
+
+function Layout() {
+  const { user, logout } = useApp();
+  const {
+    cart,
+    cartCount,
+    isMiniCartOpen,
+    toggleMiniCart,
+    closeMiniCart,
+    openCart,
+  } = useCart();
+  const [menu, setMenu] = useState(false);
+  const location = useLocation(),
+    navigate = useNavigate();
+  const isAuthPage =
+    location.pathname === '/dang-nhap' || location.pathname === '/dang-ky';
+  const cartShellRef = useRef(null);
+
+  useEffect(() => {
+    setMenu(false);
+    closeMiniCart();
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleOutside = (e) => {
+      if (cartShellRef.current && !cartShellRef.current.contains(e.target)) {
+        closeMiniCart();
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, [closeMiniCart]);
+
+  return (
+    <>
+      <div className="announcement">
+        TRIỂN LÃM SỐ LÀNG TRANH ĐÔNG HỒ <span>·</span> Gìn giữ nét xưa, kết nối
+        hôm nay
+      </div>
+      <header>
+        <div className="nav-shell">
+          <Link to="/" className="brand">
+            <span className="brand-stamp">
+              東<br />
+              湖
+            </span>
+            <span>
+              vCraft<small>ĐÔNG HỒ</small>
+            </span>
+          </Link>
+          <button
+            className="mobile-toggle icon-btn"
+            aria-label="Mở menu"
+            onClick={() => setMenu(!menu)}
+          >
+            {menu ? <X /> : <Menu />}
+          </button>
+          <nav className={menu ? 'open' : ''}>
+            <NavLink to="/" end>
+              Trang chủ
+            </NavLink>
+            <NavLink to="/tranh">Bộ sưu tập</NavLink>
+            <NavLink to="/xuong">Nghệ nhân & xưởng</NavLink>
+            <NavLink to="/ban-do">Bản đồ làng nghề</NavLink>
+            <NavLink to="/tin-tuc">Chuyện làng</NavLink>
+          </nav>
+          <div className="nav-actions">
+            <div className="nav-cart-shell" ref={cartShellRef}>
+              <button
+                type="button"
+                className="nav-cart-btn"
+                title="Giỏ hàng tác phẩm"
+                aria-label="Giỏ hàng tác phẩm"
+                onClick={toggleMiniCart}
+              >
+                <ShoppingCart size={20} />
+                {cartCount > 0 && (
+                  <span className="nav-cart-badge">{cartCount}</span>
+                )}
+              </button>
+
+              {isMiniCartOpen && (
+                <div
+                  className="mini-cart-dropdown"
+                  role="dialog"
+                  aria-label="Xem nhanh giỏ hàng"
+                >
+                  <div className="mini-cart-header">
+                    <h4>Giỏ tác phẩm</h4>
+                    <span className="mini-cart-count">
+                      {cart?.items?.length || 0} tác phẩm
+                    </span>
+                  </div>
+
+                  {!user ? (
+                    <div className="mini-cart-empty">
+                      <p>Vui lòng đăng nhập để xem và quản lý giỏ hàng</p>
+                      <Link
+                        to="/dang-nhap"
+                        className="btn small full"
+                        onClick={closeMiniCart}
+                      >
+                        Đăng nhập ngay
+                      </Link>
+                    </div>
+                  ) : !cart?.items?.length ? (
+                    <div className="mini-cart-empty">
+                      <div className="mini-cart-empty-icon">
+                        <ShoppingCart size={26} strokeWidth={1.3} />
+                      </div>
+                      <p>Chưa có tác phẩm nào trong giỏ</p>
+                      <Link
+                        to="/tranh"
+                        className="btn outline small full"
+                        onClick={closeMiniCart}
+                      >
+                        Khám phá bộ sưu tập
+                      </Link>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mini-cart-list">
+                        {cart.items.slice(0, 3).map((item) => (
+                          <Link
+                            key={item.productId}
+                            to={'/tranh/' + item.productId}
+                            onClick={closeMiniCart}
+                            className="mini-cart-item mini-cart-item-link"
+                            title="Xem chi tiết tác phẩm"
+                          >
+                            <img
+                              src={item.image || '/art/in-tranh.jpg'}
+                              alt={item.artworkName}
+                            />
+                            <div className="mini-cart-info">
+                              <h5>{item.artworkName}</h5>
+                              <div className="mini-cart-meta">
+                                <span>{item.quantity} bản</span>
+                                {item.type === 'custom' ? (
+                                  <span className="mini-custom-tag">
+                                    Độc bản
+                                  </span>
+                                ) : (
+                                  <span>{item.category}</span>
+                                )}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                        {cart.items.length > 3 && (
+                          <div className="mini-cart-more">
+                            và {cart.items.length - 3} tác phẩm khác…
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mini-cart-footer">
+                        <div className="mini-cart-summary">
+                          <span>Tổng cộng</span>
+                          <strong>
+                            {cart.totalItems} tác phẩm · {cart.totalQuantity} bản in
+                          </strong>
+                        </div>
+                        <button
+                          type="button"
+                          className="btn full mini-cart-action-btn"
+                          onClick={() => {
+                            closeMiniCart();
+                            openCart();
+                          }}
+                        >
+                          Xem giỏ hàng & Đặt lô
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="nav-user">
+              {user ? (
+                <div className="nav-user-chip">
+                  <Link
+                    className="user-profile-badge"
+                    to="/workspace"
+                    title="Không gian làm việc & Hồ sơ tài khoản"
+                  >
+                    <span className="user-avatar">
+                      {user.name?.charAt(0).toUpperCase()}
+                    </span>
+                    <div className="user-details">
+                      <span className="user-name">
+                        {user.name.split(' ').slice(-2).join(' ')}
+                      </span>
+                      <span className="user-role-tag">
+                        {user.role === 'admin'
+                          ? 'BQL'
+                          : user.role === 'artisan'
+                            ? 'Nghệ nhân'
+                            : 'Khách hàng'}
+                      </span>
+                    </div>
+                  </Link>
+                  <button
+                    className="icon-btn logout-btn"
+                    title="Đăng xuất"
+                    aria-label="Đăng xuất"
+                    onClick={() => {
+                      logout();
+                      navigate('/');
+                    }}
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </div>
+              ) : isAuthPage ? null : (
+                <div className="nav-auth-group">
+                  <Link className="nav-btn nav-btn-outline" to="/dang-nhap">
+                    Đăng nhập
+                  </Link>
+                  <Link className="nav-btn nav-btn-primary" to="/dang-ky">
+                    Đăng ký
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+      <main key={location.pathname}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tranh" element={<Catalog />} />
+          <Route path="/tranh/:id" element={<Product />} />
+          <Route path="/xuong" element={<Workshops />} />
+          <Route path="/xuong/:id" element={<Workshop />} />
+          <Route path="/ban-do" element={<VillageMap />} />
+          <Route path="/trace/:id" element={<Trace />} />
+          <Route path="/tin-tuc" element={<News />} />
+          <Route path="/dang-nhap" element={<Login />} />
+          <Route path="/dang-ky" element={<Login initialRegister={true} />} />
+          <Route path="/workspace" element={<Dashboard />} />
+          <Route path="/batch-order" element={<BatchOrder />} />
+          <Route path="/quotes/:id" element={<QuoteDetail />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <footer>
+        <div className="footer-main">
+          <Link className="brand" to="/">
+            <span className="brand-stamp">
+              東<br />
+              湖
+            </span>
+            <span>
+              vCraft<small>ĐÔNG HỒ</small>
+            </span>
+          </Link>
+          <h2>
+            Nét mộc còn mãi.
+            <br />
+            <em>Câu chuyện còn xa.</em>
+          </h2>
+          <div>
+            <Link to="/tranh">Khám phá bộ sưu tập ↗</Link>
+            <Link to="/ban-do">Ghé thăm làng tranh ↗</Link>
+            <Link to="/workspace">Kết nối đặt tranh ↗</Link>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <span>© 2026 vCraft · Đồ án triển lãm số Đông Hồ</span>
+          <span>Xưởng, giá, chứng nhận và nhật ký mẫu là dữ liệu demo.</span>
+        </div>
+        <details className="credits">
+          <summary>Nguồn hình ảnh & bản quyền</summary>
+          <p>
+            Tranh: Wikimedia Commons, phạm vi công cộng. Ảnh in tranh:{' '}
+            <a
+              href="https://commons.wikimedia.org/wiki/File:Kreado_de_pentra%C4%B5o_en_vila%C4%9Do_%C4%90%C3%B4ng_H%E1%BB%93_01.jpg"
+              target="_blank"
+              rel="noreferrer"
+            >
+              RG72 / Wikimedia Commons
+            </a>{' '}
+            ·{' '}
+            <a
+              href="https://creativecommons.org/licenses/by-sa/4.0/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              CC BY-SA 4.0
+            </a>
+            . Ảnh cắt khung khi hiển thị, minh họa nghề, không đại diện cho danh
+            tính xưởng demo. Danh sách nguồn chi tiết trong
+            public/art/SOURCES.md.
+          </p>
+        </details>
+      </footer>
+    </>
+  );
+}
+
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <HashRouter>
+      <AppProvider>
+        <CartProvider>
+          <Layout />
+        </CartProvider>
+      </AppProvider>
+    </HashRouter>
+  </React.StrictMode>,
+);
