@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CurrentUser } from "../../common/decorators/current-user.decorator";
 import { AuthGuard } from "../auth/guards/auth.guard";
@@ -29,6 +29,28 @@ export class AuthController {
     @CurrentUser()
     actor: Actor,
   ) {
-    return actor;
+    return this.service.getProfile(actor.id);
+  }
+  @Patch("profile")
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  updateProfile(
+    @CurrentUser()
+    actor: Actor,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.updateProfile(actor.id, body);
+  }
+  @Post("change-password")
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  changePassword(
+    @CurrentUser()
+    actor: Actor,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.changePassword(actor.id, body);
   }
 }

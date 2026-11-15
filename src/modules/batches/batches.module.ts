@@ -7,5 +7,6 @@ import { BatchesService } from "./batches.service";
   imports: [DatabaseModule, AuthModule],
   controllers: [BatchesController],
   providers: [BatchesService],
+  exports: [BatchesService],
 })
 export class BatchesModule {}

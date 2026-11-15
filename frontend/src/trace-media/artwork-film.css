@@ -1,0 +1,23 @@
+.trace-film { position: relative; min-width: 0; width: 100%; margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.trace-film-screen { position: relative; width: 100%; aspect-ratio: 16 / 9; background: transparent; }
+.trace-film-screen video { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent); mask-composite: intersect; }
+.trace-film-toggle { position: absolute; right: 10px; bottom: 7px; display: flex; align-items: center; gap: 7px; border: 0; padding: 6px; background: transparent; color: #7e6546; font-size: 9px; opacity: .7; }
+.trace-film-toggle:hover, .trace-film-toggle:focus-visible { opacity: 1; color: #753c2c; }
+.trace-film-loading { position: absolute; left: 10px; bottom: 12px; color: #826c4e; font-size: 9px; pointer-events: none; }
+.trace-film-error { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; background: #e8dfc8ed; color: #6d5237; text-align: center; }
+.trace-film-error p { font-size: 12px; margin: 12px 0; }
+.trace-film-error button { display: flex; align-items: center; gap: 8px; padding: 7px 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--trace-red); font-size: 11px; }
+.trace-film-description { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.trace-film-still { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; color: #9d835a; }
+.trace-film-still img { width: 100%; height: 100%; min-height: 0; max-height: 360px; object-fit: contain; }
+.trace-film-pending figcaption { display: block; text-align: center; padding-top: 15px; }
+.trace-film-pending figcaption strong { font: 21px/1.5 var(--serif); color: #6e5b40; }
+.trace-film-pending figcaption p { font-size: 11px; color: #8e7e60; margin: 12px 0 0; }
+@media (max-width: 760px) {
+  .trace-film-toggle { bottom: 0; right: 0; font-size: 8px; }
+  .trace-film-loading { bottom: 6px; font-size: 8px; }
+  .trace-film-error { padding: 15px; }
+  .trace-film-error > svg { display: none; }
+  .trace-film-error p { font-size: 10px; }
+  .trace-film-error button { font-size: 10px; }
+}

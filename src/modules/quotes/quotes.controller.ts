@@ -76,17 +76,6 @@ export class QuotesController {
   ) {
     return this.service.bid(actor, key, body);
   }
-  @Post(":id/plan")
-  plan(
-    @CurrentUser()
-    actor: Actor,
-    @Param("id")
-    key: string,
-    @Body()
-    body: unknown,
-  ) {
-    return this.service.plan(actor, key, body);
-  }
   @Post(":id/accept")
   accept(
     @CurrentUser()
