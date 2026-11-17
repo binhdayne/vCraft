@@ -431,7 +431,9 @@ export class QuotesService {
     try {
       return await this.cas(q, data.version,
         { status: q.status === "delivered" ? "delivered" : "in_production", allocations }, actor,
-        data.action === "start" ? "Xưởng bắt đầu sản xuất" : "Xưởng hoàn thành phần việc và tạo trang truy xuất lô tranh");
+        data.action === "start" ? "Xưởng bắt đầu sản xuất" : "Xưởng hoàn thành phần việc và tạo trang truy xuất lô tranh",
+        { eventType: data.action === "start" ? "production_started" : "batch_completed",
+          workshopId: String(s._id), ...(batch ? { batchId: String(batch._id) } : {}) });
     } catch (error) {
       if (batch) await this.batchesService.discardUnlinked(batch);
       throw error;
@@ -529,6 +531,7 @@ export class QuotesService {
     changes: any,
     user: Actor,
     note: string,
+    event: { eventType?: string; workshopId?: string; batchId?: string } = {},
   ) {
     if (q.version !== version)
       throw new ConflictException("Dữ liệu đã thay đổi. Vui lòng tải lại.");
@@ -543,6 +546,9 @@ export class QuotesService {
             at: new Date(),
             actor: user.id,
             note,
+            eventType: event.eventType || ({ sent: "quote_sent", bidding: "bid_received", accepted: "quote_accepted", delivered: "order_delivered" } as Record<string, string>)[changes.status],
+            ...(event.workshopId ? { workshopId: event.workshopId } : {}),
+            ...(event.batchId ? { batchId: event.batchId } : {}),
           },
         },
       },

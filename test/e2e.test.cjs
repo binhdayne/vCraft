@@ -8,7 +8,7 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
  async function ok(url,method,body,token,status){const r=await req(url,method,body,token);assert.equal(r.status,status|| (method==='POST'?201:200),JSON.stringify(r.data));return r.data;}
  let admin,buyer,other,art1,art2,studio1,studio2,p1,p2,batch,q;const password='TestPassword123!';const categories=['Chúc tụng'];
  try{
- await Promise.all([db.users.init(),db.workshops.init(),db.batches.init()]);
+ await Promise.all([db.users.init(),db.workshops.init(),db.batches.init(),conn.models.NotificationRead.init()]);
  await db.users.create({name:'Admin test',email:'admin@test.local',passwordHash:await hash(password,10),role:'admin',active:true});
  const studio={name:'Studio test',story:'Story test',address:'Demo address',latitude:21.06,longitude:106.08,openForVisits:true,visitingHours:'8–17',categories,images:['/art/dai-cat.jpg'],certificates:[]};
  await t.test('registration restricts role and guards admin endpoints',async()=>{
@@ -19,6 +19,8 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.equal((await req('/admin/users','GET',undefined,buyer)).status,403);
   assert.equal((await req('/admin/users')).status,401);
   assert.equal((await req('/auth/login','POST',{email:'buyer@test.local',password:'wrong'})).status,401);
+  assert.equal((await req('/notifications')).status,401);
+  assert.deepEqual((await ok('/notifications','GET',undefined,buyer)).items,[]);
   const accounts=await ok('/admin/users','GET',undefined,admin);assert.ok(accounts.every(u=>!u.passwordHash));
  });
  await t.test('admin creates pending artisans and explicitly approves their studios',async()=>{
@@ -213,6 +215,66 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.equal(trace.customerInfo,undefined);assert.ok(trace.items.every(item=>!('note' in item)));
   assert.equal((await req('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready',landingPage:landing(String(artworks[0]._id),uploads[0])},art1)).status,409);
   await conn.models.Artwork.updateMany({_id:{$in:artworks.map(art=>art._id)}},{$set:{published:false}});
+ });
+ await t.test('notifications scope order history, completion links and read receipts to each account',async()=>{
+  const feed=await ok('/notifications?limit=50','GET',undefined,buyer);
+  const own=q.allocations.find(a=>a.workshopId===studio1._id);
+  const otherBatch=q.allocations.find(a=>a.workshopId===studio2._id);
+  const completed=feed.items.find(item=>item.batchId===own.batchId);
+  assert.ok(completed);assert.equal(completed.type,'batch');assert.equal(completed.traceAvailable,true);
+  assert.equal(completed.path,'/quotes/'+q._id);assert.ok(completed.batchCode);assert.equal(completed.readAt,null);
+  assert.equal(feed.items.filter(item=>item.batchId===own.batchId).length,1);
+  assert.ok(feed.items.some(item=>item.batchId===otherBatch.batchId));
+  assert.equal(new Set(feed.items.map(item=>item.key)).size,feed.items.length);
+  const artisanFeed=await ok('/notifications?limit=50','GET',undefined,art1);
+  assert.ok(artisanFeed.items.some(item=>item.key===completed.key));
+  assert.ok(!artisanFeed.items.some(item=>item.batchId===otherBatch.batchId));
+  const secondFeed=await ok('/notifications?limit=50','GET',undefined,art2);
+  assert.ok(!secondFeed.items.some(item=>item.key===completed.key));
+  assert.equal((await req('/notifications/'+encodeURIComponent(completed.key)+'/read','PATCH',undefined,art2)).status,404);
+  assert.deepEqual((await ok('/notifications?limit=50','GET',undefined,other)).items,[]);
+  for(const query of ['?limit=51','?page=0','?unreadOnly=yes','?recipientId='+studio2.ownerId])
+   assert.equal((await req('/notifications'+query,'GET',undefined,buyer)).status,400);
+  assert.equal((await req('/notifications/not-a-key/read','PATCH',undefined,buyer)).status,400);
+  const pages=await Promise.all([ok('/notifications?limit=2&page=1','GET',undefined,buyer),ok('/notifications?limit=2&page=2','GET',undefined,buyer)]);
+  assert.equal(pages[0].items.length,2);assert.equal(pages[0].hasMore,true);
+  assert.equal(new Set([...pages[0].items,...pages[1].items].map(item=>item.key)).size,4);
+  const reads=await Promise.all([req('/notifications/'+encodeURIComponent(completed.key)+'/read','PATCH',undefined,buyer),req('/notifications/'+encodeURIComponent(completed.key)+'/read','PATCH',undefined,buyer)]);
+  assert.ok(reads.every(result=>result.status===200));
+  const after=await ok('/notifications?limit=50','GET',undefined,buyer);
+  assert.equal(after.unreadCount,feed.unreadCount-1);assert.ok(after.items.find(item=>item.key===completed.key).readAt);
+  assert.equal((await ok('/notifications?limit=50','GET',undefined,art1)).items.find(item=>item.key===completed.key).readAt,null);
+  const user=await db.users.findOne({email:'buyer@test.local'});
+  assert.equal(await conn.models.NotificationRead.countDocuments({recipientId:String(user._id),key:completed.key}),1);
+  await db.batches.updateOne({_id:own.batchId},{$set:{published:false}});
+  assert.equal((await ok('/notifications?limit=50','GET',undefined,buyer)).items.find(item=>item.key===completed.key).traceAvailable,false);
+  await db.batches.updateOne({_id:own.batchId},{$set:{published:true}});
+  // Historical completions from before this feature still produce a working batch notification.
+  const index=Number(completed.key.split(':').at(-1));
+  await conn.models.Quotation.updateOne({_id:q._id},{$unset:{[`history.${index}.eventType`]:'',[`history.${index}.batchId`]:'',[`history.${index}.workshopId`]:''}});
+  assert.equal((await ok('/notifications?limit=50','GET',undefined,buyer)).items.find(item=>item.key===completed.key).batchId,own.batchId);
+  await ok('/notifications/read-all','PATCH',undefined,buyer);
+  const allRead=await ok('/notifications?unreadOnly=true','GET',undefined,buyer);
+  assert.equal(allRead.unreadCount,0);assert.deepEqual(allRead.items,[]);
+  assert.ok((await ok('/notifications','GET',undefined,art1)).unreadCount>0);
+  let next=await ok('/quotes','POST',{title:'A new notification after read-all',category:'Chúc tụng',quantity:10,description:'New order',deadline:new Date(Date.now()+40*86400000).toISOString().slice(0,10)},buyer);
+  next=await ok('/quotes/'+next._id+'/send','POST',{version:next.version},buyer);
+  assert.equal((await ok('/notifications?unreadOnly=true','GET',undefined,buyer)).unreadCount,1);
+ });
+ await t.test('published BQL announcements notify buyers and artisans without exposing draft news',async()=>{
+  const input={title:'Important village announcement',body:'Upcoming power maintenance',category:'Thông báo',image:'',published:false};
+  const notice=await ok('/news','POST',input,admin);
+  const key='announcement:'+notice._id;
+  assert.ok(!(await ok('/notifications?limit=50','GET',undefined,other)).items.some(item=>item.key===key));
+  await ok('/news/'+notice._id,'PATCH',{...input,published:true},admin);
+  for(const token of [buyer,other,art1,art2]) {
+   const entry=(await ok('/notifications?limit=50','GET',undefined,token)).items.find(item=>item.key===key);
+   assert.ok(entry);assert.equal(entry.type,'announcement');assert.equal(entry.path,'/tin-tuc');
+  }
+  await ok('/notifications/'+encodeURIComponent(key)+'/read','PATCH',undefined,other);
+  assert.equal((await ok('/notifications?unreadOnly=true','GET',undefined,other)).items.length,0);
+  await ok('/news/'+notice._id,'DELETE',undefined,admin);
+  assert.ok(!(await ok('/notifications?limit=50','GET',undefined,buyer)).items.some(item=>item.key===key));
  });
  await t.test('admin news CRUD and unapproved workshop visibility',async()=>{
   const news={title:'News test',body:'Test bulletin',category:'Thông báo',image:'',published:false};assert.equal((await req('/news','POST',news,buyer)).status,403);

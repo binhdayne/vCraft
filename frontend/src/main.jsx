@@ -32,6 +32,7 @@ import {
   BatchOrder,
 } from './public';
 import { Dashboard, QuoteDetail } from './workspace';
+import { NotificationBell } from './NotificationBell';
 import './fonts.css';
 import './style.css';
 import './motion.css';
@@ -216,6 +217,7 @@ function Layout() {
               )}
             </div>
 
+            {user && ['buyer', 'artisan'].includes(user.role) && <NotificationBell key={user.id} user={user} onOpen={closeMiniCart} closeSignal={isMiniCartOpen} />}
             <div className="nav-user">
               {user ? (
                 <div className="nav-user-chip">

@@ -72,7 +72,8 @@ export const QuotationSchema = new Schema(
         batchId: String,
       },
     ],
-    history: [{ status: String, at: Date, actor: String, note: String }],
+    history: [{ status: String, at: Date, actor: String, note: String,
+      eventType: String, workshopId: String, batchId: String }],
   },
   { timestamps: true, strict: true },
 );
