@@ -11,7 +11,7 @@ const eventValues = event => ({ title: event.title.trim(), date: event.date, not
 
 export function BatchPageLinks({ batchId }) {
   if (!batchId) return null;
-  return <div className="batch-landing-links"><Link className="text-link" to={'/trace/' + batchId}>Xem landing page của lô ↗</Link>
+  return <div className="batch-landing-links"><Link className="text-link" to={'/trace/' + batchId} target="_blank" rel="noopener noreferrer" title="Mở landing page trong tab mới">Xem landing page của lô ↗</Link>
     <a className="text-link" href={'/api/v1/trace/' + batchId + '/qr'} download={'QR-lo-' + batchId + '.png'}>Tải mã QR của lô ↓</a></div>;
 }
 
