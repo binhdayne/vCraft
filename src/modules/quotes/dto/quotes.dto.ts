@@ -20,6 +20,8 @@ export const lotItemInputSchema = z.object({
   workshopName: z.string().optional().default(""),
   quantity: z.number().int().min(1, "Số lượng tối thiểu là 1").max(1000000),
   note: z.string().trim().max(500).optional().default(""),
+  productionStatus: z.enum(["pending", "in_progress", "completed"]).optional().default("pending"),
+  completedAt: z.string().nullable().optional().default(null),
 });
 
 export const quoteInput = z
@@ -65,13 +67,43 @@ export const editInputSchema = quoteInput.extend({
   version: z.number().int().min(0),
 });
 
+export const itemPriceInputSchema = z
+  .object({
+    productId: id,
+    unitPrice: z.number().positive().max(1e9),
+  })
+  .strict();
+
 export const bidInputSchema = z
   .object({
     version: z.number().int().min(0),
-    unitPrice: z.number().positive().max(1e9),
+    unitPrice: z.number().positive().max(1e9).optional(),
+    totalPrice: z.number().positive().max(1e10).optional(),
+    itemPrices: z.array(itemPriceInputSchema).optional().default([]),
     quantity: z.number().int().min(1).max(1000000),
     days: z.number().int().min(1).max(365),
     note: z.string().trim().max(2000),
+  })
+  .strict()
+  .refine(
+    (data) =>
+      Boolean(
+        data.unitPrice ||
+          data.totalPrice ||
+          (data.itemPrices && data.itemPrices.length > 0),
+      ),
+    {
+      message:
+        "Yêu cầu phải có đơn giá bình quân, tổng giá trọn gói hoặc bảng giá chi tiết từng tranh",
+    },
+  );
+
+export const itemProgressInputSchema = z
+  .object({
+    version: z.number().int().min(0),
+    productId: id,
+    status: z.enum(["pending", "in_progress", "completed"]),
+    note: z.string().trim().max(500).optional().default(""),
   })
   .strict();
 
@@ -90,3 +122,4 @@ export type ProductionDto = z.output<typeof productionInputSchema>;
 export type VersionDto = z.output<typeof versionInput>;
 export type AllocationDto = z.output<typeof allocationInput>;
 export type AcceptSingleWorkshopDto = z.output<typeof acceptSingleWorkshopSchema>;
+export type ItemProgressDto = z.output<typeof itemProgressInputSchema>;

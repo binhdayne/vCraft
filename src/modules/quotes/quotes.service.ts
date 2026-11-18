@@ -16,6 +16,7 @@ import {
   allocationInput,
   bidInputSchema,
   editInputSchema,
+  itemProgressInputSchema,
   productionInputSchema,
   quoteInput,
   versionInput,
@@ -121,6 +122,8 @@ export class QuotesService {
           workshopName: ws?.name || "",
           quantity: item.quantity,
           note: item.note || "",
+          productionStatus: "pending",
+          completedAt: null,
         });
       }
 
@@ -335,12 +338,37 @@ export class QuotesService {
     )
       throw new BadRequestException("Thời gian hoàn thành vượt hạn giao");
 
+    let unitPrice = data.unitPrice || 0;
+    let totalPrice = data.totalPrice || 0;
+    const itemPrices = data.itemPrices || [];
+
+    if (itemPrices.length > 0) {
+      const itemMap = new Map<string, number>(
+        (q.items || []).map((i: any) => [String(i.productId), Number(i.quantity) || 0]),
+      );
+      let calculatedTotal = 0;
+      for (const ip of itemPrices) {
+        const qty = Number(itemMap.get(String(ip.productId)) || 0);
+        calculatedTotal += Number(ip.unitPrice) * qty;
+      }
+      totalPrice = calculatedTotal;
+      unitPrice = q.quantity > 0 ? Math.round(totalPrice / q.quantity) : unitPrice;
+    } else if (totalPrice > 0 && !unitPrice) {
+      unitPrice = q.quantity > 0 ? Math.round(totalPrice / q.quantity) : 0;
+    } else if (unitPrice > 0 && !totalPrice) {
+      totalPrice = unitPrice * q.quantity;
+    }
+
     const { version, ...offer } = data;
     const bids = q.bids.filter((b: any) => b.workshopId !== String(studio._id));
     bids.push({
       ...offer,
+      unitPrice,
+      totalPrice,
+      itemPrices,
       workshopId: String(studio._id),
       artisanId: actor.id,
+      createdAt: new Date(),
     });
     return this.cas(
       q,
@@ -348,6 +376,51 @@ export class QuotesService {
       { status: "bidding", bids },
       actor,
       "Xưởng gửi chào giá",
+    );
+  }
+
+  async itemProgress(actor: Actor, key: string, body: unknown) {
+    role(actor, "artisan");
+    const data = parse(itemProgressInputSchema, body);
+    const q = await this.load(key, actor);
+    this.state(q, ["accepted", "in_production"]);
+    const studio = await this.studio(actor);
+    const studioId = String(studio._id);
+
+    if (q.acceptedWorkshopId && q.acceptedWorkshopId !== studioId) {
+      throw new ForbiddenException("Xưởng không đảm nhận đơn hàng này");
+    }
+    const isAllocated = (q.allocations || []).some(
+      (a: any) => a.workshopId === studioId,
+    );
+    if (!isAllocated && q.acceptedWorkshopId !== studioId) {
+      throw new ForbiddenException("Xưởng không đảm nhận đơn hàng này");
+    }
+
+    const items = (q.items || []).map((it: any) => ({ ...it }));
+    const targetItem = items.find(
+      (it: any) => String(it.productId) === String(data.productId),
+    );
+    if (!targetItem) {
+      throw new NotFoundException("Tác phẩm không nằm trong đơn hàng");
+    }
+
+    targetItem.productionStatus = data.status;
+    targetItem.completedAt = data.status === "completed" ? new Date() : null;
+
+    const statusLabel =
+      data.status === "completed"
+        ? "Đã in xong"
+        : data.status === "in_progress"
+          ? "Đang in"
+          : "Chờ in";
+
+    return this.cas(
+      q,
+      data.version,
+      { items },
+      actor,
+      `Xưởng cập nhật tiến độ tác phẩm "${targetItem.artworkName}": ${statusLabel}`,
     );
   }
 
@@ -423,8 +496,28 @@ export class QuotesService {
     if (q.version !== data.version) throw new ConflictException("Dữ liệu đã thay đổi. Vui lòng tải lại.");
     let batch: any;
     if (data.action === "ready") {
-      if (!data.landingPage) throw new BadRequestException("Điền thông tin landing page trước khi hoàn thành lô tranh");
-      batch = await this.batchesService.prepareCompletion(actor, String(q._id), own.quantity, q.category, data.landingPage, q.items || []);
+      if (q.items && q.items.length > 0) {
+        const incomplete = q.items.filter(
+          (it: any) => it.productionStatus !== "completed",
+        );
+        if (incomplete.length > 0) {
+          throw new BadRequestException(
+            `Còn ${incomplete.length} tác phẩm chưa hoàn thành chế tác (${incomplete.map((i: any) => i.artworkName).join(", ")}). Vui lòng hoàn tất in toàn bộ lô tranh.`,
+          );
+        }
+      }
+      if (!data.landingPage)
+        throw new BadRequestException(
+          "Điền thông tin landing page trước khi hoàn thành lô tranh",
+        );
+      batch = await this.batchesService.prepareCompletion(
+        actor,
+        String(q._id),
+        own.quantity,
+        q.category,
+        data.landingPage,
+        q.items || [],
+      );
       own.batchId = String(batch._id);
     }
     own.status = data.action === "start" ? "in_production" : "ready";

@@ -87,6 +87,17 @@ export class QuotesController {
   ) {
     return this.service.accept(actor, key, body);
   }
+  @Post(":id/item-progress")
+  itemProgress(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.itemProgress(actor, key, body);
+  }
   @Post(":id/production")
   production(
     @CurrentUser()
