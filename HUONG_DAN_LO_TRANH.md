@@ -3,8 +3,10 @@
 ## Quy trình cho chủ xưởng
 
 1. Đăng nhập tài khoản nghệ nhân, mở **Không gian làm việc → Yêu cầu báo giá** và chọn đơn được phân bổ.
-2. Nhấn **Bắt đầu sản xuất phần việc**. Khi đã làm xong, nhấn **Báo hoàn thành phần việc**.
-3. Điền form **Hoàn thành lô & tạo landing page**:
+2. Nhấn **Bắt đầu sản xuất toàn bộ lô**. Trong đơn đang sản xuất sẽ xuất hiện mục **Nhật ký sản xuất**.
+3. Nhấn **Ghi nhật ký sản xuất**, ghi tên công đoạn, ngày, mô tả và tải ảnh thực tế khi làm đến từng bước. Nhấn **Lưu nháp nhật ký** để lưu vào hệ thống. Có thể lưu khi chưa chọn tác phẩm, chưa có ảnh thành phẩm hoặc các mốc còn thiếu thông tin.
+4. Đợi dòng **Đã lưu nháp lúc…** rồi đóng form. Lần sau, mở lại đơn và chọn **Tiếp tục ghi nhật ký** để viết tiếp. Nút lưu giữ form mở để có thể lưu nhiều lần trong lúc làm; mỗi lần lưu cập nhật thời gian lưu gần nhất.
+5. Khi làm xong, cập nhật tiến độ từng tác phẩm thành **Xong** (nếu đơn có danh sách tranh), rồi nhấn **Báo hoàn thành lô tranh**. Form **Hoàn thành lô & tạo landing page** tự lấy lại nội dung nháp đã lưu. Kiểm tra và bổ sung đủ:
 
    | Thông tin | Cách cung cấp |
    | --- | --- |
@@ -15,8 +17,19 @@
    | Câu chuyện người làm nghề | Gợi ý từ hồ sơ xưởng; có thể sửa riêng cho lô, không thay đổi hồ sơ xưởng. |
    | Nhật ký sản xuất | Từ 2 đến 30 mốc, theo thứ tự từ ngày đầu đến thành phẩm. Mỗi mốc có tên, ngày, mô tả và ít nhất một ảnh. |
 
-4. Nhấn **Hoàn thành & xuất bản trang**. Hệ thống xác nhận hoàn thành phần việc và tạo lô, mã lô, landing page, QR của lô.
-5. Mở **Xem landing page của lô** (tab mới) hoặc **Tải mã QR của lô** ngay trong đơn hàng. Mọi bản tranh của cùng phần lô dùng chung QR.
+6. Nhấn **Hoàn thành & xuất bản trang**. Hệ thống xác nhận hoàn thành phần việc và tạo lô, mã lô, landing page, QR của lô.
+7. Mở **Xem landing page của lô** (tab mới) hoặc **Tải mã QR của lô** ngay trong đơn hàng. Mọi bản tranh của cùng phần lô dùng chung QR.
+
+## Lưu nháp trong khi sản xuất
+
+- Bản nháp thuộc phần việc của xưởng trong đơn hàng và được lưu vào MongoDB, có thể tiếp tục sau khi tải lại trang hoặc đăng nhập trên máy khác bằng cùng tài khoản xưởng.
+- Chỉ tài khoản sở hữu xưởng được phân bổ phần việc đọc và sửa bản nháp của mình. Khách hàng, xưởng khác và BQL không nhận nội dung nháp qua API đơn hàng.
+- Lưu nháp chưa tạo lô tranh, landing page hay QR, không đổi trạng thái phần việc và không gửi thông báo cho khách. Nội dung chỉ trở thành trang công khai sau khi xác nhận hoàn thành thành công.
+- Đây là lưu thủ công: cần nhấn **Lưu nháp nhật ký** trước khi rời trang. Nếu đóng form hoặc tải lại trang khi có thay đổi chưa lưu, trình duyệt sẽ nhắc xác nhận.
+- Có thể lưu từ 0 đến 30 mốc, kể cả mốc chưa có tên, ngày, mô tả hay ảnh. Ngày đã nhập phải hợp lệ, không ở tương lai; ảnh đã chọn phải do chính tài khoản xưởng tải lên. Các yêu cầu đầy đủ và thứ tự ngày được kiểm tra lại khi xuất bản.
+- Khi ảnh đang tải hoặc dữ liệu đang lưu, nút lưu và đóng bị khóa. Đợi hoàn tất trước khi thao tác tiếp.
+- Nếu đơn được cập nhật ở tab hoặc máy khác, hệ thống báo xung đột và tải phiên bản đơn mới; nội dung đang nhập vẫn giữ trong form để kiểm tra rồi lưu lại. Nếu cả hai nơi cùng sửa nhật ký, đối chiếu trước khi lưu lại để tránh ghi đè bản vừa lưu ở nơi kia.
+- Sau khi hoàn thành, sửa nội dung đã xuất bản tại **Lô tranh & nhật ký → Chỉnh sửa landing page**.
 
 Khách hàng và chủ xưởng cũng nhận thông báo hoàn thành tại biểu tượng chuông cạnh tài khoản. Ngay trong thông báo có thể mở landing page ở tab mới, xem QR tại chỗ hoặc tải QR PNG. Các cập nhật chào giá, bắt đầu sản xuất và xác nhận nhận hàng cũng xuất hiện tại đây; trạng thái đã đọc được lưu riêng theo tài khoản.
 
@@ -45,7 +58,9 @@ Tên tác phẩm, tên xưởng, câu chuyện người làm nghề và ảnh th
 
 ## Kiểm tra kỹ thuật
 
-`POST /api/v1/quotes/:id/production` với `action: "ready"` yêu cầu thêm `landingPage` gồm `productId`, `story`, `workshopStory`, `coverImages`, `events`. Số lượng và xưởng do backend xác định. Kết quả lưu `batchId` vào phân bổ của xưởng; link công khai vẫn là `/#/trace/:batchId`.
+`PATCH /api/v1/quotes/:id/production-journal` nhận `{ version, journal }`, trong đó `journal` gồm `productId`, `story`, `workshopStory`, `coverImages`, `events`. Các nội dung có thể còn trống. API chỉ cho xưởng lưu khi phần việc đang sản xuất; lưu vào `allocations[].journalDraft`, ghi `savedAt` và tăng `version` của đơn. Không thêm lịch sử công khai hay tạo lô ở bước này.
+
+`POST /api/v1/quotes/:id/production` với `action: "ready"` nhận `landingPage` gồm các trường trên; nếu không truyền, backend dùng bản nháp đã lưu. Cả hai cách đều phải qua kiểm tra đầy đủ trước khi tạo trang. Giao diện luôn mở form để chủ xưởng kiểm tra và xác nhận lại. Số lượng và xưởng do backend xác định. Kết quả lưu `batchId` vào phân bổ của xưởng; link công khai vẫn là `/#/trace/:batchId`.
 
 Backend dùng phiên bản đơn hàng để chống cập nhật đồng thời. Trang chỉ công khai khi đơn đã ghi nhận hoàn thành và liên kết đúng lô, kể cả khi MongoDB chạy độc lập không có transaction.
 

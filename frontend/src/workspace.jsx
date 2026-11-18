@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';import {Link,Navigate,useNavigate,useParams} from 'react-router-dom';import {Plus,ArrowUpRight,Palette,Layers,ClipboardList,Users,Newspaper,Home,Check,Edit3,Trash2,RefreshCw,Send,MapPin,ShieldCheck,X,Landmark,Search,Eye,User,Lock,Mail,Calendar,CheckCircle2,AlertCircle,UserCheck} from 'lucide-react';import {api,useApp,useLoad,LoadState,Empty,Badge,FormDialog,PageTitle,CATEGORIES,STATUS,money,date,ImageUpload,Pagination} from './shared';
 import { BatchLandingDialog, BatchPageLinks } from './BatchLandingDialog';
+import { ProductionJournal } from './ProductionJournal';
 import { WorkshopBidDialog } from './WorkshopBidDialog';
 import { ConfirmWorkshopModal } from './ConfirmWorkshopModal';
 const field=(name,label,type='text',extra={})=>({name,label,type,...extra});
@@ -1128,6 +1129,7 @@ function QuoteContent(){
 
       <div className="quote-detail-grid">
         <div>
+          {mine?.status === 'in_production' && studio.data && <ProductionJournal quote={q} allocation={mine} studio={studio.data} onSaved={state.reload} />}
           {/* Panel Thông tin đơn đặt lô & Giao nhận: Lưới 6 ô cân xứng tuyệt đối */}
           <div className="panel quote-overview-panel">
             <div className="quote-overview-head">
@@ -1534,7 +1536,7 @@ function QuoteContent(){
       </div>
 
       {dialog==='edit'&&<FormDialog title="Sửa bản nháp" fields={quoteFields} initial={pick(q,quoteFields)} onClose={()=>setDialog(null)} onSubmit={async body=>{await api('/quotes/'+id,{method:'PATCH',body:{...body,version:q.version}});state.reload();notify('Đã lưu bản nháp');}}/>}
-      {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async landingPage=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version:q.version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh và tạo landing page cùng mã QR');}}/>}
+      {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} initialDraft={mine.journalDraft} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async (landingPage,version)=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh và tạo landing page cùng mã QR');}}/>}
       {dialog==='bid'&&(
         <WorkshopBidDialog
           quote={q}

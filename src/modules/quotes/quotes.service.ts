@@ -11,6 +11,7 @@ import { role } from "../../common/authorization";
 import { id, parse } from "../../common/validation";
 import { Actor } from "../auth/interfaces/actor.interface";
 import { BatchesService } from "../batches/batches.service";
+import { productionJournalInput } from "./dto/production-journal.dto";
 import {
   acceptSingleWorkshopSchema,
   allocationInput,
@@ -52,11 +53,12 @@ export class QuotesService {
         status: { $ne: "draft" },
       };
     }
-    return this.quotesModel
+    const quotes = await this.quotesModel
       .find(filter)
       .sort({ updatedAt: -1 })
       .limit(200)
       .lean();
+    return this.visibleJournals(quotes, actor);
   }
 
   async detail(actor: Actor, key: string) {
@@ -69,7 +71,7 @@ export class QuotesService {
       .find({ _id: { $in: recipientIds } })
       .select("name images address categories")
       .lean();
-    return { ...q, workshops };
+    return this.visibleJournals({ ...q, workshops }, actor);
   }
 
   async create(actor: Actor, body: unknown) {
@@ -479,6 +481,32 @@ export class QuotesService {
     );
   }
 
+  async saveProductionJournal(actor: Actor, key: string, body: unknown) {
+    role(actor, "artisan");
+    const data = parse(productionJournalInput, body);
+    const q = await this.load(key, actor);
+    this.state(q, ["in_production"]);
+    const studio = await this.studio(actor);
+    const index = q.allocations.findIndex((entry: any) => entry.workshopId === String(studio._id));
+    if (index < 0) throw new ForbiddenException("Xưởng không được phân bổ đơn này");
+    const own = q.allocations[index];
+    if (own.status !== "in_production" || own.batchId)
+      throw new ConflictException("Chỉ được lưu nhật ký khi phần việc đang sản xuất");
+    if (q.version !== data.version) throw new ConflictException("Đơn đã thay đổi. Tải lại dữ liệu và lưu lại bản nháp.");
+    if (data.journal.productId && q.items?.length && !q.items.some((item: any) => item.productId === data.journal.productId))
+      throw new BadRequestException("Tác phẩm đại diện phải nằm trong đơn hàng");
+    await this.batchesService.assertOwnedImages(actor.id,
+      [...data.journal.coverImages, ...data.journal.events.flatMap(event => event.images)]);
+    const updated = await this.quotesModel.findOneAndUpdate(
+      { _id: q._id, version: data.version, status: "in_production" },
+      { $set: { [`allocations.${index}.journalDraft`]: { ...data.journal, savedAt: new Date() } }, $inc: { version: 1 } },
+      { new: true },
+    );
+    if (!updated) throw new ConflictException("Có cập nhật đồng thời. Vui lòng tải lại rồi lưu nháp.");
+    // A private draft does not create a public batch, customer history entry or notification.
+    return this.visibleJournals(updated, actor);
+  }
+
   async production(actor: Actor, key: string, body: unknown) {
     role(actor, "artisan");
     const data = parse(productionInputSchema, body);
@@ -506,7 +534,12 @@ export class QuotesService {
           );
         }
       }
-      if (!data.landingPage)
+      const saved = own.journalDraft;
+      const landingPage = data.landingPage || (saved ? {
+        productId: saved.productId, story: saved.story, workshopStory: saved.workshopStory,
+        coverImages: saved.coverImages, events: saved.events,
+      } : undefined);
+      if (!landingPage)
         throw new BadRequestException(
           "Điền thông tin landing page trước khi hoàn thành lô tranh",
         );
@@ -515,7 +548,7 @@ export class QuotesService {
         String(q._id),
         own.quantity,
         q.category,
-        data.landingPage,
+        landingPage,
         q.items || [],
       );
       own.batchId = String(batch._id);
@@ -649,6 +682,20 @@ export class QuotesService {
     );
     if (!updated)
       throw new ConflictException("Có cập nhật đồng thời. Vui lòng tải lại.");
-    return updated;
+    return this.visibleJournals(updated, user);
+  }
+
+  private async visibleJournals(value: any, actor: Actor) {
+    const studio = actor.role === "artisan"
+      ? await this.workshopsModel.findOne({ ownerId: actor.id }).select("_id").lean() : null;
+    const studioId = studio ? String(studio._id) : null;
+    const clean = (quote: any) => {
+      const record = typeof quote.toObject === "function" ? quote.toObject() : quote;
+      return { ...record, allocations: (record.allocations || []).map((allocation: any) => {
+        const { journalDraft, ...rest } = allocation;
+        return studioId && allocation.workshopId === studioId ? allocation : rest;
+      }) };
+    };
+    return Array.isArray(value) ? value.map(clean) : clean(value);
   }
 }

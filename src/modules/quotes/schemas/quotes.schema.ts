@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { ProductionJournalSchema } from "./production-journal.schema";
 
 export const QuotationModelName = "Quotation";
 
@@ -84,6 +85,7 @@ export const QuotationSchema = new Schema(
         unitPrice: Number,
         status: String,
         batchId: String,
+        journalDraft: { type: ProductionJournalSchema, default: undefined },
       },
     ],
     history: [{ status: String, at: Date, actor: String, note: String,
