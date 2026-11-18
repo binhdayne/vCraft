@@ -27,13 +27,14 @@ test('demo seed creates related data, preserves edits on rerun and refuses produ
 
   try {
     await runSeed();
-    const expected = { users: 5, workshops: 3, products: 6, workshopProducts: 0, batches: 3, quotes: 1, news: 3, carts: 0 };
+    const expected = { users: 5, workshops: 3, products: 6, workshopProducts: 0, batches: 2, quotes: 1, news: 3, carts: 0 };
     assert.deepEqual(await counts(), expected);
     const buyer = await db.users.findOne({ email: 'buyer@vcraft.local' }).select('+passwordHash');
     assert.equal(buyer.role, 'buyer');
     assert.equal(await compare('DongHo@2026!', buyer.passwordHash), true);
     assert.equal(await db.workshops.countDocuments({ approved: true }), 3);
     const batches = await db.batches.find();
+    assert.deepEqual(batches.map(batch => batch.code).sort(), ['DH-DEMO-002', 'DH-DEMO-003']);
     assert.ok(batches.every(batch => batch.events.length === 4));
     for (const batch of batches) {
       assert.ok(await db.products.exists({ _id: batch.productId, workshopId: batch.workshopId }));

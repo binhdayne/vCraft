@@ -38,7 +38,7 @@ Nút **Vị trí của tôi** xin quyền định vị, sắp xếp xưởng the
 
 Popup bản đồ có thư viện ảnh do chủ tài khoản xưởng tải lên: chuyển ảnh và bấm xem lớn. Chủ xưởng thêm ảnh ở **Hồ sơ xưởng → Chỉnh sửa → Ảnh xưởng**, rồi lưu; ảnh hiện công khai khi xưởng đã được duyệt. Ảnh minh họa mẫu không được gắn nhãn ảnh do chủ xưởng đăng. Xem [chi tiết ảnh xưởng](docs/MAP.md#ảnh-xưởng-do-chủ-tài-khoản-tải-lên).
 
-`seed` tự build backend trước khi nạp 5 tài khoản, 3 xưởng, 6 tranh, 3 lô, 3 tin và 1 yêu cầu báo giá. Script giữ bản ghi hiện có và từ chối chạy trong production. Mật khẩu demo: `DongHo@2026!`; danh sách email và cách kiểm tra có trong hướng dẫn.
+`seed` tự build backend trước khi nạp 5 tài khoản, 3 xưởng, 6 tranh, 2 lô, 3 tin và 1 yêu cầu báo giá. Lô demo Đám cưới chuột đã được bỏ khỏi seed. Script giữ bản ghi hiện có và từ chối chạy trong production. Mật khẩu demo: `DongHo@2026!`; danh sách email và cách kiểm tra có trong hướng dẫn.
 
 ## Cấu trúc NestJS
 

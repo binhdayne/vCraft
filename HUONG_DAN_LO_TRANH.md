@@ -16,7 +16,9 @@
    | Nhật ký sản xuất | Từ 2 đến 30 mốc, theo thứ tự từ ngày đầu đến thành phẩm. Mỗi mốc có tên, ngày, mô tả và ít nhất một ảnh. |
 
 4. Nhấn **Hoàn thành & xuất bản trang**. Hệ thống xác nhận hoàn thành phần việc và tạo lô, mã lô, landing page, QR của lô.
-5. Mở **Xem landing page của lô** hoặc **Tải mã QR của lô** ngay trong đơn hàng. Mọi bản tranh của cùng phần lô dùng chung QR.
+5. Mở **Xem landing page của lô** (tab mới) hoặc **Tải mã QR của lô** ngay trong đơn hàng. Mọi bản tranh của cùng phần lô dùng chung QR.
+
+Khách hàng và chủ xưởng cũng nhận thông báo hoàn thành tại biểu tượng chuông cạnh tài khoản. Ngay trong thông báo có thể mở landing page ở tab mới, xem QR tại chỗ hoặc tải QR PNG. Các cập nhật chào giá, bắt đầu sản xuất và xác nhận nhận hàng cũng xuất hiện tại đây; trạng thái đã đọc được lưu riêng theo tài khoản.
 
 Đơn nhiều tác phẩm theo luồng mới giao cho một xưởng thực hiện trọn gói. Landing page lưu đủ danh sách tranh và số lượng từng loại; ảnh, câu chuyện và nhật ký thuộc toàn bộ lô. Tác phẩm đại diện dùng ở phần mở đầu và góc hoạt họa. Các đơn cũ từng chia cho nhiều xưởng vẫn có trang riêng cho phần lô của từng xưởng. Khách hàng xác nhận nhận đủ hàng khi các phần việc đều hoàn thành. Một phần việc chỉ tạo một trang; gửi lại thao tác không tạo thêm lô.
 
@@ -28,6 +30,8 @@
 - QR được cung cấp ở trang quản lý và chi tiết đơn; landing page tiếp tục tập trung vào câu chuyện, nhật ký và hình ảnh.
 
 ## Quản lý sau khi tạo
+
+Landing page là trang kể chuyện độc lập, không có thanh điều hướng, tài khoản, giỏ hàng hay footer của hệ thống. Phần mở đầu có dấu mộc và nét mực xuất hiện; phần kết có vòng hoa văn chuyển động và nút đọc lại. Có thể tạm dừng chuyển động; cài đặt giảm chuyển động của thiết bị cũng được tôn trọng. Truy cập bằng link cũ hoặc quét QR vẫn mở đúng trang này, không cần đăng nhập. Các link ghé thăm xưởng/bộ sưu tập mở tab khác.
 
 Mở **Lô tranh & nhật ký → Chỉnh sửa landing page** để cập nhật câu chuyện, ảnh thành phẩm, câu chuyện người làm nghề, các mốc và trạng thái công khai. Mã lô, số lượng, đường dẫn và QR giữ nguyên. Khi ẩn trang, khách không mở được landing page và QR đến khi công khai lại.
 

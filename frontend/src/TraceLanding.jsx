@@ -29,6 +29,29 @@ function FolkCloud({ className = '' }) {
   </svg>;
 }
 
+function ImprintOrbit({ className = '' }) {
+  return <svg className={className} viewBox="0 0 360 360" fill="none" aria-hidden="true" focusable="false">
+    <g className="trace-imprint-orbit">
+      <circle cx="180" cy="180" r="163" stroke="currentColor" strokeWidth=".6" />
+      <circle cx="180" cy="180" r="151" stroke="currentColor" strokeWidth=".7" strokeDasharray="1 7" strokeLinecap="round" />
+      {Array.from({ length: 12 }, (_, index) => <g key={index} transform={`rotate(${index * 30} 180 180)`}>
+        <path d="M180 51C159 69 160 91 180 105C200 91 201 69 180 51Z" stroke="currentColor" strokeWidth=".8" />
+        <path d="M180 64V95M174 78L180 84L186 78M176 41H184" stroke="currentColor" strokeWidth=".7" />
+      </g>)}
+    </g>
+    <circle cx="180" cy="180" r="65" stroke="currentColor" strokeWidth=".8" />
+    <circle cx="180" cy="180" r="72" stroke="currentColor" strokeWidth=".6" strokeDasharray="3 6" />
+    <g className="trace-imprint-seal">
+      <rect x="142" y="137" width="76" height="86" rx="2" fill="currentColor" />
+      <rect x="147" y="142" width="66" height="76" rx="1" stroke="var(--trace-forest)" strokeWidth=".7" />
+      <text x="180" y="174" textAnchor="middle" fill="var(--trace-forest)" fontSize="24" fontFamily="var(--serif)">LƯU</text>
+      <text x="180" y="205" textAnchor="middle" fill="var(--trace-forest)" fontSize="24" fontFamily="var(--serif)">DẤU</text>
+    </g>
+    {[0, 90, 180, 270].map(angle => <path key={angle} transform={`rotate(${angle} 180 180)`}
+      d="M180 12V25M174 18.5H186" stroke="currentColor" strokeWidth=".7" />)}
+  </svg>;
+}
+
 function ArtImage({ src, alt, className = '', ...props }) {
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [src]);
@@ -40,13 +63,20 @@ function ArtImage({ src, alt, className = '', ...props }) {
 
 // Presentation only: the route supplies the existing trace response and retry callback.
 export function TraceLanding({ batch, batchId, loading, error, onRetry }) {
+  useEffect(() => {
+    const previous = document.title;
+    document.title = batch
+      ? `${batch.product?.name || 'Hành trình lô tranh'} · ${batch.code} | vCraft`
+      : 'Câu chuyện một lô tranh | vCraft';
+    return () => { document.title = previous; };
+  }, [batch]);
   if (loading || error || !batch) return <section className="trace-experience trace-state" aria-busy={loading}>
     <FolkFlower className="trace-state-flower" />
     <span className="trace-kicker">VCRAFT · HÀNH TRÌNH MỘT LÔ TRANH</span>
     <h1>{error ? 'Câu chuyện chưa mở được.' : 'Một câu chuyện đang mở…'}</h1>
     <p role={error ? 'alert' : 'status'}>{error || 'Đang tìm lại những dấu tay phía sau bức tranh.'}</p>
     {error && <button className="trace-button" type="button" onClick={onRetry}><RotateCcw size={16} /> Thử tải lại</button>}
-    <a className="trace-text-link" href="#/tranh">Về bộ sưu tập <ArrowUpRight size={16} /></a>
+    <a className="trace-text-link" href="#/tranh" target="_blank" rel="noopener noreferrer">Khám phá bộ sưu tập <ArrowUpRight size={16} /></a>
   </section>;
   return <TraceStory key={batch._id || batchId} batch={batch} />;
 }
@@ -62,6 +92,7 @@ function TraceStory({ batch }) {
   const currentEvent = events[active];
   const motion = !paused && !reduced;
   const isDemo = /DEMO/i.test(batch.code || '');
+  const hasProcessIllustration = [...(product.images || []), ...events.flatMap(event => event.images || [])].includes('/art/in-tranh.jpg');
 
   useEffect(() => {
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
@@ -142,8 +173,12 @@ function TraceStory({ batch }) {
       <FolkCloud className="trace-cloud trace-cloud-one" />
       <FolkCloud className="trace-cloud trace-cloud-two" />
       <FolkFlower className="trace-hero-flower" />
+      <div className="trace-opening-lines" aria-hidden="true"><svg viewBox="0 0 1440 140" preserveAspectRatio="none">
+        <path pathLength="1" d="M-40 110C190 16 252 180 480 95S807 13 1010 84S1310 129 1480 25" />
+        <path pathLength="1" d="M-40 124C190 30 252 194 480 109S807 27 1010 98S1310 143 1480 39" />
+      </svg></div>
       <div className="trace-hero-top trace-shell">
-        <span className="trace-kicker"><span className="trace-small-star" aria-hidden="true">✳</span> TRIỂN LÃM SỐ ĐÔNG HỒ</span>
+        <span className="trace-kicker trace-story-identity"><span className="trace-opening-seal" aria-hidden="true">ĐÔNG<br />HỒ</span><span>VCRAFT<span className="trace-identity-caption">MỘT LÔ TRANH · MỘT CÂU CHUYỆN</span></span></span>
         <button type="button" className="trace-motion-toggle" onClick={() => setPaused(value => !value)} aria-pressed={paused || reduced} disabled={reduced}
           aria-label={reduced ? 'Đã giảm chuyển động theo cài đặt thiết bị' : paused ? 'Bật chuyển động trang truy xuất' : 'Tạm dừng chuyển động trang truy xuất'}>
           {paused || reduced ? <Play size={13} /> : <Pause size={13} />}<span>{reduced ? 'Đã giảm chuyển động' : paused ? 'Bật chuyển động' : 'Tạm dừng chuyển động'}</span>
@@ -237,7 +272,7 @@ function TraceStory({ batch }) {
     <section className="trace-maker trace-shell" aria-labelledby="trace-maker-title">
       <div className="trace-maker-emblem" data-reveal data-ambient><FolkFlower /><span>NGƯỜI<br /><em>giữ nghề.</em></span></div>
       <div className="trace-maker-copy" data-reveal><span className="trace-kicker">CÂU CHUYỆN ĐƯỢC GỬI TỪ</span><h2 id="trace-maker-title">{workshop.name || 'Không gian làm nghề'}</h2><p>{workshop.story || 'Một không gian làm nghề, nơi những câu chuyện được lưu lại qua từng bản in.'}</p>
-        {workshop._id && <a className="trace-text-link" href={`#/xuong/${workshop._id}`}>Ghé thăm không gian xưởng <ArrowUpRight size={17} /></a>}
+        {workshop._id && <a className="trace-text-link" href={`#/xuong/${workshop._id}`} target="_blank" rel="noopener noreferrer">Ghé thăm không gian xưởng <ArrowUpRight size={17} /></a>}
       </div>
     </section>
 
@@ -250,7 +285,25 @@ function TraceStory({ batch }) {
         </div>
         <div className="trace-screening-player" data-reveal><ArtworkFilm product={product} motion={motion} /></div>
       </div>
-      <div className="trace-colophon trace-shell"><span>ĐƯỢC KỂ BẰNG NHỮNG DẤU TAY.</span><span>Nhật ký và hình ảnh do xưởng cung cấp.{isDemo ? ' Lô hiện tại là dữ liệu minh họa.' : ''}</span><span aria-hidden="true">✳</span></div>
+    </section>
+
+    <section className="trace-closing" aria-labelledby="trace-closing-title" data-ambient>
+      <FolkCloud className="trace-closing-cloud" />
+      <div className="trace-shell trace-closing-main">
+        <div className="trace-closing-visual" data-reveal>
+          <div className="trace-closing-orbit"><ImprintOrbit className="trace-closing-imprint" /></div>
+          <span>ĐƯỢC KỂ BẰNG NHỮNG DẤU TAY</span>
+        </div>
+        <div className="trace-closing-copy" data-reveal>
+          <span className="trace-kicker">KHÉP LẠI MỘT HÀNH TRÌNH</span>
+          <h2 id="trace-closing-title">Mực in đã khô.<br /><em>Câu chuyện còn ở lại.</em></h2>
+          <svg className="trace-closing-brush" viewBox="0 0 300 26" fill="none" aria-hidden="true"><path pathLength="1" d="M3 17C83 3 163 6 260 10C279 11 290 13 297 17M15 22C80 12 145 13 210 15" /></svg>
+          <p>Cảm ơn bạn đã đi qua câu chuyện của <strong>{product.name || 'lô tranh này'}</strong>.<br />Từ <strong>{workshop.name || 'người làm nghề'}</strong>, một nét mộc được gửi đến bạn.</p>
+          <button type="button" className="trace-closing-restart" onClick={() => goTo('trace-top')}><span><ArrowUp size={18} /></span>Đọc lại câu chuyện</button>
+        </div>
+      </div>
+      <div className="trace-colophon trace-shell"><span>HỒ SƠ LÔ TRANH · {batch.code}</span><span>Nhật ký và hình ảnh do xưởng cung cấp.{isDemo ? ' Lô hiện tại là dữ liệu minh họa.' : ''}</span><span aria-hidden="true">✳</span></div>
+      {hasProcessIllustration && <p className="trace-art-credit trace-shell">Ảnh tư liệu in tranh (cắt khung khi hiển thị): <a href="https://commons.wikimedia.org/wiki/File:Kreado_de_pentra%C4%B5o_en_vila%C4%9Do_%C4%90%C3%B4ng_H%E1%BB%93_01.jpg" target="_blank" rel="noopener noreferrer">RG72 / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>.</p>}
     </section>
   </article>;
 }

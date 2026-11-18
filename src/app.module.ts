@@ -10,6 +10,7 @@ import { MediaModule } from "./modules/media/media.module";
 import { NewsModule } from "./modules/news/news.module";
 import { QuotesModule } from "./modules/quotes/quotes.module";
 import { CartModule } from "./modules/cart/cart.module";
+import { NotificationsModule } from "./modules/notifications/notifications.module";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, validate: validateEnvironment }),
@@ -18,6 +19,7 @@ import { CartModule } from "./modules/cart/cart.module";
     AdminModule,
     QuotesModule,
     CartModule,
+    NotificationsModule,
     BatchesModule,
     NewsModule,
     MediaModule,
