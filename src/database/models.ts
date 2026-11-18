@@ -34,6 +34,7 @@ import {
   CartModelName,
   CartSchema,
 } from "../modules/cart/schemas/cart.schema";
+import { NotificationReadModelName, NotificationReadSchema } from "../modules/notifications/schemas/notification-read.schema";
 export const databaseModels = [
   { name: AccountModelName, schema: AccountSchema },
   { name: StudioModelName, schema: StudioSchema },
@@ -44,4 +45,5 @@ export const databaseModels = [
   { name: BulletinModelName, schema: BulletinSchema },
   { name: MediaAssetModelName, schema: MediaAssetSchema },
   { name: CartModelName, schema: CartSchema },
+  { name: NotificationReadModelName, schema: NotificationReadSchema },
 ];

@@ -32,6 +32,7 @@ import {
   BatchOrder,
 } from './public';
 import { Dashboard, QuoteDetail } from './workspace';
+import { NotificationBell } from './NotificationBell';
 import './fonts.css';
 import './style.css';
 import './motion.css';
@@ -216,6 +217,7 @@ function Layout() {
               )}
             </div>
 
+            {user && ['buyer', 'artisan'].includes(user.role) && <NotificationBell key={user.id} user={user} onOpen={closeMiniCart} closeSignal={isMiniCartOpen} />}
             <div className="nav-user">
               {user ? (
                 <div className="nav-user-chip">
@@ -274,7 +276,6 @@ function Layout() {
           <Route path="/xuong" element={<Workshops />} />
           <Route path="/xuong/:id" element={<Workshop />} />
           <Route path="/ban-do" element={<VillageMap />} />
-          <Route path="/trace/:id" element={<Trace />} />
           <Route path="/tin-tuc" element={<News />} />
           <Route path="/dang-nhap" element={<Login />} />
           <Route path="/dang-ky" element={<Login initialRegister={true} />} />
@@ -339,14 +340,27 @@ function Layout() {
   );
 }
 
+function TraceDocument() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    document.body.classList.add('trace-document-open');
+    window.scrollTo(0, 0);
+    return () => document.body.classList.remove('trace-document-open');
+  }, [pathname]);
+  return <main className="trace-document"><Trace /></main>;
+}
+
+function AppRoutes() {
+  return <Routes>
+    <Route path="/trace/:id" element={<TraceDocument />} />
+    <Route path="*" element={<AppProvider><CartProvider><Layout /></CartProvider></AppProvider>} />
+  </Routes>;
+}
+
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HashRouter>
-      <AppProvider>
-        <CartProvider>
-          <Layout />
-        </CartProvider>
-      </AppProvider>
+      <AppRoutes />
     </HashRouter>
   </React.StrictMode>,
 );

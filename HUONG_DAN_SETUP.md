@@ -167,7 +167,7 @@ Trên database trống, dữ liệu mẫu gồm:
 | Tài khoản | 5 | 1 admin, 1 buyer, 3 artisan đang hoạt động |
 | Xưởng đã duyệt | 3 | Xưởng Nét Mộc, Xưởng Sắc Điệp, Xưởng Hồn Quê; có tọa độ và lịch tham quan |
 | Tranh công khai | 6 | Đám cưới chuột, Lợn âm dương, Đại cát, Vinh hoa, Phú quý, Mục đồng đọc sách |
-| Lô sản xuất | 3 | `DH-DEMO-001` đến `DH-DEMO-003`; mỗi lô 100 bản, có 4 mốc nhật ký |
+| Lô sản xuất | 2 | `DH-DEMO-002` và `DH-DEMO-003`; mỗi lô 100 bản, có 4 mốc nhật ký. Đã bỏ lô demo Đám cưới chuột. |
 | Tin công khai | 3 | Tin làng nghề, thông báo và sự kiện minh họa |
 | Yêu cầu báo giá | 1 | Đơn 200 bản, trạng thái `bidding`, có 2 chào giá mẫu |
 
@@ -208,7 +208,7 @@ Trên database mới, kết quả lần lượt là **3, 6, 3**. Trên web, ki�
 1. **Bộ sưu tập**: có 6 tranh, có ảnh và giá; mở được chi tiết tranh.
 2. **Nghệ nhân & xưởng**: có 3 xưởng, mở được hồ sơ và danh sách tranh.
 3. **Bản đồ làng nghề**: có 3 ghim; nhấn ghim xem thông tin, thấy trạng thái mở tham quan.
-4. **Chi tiết Đám cưới chuột** → **Hành trình từng lô tranh**: mở `DH-DEMO-001`, thấy 4 mốc và mã QR.
+4. **Không gian làm việc → Lô tranh & nhật ký**: mở landing page hoặc tải QR của lô. Với lô mới, các nút này cũng có trong đơn hàng sau khi xưởng hoàn thành. Trang chi tiết sản phẩm không hiển thị mục hành trình lô.
 5. **Chuyện làng**: có 3 tin với ảnh minh họa.
 
 QR chứa `PUBLIC_URL` của máy đang chạy. Để kiểm tra trên cùng máy, mở trang truy xuất và tải/xem mã QR. Điện thoại quét URL có `localhost` sẽ trỏ về chính điện thoại; việc truy cập qua mạng LAN cần cấu hình địa chỉ mạng riêng và không phải tiêu chí setup local này.
@@ -271,7 +271,7 @@ Sao chép bảng này vào biên bản của nhóm và điền theo kết quả 
 | MongoDB báo ready, health báo connected | | |
 | `dev` mở được web 5173 và Swagger 3000 | | |
 | API qua Vite hoạt động | | |
-| Seed có 5 tài khoản, 3 xưởng, 6 tranh, 3 lô, 3 tin, 1 đơn trên database mới | | |
+| Seed có 5 tài khoản, 3 xưởng, 6 tranh, 2 lô, 3 tin, 1 đơn trên database mới | | |
 | Đăng nhập đúng 3 vai trò | | |
 | Có ảnh, bản đồ, nhật ký và QR | | |
 | Hoàn thành thử luồng báo giá hai xưởng | | |
