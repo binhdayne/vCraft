@@ -11,11 +11,13 @@ import { role } from "../../common/authorization";
 import { id, parse } from "../../common/validation";
 import { Actor } from "../auth/interfaces/actor.interface";
 import { BatchesService } from "../batches/batches.service";
+import { productionJournalInput } from "./dto/production-journal.dto";
 import {
   acceptSingleWorkshopSchema,
   allocationInput,
   bidInputSchema,
   editInputSchema,
+  itemProgressInputSchema,
   productionInputSchema,
   quoteInput,
   versionInput,
@@ -51,11 +53,12 @@ export class QuotesService {
         status: { $ne: "draft" },
       };
     }
-    return this.quotesModel
+    const quotes = await this.quotesModel
       .find(filter)
       .sort({ updatedAt: -1 })
       .limit(200)
       .lean();
+    return this.visibleJournals(quotes, actor);
   }
 
   async detail(actor: Actor, key: string) {
@@ -68,7 +71,7 @@ export class QuotesService {
       .find({ _id: { $in: recipientIds } })
       .select("name images address categories")
       .lean();
-    return { ...q, workshops };
+    return this.visibleJournals({ ...q, workshops }, actor);
   }
 
   async create(actor: Actor, body: unknown) {
@@ -121,6 +124,8 @@ export class QuotesService {
           workshopName: ws?.name || "",
           quantity: item.quantity,
           note: item.note || "",
+          productionStatus: "pending",
+          completedAt: null,
         });
       }
 
@@ -335,12 +340,37 @@ export class QuotesService {
     )
       throw new BadRequestException("Thời gian hoàn thành vượt hạn giao");
 
+    let unitPrice = data.unitPrice || 0;
+    let totalPrice = data.totalPrice || 0;
+    const itemPrices = data.itemPrices || [];
+
+    if (itemPrices.length > 0) {
+      const itemMap = new Map<string, number>(
+        (q.items || []).map((i: any) => [String(i.productId), Number(i.quantity) || 0]),
+      );
+      let calculatedTotal = 0;
+      for (const ip of itemPrices) {
+        const qty = Number(itemMap.get(String(ip.productId)) || 0);
+        calculatedTotal += Number(ip.unitPrice) * qty;
+      }
+      totalPrice = calculatedTotal;
+      unitPrice = q.quantity > 0 ? Math.round(totalPrice / q.quantity) : unitPrice;
+    } else if (totalPrice > 0 && !unitPrice) {
+      unitPrice = q.quantity > 0 ? Math.round(totalPrice / q.quantity) : 0;
+    } else if (unitPrice > 0 && !totalPrice) {
+      totalPrice = unitPrice * q.quantity;
+    }
+
     const { version, ...offer } = data;
     const bids = q.bids.filter((b: any) => b.workshopId !== String(studio._id));
     bids.push({
       ...offer,
+      unitPrice,
+      totalPrice,
+      itemPrices,
       workshopId: String(studio._id),
       artisanId: actor.id,
+      createdAt: new Date(),
     });
     return this.cas(
       q,
@@ -348,6 +378,51 @@ export class QuotesService {
       { status: "bidding", bids },
       actor,
       "Xưởng gửi chào giá",
+    );
+  }
+
+  async itemProgress(actor: Actor, key: string, body: unknown) {
+    role(actor, "artisan");
+    const data = parse(itemProgressInputSchema, body);
+    const q = await this.load(key, actor);
+    this.state(q, ["accepted", "in_production"]);
+    const studio = await this.studio(actor);
+    const studioId = String(studio._id);
+
+    if (q.acceptedWorkshopId && q.acceptedWorkshopId !== studioId) {
+      throw new ForbiddenException("Xưởng không đảm nhận đơn hàng này");
+    }
+    const isAllocated = (q.allocations || []).some(
+      (a: any) => a.workshopId === studioId,
+    );
+    if (!isAllocated && q.acceptedWorkshopId !== studioId) {
+      throw new ForbiddenException("Xưởng không đảm nhận đơn hàng này");
+    }
+
+    const items = (q.items || []).map((it: any) => ({ ...it }));
+    const targetItem = items.find(
+      (it: any) => String(it.productId) === String(data.productId),
+    );
+    if (!targetItem) {
+      throw new NotFoundException("Tác phẩm không nằm trong đơn hàng");
+    }
+
+    targetItem.productionStatus = data.status;
+    targetItem.completedAt = data.status === "completed" ? new Date() : null;
+
+    const statusLabel =
+      data.status === "completed"
+        ? "Đã in xong"
+        : data.status === "in_progress"
+          ? "Đang in"
+          : "Chờ in";
+
+    return this.cas(
+      q,
+      data.version,
+      { items },
+      actor,
+      `Xưởng cập nhật tiến độ tác phẩm "${targetItem.artworkName}": ${statusLabel}`,
     );
   }
 
@@ -406,6 +481,32 @@ export class QuotesService {
     );
   }
 
+  async saveProductionJournal(actor: Actor, key: string, body: unknown) {
+    role(actor, "artisan");
+    const data = parse(productionJournalInput, body);
+    const q = await this.load(key, actor);
+    this.state(q, ["in_production"]);
+    const studio = await this.studio(actor);
+    const index = q.allocations.findIndex((entry: any) => entry.workshopId === String(studio._id));
+    if (index < 0) throw new ForbiddenException("Xưởng không được phân bổ đơn này");
+    const own = q.allocations[index];
+    if (own.status !== "in_production" || own.batchId)
+      throw new ConflictException("Chỉ được lưu nhật ký khi phần việc đang sản xuất");
+    if (q.version !== data.version) throw new ConflictException("Đơn đã thay đổi. Tải lại dữ liệu và lưu lại bản nháp.");
+    if (data.journal.productId && q.items?.length && !q.items.some((item: any) => item.productId === data.journal.productId))
+      throw new BadRequestException("Tác phẩm đại diện phải nằm trong đơn hàng");
+    await this.batchesService.assertOwnedImages(actor.id,
+      [...data.journal.coverImages, ...data.journal.events.flatMap(event => event.images)]);
+    const updated = await this.quotesModel.findOneAndUpdate(
+      { _id: q._id, version: data.version, status: "in_production" },
+      { $set: { [`allocations.${index}.journalDraft`]: { ...data.journal, savedAt: new Date() } }, $inc: { version: 1 } },
+      { new: true },
+    );
+    if (!updated) throw new ConflictException("Có cập nhật đồng thời. Vui lòng tải lại rồi lưu nháp.");
+    // A private draft does not create a public batch, customer history entry or notification.
+    return this.visibleJournals(updated, actor);
+  }
+
   async production(actor: Actor, key: string, body: unknown) {
     role(actor, "artisan");
     const data = parse(productionInputSchema, body);
@@ -423,8 +524,33 @@ export class QuotesService {
     if (q.version !== data.version) throw new ConflictException("Dữ liệu đã thay đổi. Vui lòng tải lại.");
     let batch: any;
     if (data.action === "ready") {
-      if (!data.landingPage) throw new BadRequestException("Điền thông tin landing page trước khi hoàn thành lô tranh");
-      batch = await this.batchesService.prepareCompletion(actor, String(q._id), own.quantity, q.category, data.landingPage, q.items || []);
+      if (q.items && q.items.length > 0) {
+        const incomplete = q.items.filter(
+          (it: any) => it.productionStatus !== "completed",
+        );
+        if (incomplete.length > 0) {
+          throw new BadRequestException(
+            `Còn ${incomplete.length} tác phẩm chưa hoàn thành chế tác (${incomplete.map((i: any) => i.artworkName).join(", ")}). Vui lòng hoàn tất in toàn bộ lô tranh.`,
+          );
+        }
+      }
+      const saved = own.journalDraft;
+      const landingPage = data.landingPage || (saved ? {
+        productId: saved.productId, story: saved.story, workshopStory: saved.workshopStory,
+        coverImages: saved.coverImages, events: saved.events,
+      } : undefined);
+      if (!landingPage)
+        throw new BadRequestException(
+          "Điền thông tin landing page trước khi hoàn thành lô tranh",
+        );
+      batch = await this.batchesService.prepareCompletion(
+        actor,
+        String(q._id),
+        own.quantity,
+        q.category,
+        landingPage,
+        q.items || [],
+      );
       own.batchId = String(batch._id);
     }
     own.status = data.action === "start" ? "in_production" : "ready";
@@ -556,6 +682,20 @@ export class QuotesService {
     );
     if (!updated)
       throw new ConflictException("Có cập nhật đồng thời. Vui lòng tải lại.");
-    return updated;
+    return this.visibleJournals(updated, user);
+  }
+
+  private async visibleJournals(value: any, actor: Actor) {
+    const studio = actor.role === "artisan"
+      ? await this.workshopsModel.findOne({ ownerId: actor.id }).select("_id").lean() : null;
+    const studioId = studio ? String(studio._id) : null;
+    const clean = (quote: any) => {
+      const record = typeof quote.toObject === "function" ? quote.toObject() : quote;
+      return { ...record, allocations: (record.allocations || []).map((allocation: any) => {
+        const { journalDraft, ...rest } = allocation;
+        return studioId && allocation.workshopId === studioId ? allocation : rest;
+      }) };
+    };
+    return Array.isArray(value) ? value.map(clean) : clean(value);
   }
 }

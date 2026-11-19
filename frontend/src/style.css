@@ -2210,3 +2210,833 @@ input[type=number] {
     flex-wrap: wrap;
   }
 }
+
+/* ==========================================================================
+   Spec 003: Workshop Multi-Item Lot Workflow & Production Tracking Styles
+   Heritage palette: --paper, --red, --green, --ink, --line
+   ========================================================================== */
+
+/* Quote list badges */
+.badge-direct-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 3px;
+  background: rgba(146, 60, 46, 0.1);
+  color: var(--red);
+  border: 1px solid rgba(146, 60, 46, 0.25);
+  letter-spacing: 0.3px;
+}
+
+.badge-bidding-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 3px;
+  background: rgba(83, 100, 73, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(83, 100, 73, 0.25);
+  letter-spacing: 0.3px;
+}
+
+/* Item Production Tracking in Table Row */
+.item-progress-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.item-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.item-status-pending {
+  background: #f0ede4;
+  color: #777063;
+  border: 1px solid #ded8c8;
+}
+
+.item-status-in-progress {
+  background: #fef5e7;
+  color: #b76e00;
+  border: 1px solid #f6d194;
+}
+
+.item-status-completed {
+  background: #edf4ea;
+  color: #3f6b3b;
+  border: 1px solid #b7d6b2;
+}
+
+.item-progress-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-item-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+}
+
+.btn-item-action.action-start {
+  background: #fff;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+
+.btn-item-action.action-start:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-item-action.action-done {
+  background: var(--green);
+  border: 1px solid var(--green);
+  color: #fff;
+}
+
+.btn-item-action.action-done:hover {
+  filter: brightness(1.1);
+}
+
+.btn-item-action-revert {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0 4px;
+}
+
+.btn-item-action-revert:hover {
+  color: var(--red);
+}
+
+/* ==========================================================================
+   Global Modal Backdrop & Dialog Container
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(22, 18, 14, 0.75) !important;
+  backdrop-filter: blur(2px);
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px 16px !important;
+  overflow-y: auto !important;
+}
+
+.modal {
+  border: 1px solid var(--line);
+  background: #faf7ef;
+  padding: 30px;
+  max-width: 550px;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  position: relative;
+  z-index: 100000;
+  border-radius: 0 !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  margin: auto;
+}
+
+/* Workshop Bid Modal */
+.modal.workshop-bid-modal {
+  max-width: 760px;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border-radius: 0 !important;
+}
+
+.bid-mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.bid-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 0 !important;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bid-tab-btn:hover {
+  background: #f7f3e9;
+  border-color: #cbbeaa;
+}
+
+.bid-tab-btn.active {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  font-weight: 600;
+}
+
+.itemized-bid-intro p {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.itemized-bid-table td {
+  vertical-align: middle;
+  padding: 8px 10px;
+}
+
+.item-price-input-wrap {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 0 !important;
+  padding: 0 8px;
+  height: 36px;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+
+.item-price-input-wrap:focus-within {
+  border-color: var(--red);
+  box-shadow: none;
+  outline: 1px solid var(--red);
+}
+
+.item-price-input-wrap.large {
+  max-width: 260px;
+  height: 40px;
+}
+
+.item-price-input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--ink);
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.currency-unit {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-left: 6px;
+  padding-left: 6px;
+  border-left: 1px solid #ded8c8;
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+.bid-calculation-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f3e9;
+  border: 1px solid var(--line);
+  border-radius: 0 !important;
+  padding: 12px 18px;
+  margin-top: 10px;
+}
+
+.summary-label {
+  font-size: 11.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.summary-blended {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.summary-total {
+  font-size: 20px;
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* Bid card itemized pricing dropdown */
+.bid-itemized-dropdown {
+  margin-top: 8px;
+}
+
+.bid-itemized-dropdown summary {
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.bid-itemized-grid {
+  margin-top: 6px;
+  display: grid;
+  gap: 4px;
+  border: 1px dashed var(--line);
+  background: #fffdf9;
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+
+/* ==========================================================================
+   Elevated Quote Detail & Symmetrical Overview Card Layout
+   ========================================================================== */
+
+/* Status badges for winning / non-winning workshops */
+.badge-won-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: #edf4ea;
+  color: #3f6b3b;
+  border: 1px solid #b7d6b2;
+}
+
+.badge-bid-sent {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: #fef5e7;
+  color: #b76e00;
+  border: 1px solid #f6d194;
+}
+
+.badge.status-other-workshop {
+  background: #e9e4d8;
+  color: #6b6559;
+  border: 1px solid #d5cebe;
+}
+
+.quote-row-other-won {
+  opacity: 0.78;
+}
+
+.quote-row-closed-meta {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Notice banners for workshops */
+.quote-notice-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 4px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.quote-notice-banner.notice-other-workshop {
+  background: #f3efe4;
+  border: 1px solid #d6cebd;
+  border-left: 4px solid #8c8270;
+  color: var(--ink);
+}
+
+.quote-notice-banner.notice-won-workshop {
+  background: #edf4ea;
+  border: 1px solid #b7d6b2;
+  border-left: 4px solid var(--green);
+  color: #2c4a29;
+}
+
+/* Symmetrical 6-Cell Overview Panel */
+.quote-overview-panel {
+  background: #fffdfa;
+  border: 1px solid var(--line);
+  padding: 24px 26px;
+  border-radius: 4px;
+  margin-bottom: 22px;
+}
+
+.quote-overview-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+
+.quote-mode-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 3px;
+  background: #f5f0e4;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.quote-info-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-top: 18px;
+}
+
+.quote-info-heading {
+  font-family: var(--serif);
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 0.2px;
+}
+
+.quote-info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-info-row {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed rgba(215, 205, 190, 0.65);
+}
+
+.quote-info-row:last-child {
+  border-bottom: none;
+}
+
+.quote-info-label {
+  font-size: 13.5px;
+  color: #6e675f;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.quote-info-val {
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.quote-qty-val {
+  color: var(--red);
+  font-size: 16px;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.quote-qty-sub {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.quote-action-bar {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+/* Quote artworks table typography elevation */
+.quote-art-table th {
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 12px 14px;
+  text-transform: uppercase;
+}
+
+.quote-art-table td {
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+.quote-bids-panel,
+.quote-contract-panel {
+  background: #fffdfa;
+  border: 1px solid var(--line);
+  padding: 24px 26px;
+  border-radius: 4px;
+}
+
+.bid-card-mine {
+  border-color: #d6b67c;
+  background: #fffcf5;
+}
+
+/* Unified Accepted Workshop Contract Card */
+.contract-workshop-card {
+  border: 1px solid #c5d6bf;
+  background: #f9fbf8;
+  border-radius: 4px;
+  padding: 20px 22px;
+}
+
+.contract-card-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.contract-meta-line {
+  margin: 4px 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.contract-note-line {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.contract-price-col {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.contract-unit-price {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.contract-unit-price strong {
+  color: var(--ink);
+}
+
+.contract-total-price {
+  font-size: 22px;
+  color: var(--red);
+  font-weight: 700;
+}
+
+.contract-total-price small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.contract-itemized-section {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed #c8d6c3;
+}
+
+.contract-itemized-title {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
+}
+
+.contract-itemized-list {
+  display: grid;
+  gap: 6px;
+}
+
+.contract-itemized-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.contract-batch-footer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #c8d6c3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.other-artisan-bid-summary {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: #f5f1e6;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Confirm Workshop Modal Styles
+   ========================================================================== */
+.modal.confirm-workshop-modal {
+  max-width: 680px;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border-radius: 0 !important;
+}
+
+.confirm-workshop-body {
+  padding: 4px 0 0;
+}
+
+.confirm-workshop-intro {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.confirm-workshop-card {
+  background: #fffdfa;
+  border: 1px solid var(--line);
+  border-radius: 0 !important;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.confirm-ws-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.confirm-ws-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.confirm-ws-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--green);
+  background: rgba(83, 100, 73, 0.1);
+  padding: 2px 8px;
+  border-radius: 0 !important;
+}
+
+.confirm-ws-price-box {
+  text-align: right;
+}
+
+.confirm-ws-price-box .price-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.confirm-ws-price-box .price-value {
+  font-size: 24px;
+  color: var(--red);
+  font-weight: 700;
+  display: block;
+  margin: 2px 0;
+}
+
+.confirm-ws-price-box .price-sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  display: block;
+}
+
+.confirm-ws-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.confirm-ws-specs-grid .spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.confirm-ws-specs-grid .spec-item.wide {
+  grid-column: 1 / -1;
+}
+
+.confirm-ws-specs-grid .spec-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.confirm-ws-specs-grid .spec-val {
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.confirm-ws-specs-grid .spec-note {
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--ink);
+  margin: 4px 0 0;
+  background: rgba(247, 243, 233, 0.7);
+  padding: 8px 12px;
+  border-left: 2px solid var(--red);
+  border-radius: 0 !important;
+}
+
+.confirm-ws-items-breakdown {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+
+.breakdown-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.breakdown-table-wrap {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.breakdown-table th {
+  padding: 7px 10px;
+  background: #f7f3e9;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.breakdown-table td {
+  padding: 7px 10px;
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink);
+}
+
+.confirm-notice-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(83, 100, 73, 0.08);
+  border: 1px solid rgba(83, 100, 73, 0.25);
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  .quote-info-section {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .contract-card-main,
+  .confirm-ws-header {
+    flex-direction: column;
+  }
+  .contract-price-col,
+  .confirm-ws-price-box {
+    text-align: left;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 540px) {
+  .quote-info-row {
+    grid-template-columns: 120px 1fr;
+    gap: 8px;
+  }
+  .quote-info-label {
+    white-space: normal;
+  }
+}
+
+

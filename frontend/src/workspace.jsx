@@ -1,5 +1,8 @@
 import React,{useState,useEffect} from 'react';import {Link,Navigate,useNavigate,useParams} from 'react-router-dom';import {Plus,ArrowUpRight,Palette,Layers,ClipboardList,Users,Newspaper,Home,Check,Edit3,Trash2,RefreshCw,Send,MapPin,ShieldCheck,X,Landmark,Search,Eye,User,Lock,Mail,Calendar,CheckCircle2,AlertCircle,UserCheck} from 'lucide-react';import {api,useApp,useLoad,LoadState,Empty,Badge,FormDialog,PageTitle,CATEGORIES,STATUS,money,date,ImageUpload,Pagination} from './shared';
 import { BatchLandingDialog, BatchPageLinks } from './BatchLandingDialog';
+import { ProductionJournal } from './ProductionJournal';
+import { WorkshopBidDialog } from './WorkshopBidDialog';
+import { ConfirmWorkshopModal } from './ConfirmWorkshopModal';
 const field=(name,label,type='text',extra={})=>({name,label,type,...extra});
 const quoteFields=[field('title','Tên yêu cầu'),field('category','Phân loại','select',{options:CATEGORIES}),field('quantity','Số lượng bản tranh','number',{min:1,step:1}),field('deadline','Hạn giao hàng','date'),field('description','Mô tả yêu cầu / quy cách','textarea',{wide:true})];
 const productFields=[field('name','Tên tranh'),field('category','Phân loại','select',{options:CATEGORIES}),field('price','Giá tham khảo (VNĐ)','number',{min:0}),field('dimensions','Kích thước'),field('material','Chất liệu'),field('published','Công khai sản phẩm','checkbox'),field('description','Câu chuyện bức tranh','textarea',{wide:true}),field('images','Ảnh sản phẩm','images',{wide:true})];
@@ -7,7 +10,57 @@ const studioFields=[field('name','Tên xưởng'),field('address','Địa chỉ'
 const newsFields=[field('title','Tiêu đề'),field('category','Chuyên mục','select',{options:['Thông báo','Làng nghề','Sự kiện']}),field('body','Nội dung','textarea',{wide:true,maxLength:15000}),field('pictures','Ảnh minh họa','images',{wide:true,required:false}),field('published','Công khai','checkbox')];
 const pick=(obj,fields)=>Object.fromEntries(fields.map(f=>[f.name,obj[f.name]??(f.type==='images'||f.type==='categories'?[]:f.type==='checkbox'?false:'')]));
 export function Dashboard(){const {user,loading}=useApp(),[tab,setTab]=useState('quotes');if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;const items=user.role==='artisan'?[['quotes','Yêu cầu báo giá',ClipboardList],['studio','Hồ sơ xưởng',Home],['products','Tranh của xưởng',Palette],['batches','Lô tranh & nhật ký',Layers],['account','Hồ sơ tài khoản',UserCheck]]:user.role==='admin'?[['quotes','Điều phối đơn hàng',ClipboardList],['heritage','Kho Di sản Làng',Landmark],['artisans','Nghệ nhân & xưởng',Users],['users','Quản lý tài khoản',ShieldCheck],['news','Tin tức cộng đồng',Newspaper],['account','Hồ sơ tài khoản',UserCheck]]:[['quotes','Yêu cầu đặt tranh',ClipboardList],['account','Hồ sơ tài khoản',UserCheck]];return <section className="workspace wrap"><aside className="workspace-sidebar"><span className="eyebrow">KHÔNG GIAN LÀM VIỆC</span><h2>{user.name}</h2><span className="role-label">{user.role==='admin'?'Ban quản lý':user.role==='artisan'?'Nghệ nhân':'Khách hàng'}</span><nav>{items.map(([key,label,Icon])=><button key={key} className={tab===key?'active':''} onClick={()=>setTab(key)}><Icon size={18}/>{label}</button>)}</nav><div className="sidebar-note"><ShieldCheck/><p>Mỗi tác phẩm một câu chuyện. Mỗi đơn hàng một kết nối.</p></div></aside><div className="workspace-content" key={tab}>{tab==='quotes'&&<QuotesList/>}{tab==='studio'&&<StudioEditor/>}{tab==='products'&&<ProductsEditor/>}{tab==='batches'&&<BatchesEditor onOpenQuotes={()=>setTab('quotes')}/>}{tab==='artisans'&&<ArtisansAdmin/>}{tab==='heritage'&&<HeritageAdmin/>}{tab==='news'&&<NewsEditor/>}{tab==='users'&&<UsersAdmin/>}{tab==='account'&&<AccountProfile/>}</div></section>;}
-function QuotesList(){const {user}=useApp(),state=useLoad('/quotes'),[dialog,setDialog]=useState(false),navigate=useNavigate(),[filter,setFilter]=useState('');const data=(state.data||[]).filter(q=>!filter||q.status===filter);return <><PageTitle eyebrow="KẾT NỐI & HỢP TÁC" title={user.role==='buyer'?'Yêu cầu đặt tranh':user.role==='artisan'?'Yêu cầu báo giá':'Điều phối đơn hàng'} action={user.role==='buyer'&&<button className="btn" onClick={()=>setDialog(true)}><Plus size={18}/> Tạo yêu cầu</button>}>Theo dõi chào giá, phân bổ và tiến độ thực hiện.</PageTitle>{state.data&&<div className="stats-grid"><div><span>Tổng yêu cầu</span><strong>{state.data.length}</strong></div><div><span>Đang chào giá</span><strong>{state.data.filter(q=>['sent','bidding'].includes(q.status)).length}</strong></div><div><span>Đang sản xuất</span><strong>{state.data.filter(q=>q.status==='in_production').length}</strong></div><div><span>Đã giao</span><strong>{state.data.filter(q=>q.status==='delivered').length}</strong></div></div>}<div className="table-toolbar"><select aria-label="Lọc trạng thái đơn" value={filter} onChange={e=>setFilter(e.target.value)}><option value="">Mọi trạng thái</option>{Object.entries(STATUS).filter(([k])=>k!=='ready').map(([k,v])=><option key={k} value={k}>{v}</option>)}</select><button className="text-link" onClick={state.reload}><RefreshCw size={16}/> Làm mới</button></div><LoadState {...state}/>{state.data&&data.length===0&&<Empty title="Chưa có yêu cầu ở trạng thái này"><p>{user.role==='buyer'?'Bắt đầu bằng ý tưởng và số lượng tranh bạn muốn đặt.':'Yêu cầu phù hợp sẽ xuất hiện tại đây.'}</p></Empty>}<div className="quote-list">{data.map(q=><Link to={'/quotes/'+q._id} className="quote-row" key={q._id}><div><Badge status={q.status}/><h3>{q.title}</h3><p>{q.category} · {q.quantity.toLocaleString('vi-VN')} bản · Hạn giao {date(q.deadline)}</p></div><div><strong>{q.bids.length} chào giá</strong><ArrowUpRight size={20}/></div></Link>)}</div>{dialog&&<FormDialog title="Tạo yêu cầu đặt tranh" fields={quoteFields} initial={{category:CATEGORIES[0],quantity:100,deadline:'',description:'',title:''}} onClose={()=>setDialog(false)} submitLabel="Lưu bản nháp" onSubmit={async body=>{const q=await api('/quotes',{method:'POST',body});navigate('/quotes/'+q._id);}}/>}</>;}
+function QuotesList(){
+  const {user}=useApp(),state=useLoad('/quotes'),studio=useLoad(user.role==='artisan'?'/studio':'/auth/me'),[dialog,setDialog]=useState(false),navigate=useNavigate(),[filter,setFilter]=useState('');
+  const myStudioId=user.role==='artisan'?studio.data?._id:null;
+  const isMyWorkshopQuote=q=>Boolean(myStudioId&&(q.acceptedWorkshopId===myStudioId||q.allocations?.some(a=>a.workshopId===myStudioId)));
+  const isClosedStage=q=>['accepted','in_production','delivered'].includes(q.status);
+  const data=(state.data||[]).filter(q=>!filter||q.status===filter);
+  const inProdCount=(state.data||[]).filter(q=>q.status==='in_production'&&(user.role!=='artisan'||!myStudioId||isMyWorkshopQuote(q))).length;
+  const deliveredCount=(state.data||[]).filter(q=>q.status==='delivered'&&(user.role!=='artisan'||!myStudioId||isMyWorkshopQuote(q))).length;
+  return <>
+    <PageTitle eyebrow="KẾT NỐI & HỢP TÁC" title={user.role==='buyer'?'Yêu cầu đặt tranh':user.role==='artisan'?'Yêu cầu báo giá':'Điều phối đơn hàng'} action={user.role==='buyer'&&<button className="btn" onClick={()=>setDialog(true)}><Plus size={18}/> Tạo yêu cầu</button>}>Theo dõi chào giá, phân bổ và tiến độ thực hiện.</PageTitle>
+    {state.data&&<div className="stats-grid"><div><span>Tổng yêu cầu</span><strong>{state.data.length}</strong></div><div><span>Đang chào giá</span><strong>{state.data.filter(q=>['sent','bidding'].includes(q.status)).length}</strong></div><div><span>{user.role==='artisan'?'Xưởng đang sản xuất':'Đang sản xuất'}</span><strong>{inProdCount}</strong></div><div><span>{user.role==='artisan'?'Xưởng đã giao':'Đã giao'}</span><strong>{deliveredCount}</strong></div></div>}
+    <div className="table-toolbar"><select aria-label="Lọc trạng thái đơn" value={filter} onChange={e=>setFilter(e.target.value)}><option value="">Mọi trạng thái</option>{Object.entries(STATUS).filter(([k])=>k!=='ready').map(([k,v])=><option key={k} value={k}>{v}</option>)}</select><button className="text-link" onClick={state.reload}><RefreshCw size={16}/> Làm mới</button></div>
+    <LoadState {...state}/>
+    {state.data&&data.length===0&&<Empty title="Chưa có yêu cầu ở trạng thái này"><p>{user.role==='buyer'?'Bắt đầu bằng ý tưởng và số lượng tranh bạn muốn đặt.':'Yêu cầu phù hợp sẽ xuất hiện tại đây.'}</p></Empty>}
+    <div className="quote-list">{data.map(q=>{
+      const closed=isClosedStage(q);
+      const mineWon=isMyWorkshopQuote(q);
+      const otherWon=user.role==='artisan'&&closed&&!mineWon;
+      const hasMyBid=Boolean(myStudioId&&q.bids?.some(b=>b.workshopId===myStudioId));
+      return (
+        <Link to={'/quotes/'+q._id} className={'quote-row '+(otherWon?'quote-row-other-won':'')} key={q._id}>
+          <div>
+            <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:4,flexWrap:'wrap'}}>
+              {otherWon?(
+                <span className="badge status-other-workshop">Đã giao xưởng khác</span>
+              ):(
+                <Badge status={q.status}/>
+              )}
+              {q.targetType==='direct'?<span className="badge-direct-tag">Chỉ định xưởng</span>:<span className="badge-bidding-tag">Đấu thầu</span>}
+              {user.role==='artisan'&&mineWon&&<span className="badge-won-tag">Xưởng bạn đảm nhận</span>}
+              {user.role==='artisan'&&!closed&&hasMyBid&&<span className="badge-bid-sent">Đã gửi báo giá</span>}
+            </div>
+            <h3>{q.title}</h3>
+            <p>{q.category} · {q.items?.length?`${q.items.length} tác phẩm · `:''}{q.quantity.toLocaleString('vi-VN')} bản · Hạn giao {date(q.deadline)}</p>
+          </div>
+          <div>
+            {otherWon?(
+              <span className="quote-row-closed-meta">{hasMyBid?'Không trúng thầu':'Đã đóng chào giá'}</span>
+            ):user.role==='artisan'&&mineWon?(
+              <strong style={{color:'var(--green)'}}>Đơn của xưởng</strong>
+            ):(
+              <strong>{q.bids.length} chào giá</strong>
+            )}
+            <ArrowUpRight size={20}/>
+          </div>
+        </Link>
+      );
+    })}</div>
+    {dialog&&<FormDialog title="Tạo yêu cầu đặt tranh" fields={quoteFields} initial={{category:CATEGORIES[0],quantity:100,deadline:'',description:'',title:''}} onClose={()=>setDialog(false)} submitLabel="Lưu bản nháp" onSubmit={async body=>{const q=await api('/quotes',{method:'POST',body});navigate('/quotes/'+q._id);}}/>}
+  </>;
+}
 function StudioEditor(){const state=useLoad('/studio'),[edit,setEdit]=useState(false),{notify}=useApp();return <><PageTitle eyebrow="CÂU CHUYỆN CỦA BẠN" title="Hồ sơ xưởng" action={<button className="btn" onClick={()=>setEdit(true)} disabled={!state.data}><Edit3 size={17}/> Chỉnh sửa</button>}/><LoadState {...state}/>{state.data&&<div className="panel"><span className={'badge '+(state.data.approved?'status-delivered':'status-draft')}>{state.data.approved?'Đã được duyệt':'Đang chờ BQL duyệt'}</span><h2>{state.data.name}</h2><p className="prose">{state.data.story}</p><p><MapPin size={16}/> {state.data.address}</p><p>{state.data.visitingHours} · {state.data.openForVisits?'Đang mở cửa':'Hẹn trước'}</p><p className="muted">Ảnh xưởng bạn tải lên và lưu sẽ xuất hiện trong popup bản đồ khi xưởng đã được duyệt. Tối đa 8 ảnh; ảnh minh họa có sẵn không được tính là ảnh do chủ xưởng đăng.</p><div className="event-images">{state.data.images.map((src,i)=><img key={i} src={src} alt="Ảnh xưởng"/>)}</div><p>Phân loại: {state.data.categories.join(' · ')}</p><p>{state.data.certificates.length} ảnh chứng nhận</p></div>}{edit&&state.data&&<FormDialog title="Chỉnh sửa hồ sơ xưởng" fields={studioFields} initial={pick(state.data,studioFields)} onClose={()=>setEdit(false)} onSubmit={async body=>{await api('/studio',{method:'PATCH',body});state.reload();notify('Đã lưu hồ sơ xưởng');}}/>}</>;}
 
 
@@ -961,7 +1014,7 @@ function AccountProfile(){const {user,setUser,notify}=useApp(),state=useLoad('/a
 
 export function QuoteDetail(){const {user,loading}=useApp();if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;return <QuoteContent/>;}
 function QuoteContent(){
-  const {id}=useParams(),{user,notify}=useApp(),state=useLoad('/quotes/'+id),[dialog,setDialog]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
+  const {id}=useParams(),{user,notify}=useApp(),state=useLoad('/quotes/'+id),[dialog,setDialog]=useState(null),[confirmingBid,setConfirmingBid]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
   const studio=useLoad(user.role==='artisan'?'/studio':'/auth/me');
   const q=state.data,own=!!q&&user.role==='buyer'&&q.buyerId===user.id;
 
@@ -988,9 +1041,45 @@ function QuoteContent(){
   const isTargetArtisan=!q.targetWorkshopId||studio.data?._id===q.targetWorkshopId;
   const mineBid=q.bids?.find(b=>b.workshopId===studio.data?._id);
 
-  const handleSelectWorkshop=async(workshopId,wName)=>{
-    if(!window.confirm(`Xác nhận trao toàn bộ 100% lô tranh này cho xưởng "${wName}" thực hiện trọn gói?`))return;
-    await act('accept',{workshopId});
+  const isClosedStage = ['accepted', 'in_production', 'delivered'].includes(q.status);
+  const isWinningWorkshop = Boolean(studio.data?._id && (q.acceptedWorkshopId === studio.data._id || q.allocations?.some(a => a.workshopId === studio.data._id)));
+  const isAssignedToOtherWorkshop = user.role === 'artisan' && isClosedStage && !isWinningWorkshop;
+  const acceptedWorkshopId = q.acceptedWorkshopId || q.allocations?.[0]?.workshopId;
+  const canUpdateItemProgress = user.role === 'artisan' && isWinningWorkshop;
+  const allItemsCompleted = !q.items?.length || q.items.every(it => it.productionStatus === 'completed');
+
+  const cleanDesc = q.description && q.description.trim() && q.description.trim().toLowerCase() !== 'không' ? q.description.trim() : '';
+  const cleanPkgNote = q.customerInfo?.packagingNote && q.customerInfo.packagingNote.trim() && q.customerInfo.packagingNote.trim().toLowerCase() !== 'không' ? q.customerInfo.packagingNote.trim() : '';
+  const hasActionButtons =
+    (own && q.status === 'draft') ||
+    (user.role === 'artisan' && ['sent', 'bidding'].includes(q.status) && isTargetArtisan) ||
+    mine?.status === 'accepted' ||
+    mine?.status === 'in_production' ||
+    (mine?.status === 'ready' && !mine.batchId) ||
+    (own && q.status === 'in_production');
+
+  const handleUpdateItemStatus = async (productId, nextStatus) => {
+    setBusy(true);
+    setError('');
+    try {
+      await api('/quotes/' + id + '/item-progress', {
+        method: 'POST',
+        body: { version: q.version, productId, status: nextStatus },
+      });
+      state.reload();
+      notify(nextStatus === 'completed' ? 'Đã hoàn thành in tác phẩm' : 'Đã cập nhật tiến độ chế tác');
+    } catch (e) {
+      setError(e.message);
+      state.reload();
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleConfirmWorkshop = async () => {
+    if (!confirmingBid) return;
+    await act('accept', { workshopId: confirmingBid.workshopId });
+    setConfirmingBid(null);
   };
 
   return (
@@ -1012,12 +1101,26 @@ function QuoteContent(){
 
       {error&&<p className="error" role="alert">{error}</p>}
 
-      {isDirect?(
+      {isAssignedToOtherWorkshop ? (
+        <div className="quote-notice-banner notice-other-workshop" style={{margin:'0 0 20px'}}>
+          <AlertCircle size={18}/>
+          <div>
+            <strong>Đơn hàng đã có xưởng đảm nhận:</strong> Khách hàng đã lựa chọn <strong>{studioName(acceptedWorkshopId)}</strong> thực hiện trọn gói lô tranh này. Phiên chào giá đã kết thúc.
+          </div>
+        </div>
+      ) : user.role === 'artisan' && isClosedStage && isWinningWorkshop ? (
+        <div className="quote-notice-banner notice-won-workshop" style={{margin:'0 0 20px'}}>
+          <CheckCircle2 size={18}/>
+          <div>
+            <strong>Xưởng bạn đảm nhận đơn hàng này:</strong> Khách hàng đã lựa chọn xưởng của bạn thực hiện trọn gói 100% lô tranh ({q.quantity?.toLocaleString('vi-VN')} bản in).
+          </div>
+        </div>
+      ) : isDirect ? (
         <div className="cart-copyright-banner banner-direct" style={{margin:'0 0 20px'}}>
           <ShieldCheck size={18}/>
           <div><strong>Đơn hàng gửi trực tiếp xưởng:</strong> Lô tranh được gửi chỉ định tới <strong>{studioName(q.targetWorkshopId)}</strong> sở hữu ván in chế tác độc bản.</div>
         </div>
-      ):(
+      ) : (
         <div className="bidding-mode-notice" style={{margin:'0 0 20px'}}>
           <Layers size={18}/>
           <div><strong>Đấu thầu công khai:</strong> Các xưởng làng nghề tham gia chào giá cạnh tranh. Khách hàng lựa chọn 1 xưởng duy nhất để nhận trọn gói 100% lô tranh.</div>
@@ -1026,62 +1129,149 @@ function QuoteContent(){
 
       <div className="quote-detail-grid">
         <div>
-          {/* Panel Thông tin chung của lô tranh */}
-          <div className="panel">
-            <Badge status={q.status}/>
-            <h2>Thông tin đơn đặt lô</h2>
-            <dl>
-              <div><dt>Phân loại chính</dt><dd>{q.category}</dd></div>
-              <div><dt>Tổng số bản in</dt><dd><strong style={{color:'var(--red)'}}>{q.quantity?.toLocaleString('vi-VN')}</strong> bản</dd></div>
-              <div><dt>Hạn giao hàng</dt><dd>{date(q.deadline)}</dd></div>
-              <div><dt>Hình thức điều phối</dt><dd>{isDirect?'Gửi trực tiếp 1 xưởng':'Đấu thầu công khai'}</dd></div>
-            </dl>
-            <p className="prose">{q.description}</p>
-
-            <div className="button-row">
-              {own&&q.status==='draft'&&(
-                <>
-                  <button className="btn" disabled={busy} onClick={()=>act('send')}><Send size={17}/> Gửi yêu cầu tới xưởng</button>
-                  <button className="text-link" onClick={()=>setDialog('edit')}>Sửa bản nháp</button>
-                </>
-              )}
-              {user.role==='artisan'&&['sent','bidding'].includes(q.status)&&isTargetArtisan&&(
-                <button className="btn" onClick={()=>setDialog('bid')}><Send size={17}/> {mineBid?'Cập nhật chào giá':'Gửi chào giá lô tranh'} <ArrowUpRight size={17}/></button>
-              )}
-              {mine?.status==='accepted'&&(
-                <button className="btn" disabled={busy} onClick={()=>act('production',{action:'start'})}>Bắt đầu sản xuất toàn bộ lô</button>
-              )}
-              {mine?.status==='in_production'&&(
-                <button className="btn" disabled={busy} onClick={()=>setDialog('complete')}>Báo hoàn thành lô tranh</button>
-              )}
-              {mine?.status==='ready'&&!mine.batchId&&<button className="btn" disabled={busy} onClick={()=>setDialog('complete')}>Tạo landing page cho lô đã hoàn thành</button>}
-              {own&&q.status==='in_production'&&(
-                <button className="btn" disabled={busy||q.allocations?.some(a=>a.status!=='ready')} onClick={()=>act('deliver')}>Xác nhận đã nhận đủ hàng</button>
-              )}
+          {mine?.status === 'in_production' && studio.data && <ProductionJournal quote={q} allocation={mine} studio={studio.data} onSaved={state.reload} />}
+          {/* Panel Thông tin đơn đặt lô & Giao nhận: Lưới 6 ô cân xứng tuyệt đối */}
+          <div className="panel quote-overview-panel">
+            <div className="quote-overview-head">
+              <div style={{display:'flex',alignItems:'center',gap:10,flexWrap:'wrap'}}>
+                {isAssignedToOtherWorkshop ? (
+                  <span className="badge status-other-workshop">Đã giao xưởng khác</span>
+                ) : (
+                  <Badge status={q.status}/>
+                )}
+                <h2 style={{margin:0,fontSize:'21px',fontFamily:'var(--serif)'}}>Thông tin đơn đặt lô</h2>
+              </div>
+              <span className="quote-mode-pill">
+                {isDirect ? `Chỉ định: ${studioName(q.targetWorkshopId)}` : 'Đấu thầu công khai'}
+              </span>
             </div>
-          </div>
 
-          {mine?.batchId&&<div className="panel batch-landing-result"><p>Lô {mine.quantity} bản của xưởng đã hoàn thành và có trang truy xuất riêng.</p><BatchPageLinks batchId={mine.batchId}/></div>}
+            <div className="quote-info-section">
+              <div className="quote-info-col">
+                <h3 className="quote-info-heading">Quy cách & Kế hoạch chế tác</h3>
+                <div className="quote-info-list">
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Tổng số lượng in</span>
+                    <span className="quote-info-val">
+                      <strong className="quote-qty-val">{q.quantity?.toLocaleString('vi-VN')} bản</strong>
+                      <span className="quote-qty-sub">({q.items?.length || 1} tác phẩm)</span>
+                    </span>
+                  </div>
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Hạn hoàn thành</span>
+                    <span className="quote-info-val">
+                      <strong>{date(q.deadline)}</strong>
+                    </span>
+                  </div>
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Phân loại tranh</span>
+                    <span className="quote-info-val">{q.category || 'Tranh Đông Hồ'}</span>
+                  </div>
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Hình thức đặt</span>
+                    <span className="quote-info-val">
+                      {isDirect ? `Chỉ định (${studioName(q.targetWorkshopId)})` : 'Đấu thầu công khai toàn làng nghề'}
+                    </span>
+                  </div>
+                  {cleanDesc && (
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Yêu cầu chế tác</span>
+                      <span className="quote-info-val">{cleanDesc}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="quote-info-col">
+                <h3 className="quote-info-heading">Thông tin giao nhận</h3>
+                <div className="quote-info-list">
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Người nhận hàng</span>
+                    <span className="quote-info-val">
+                      <strong>{q.customerInfo?.fullName || '—'}</strong>
+                    </span>
+                  </div>
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Số điện thoại</span>
+                    <span className="quote-info-val">
+                      <strong>{q.customerInfo?.phoneNumber || '—'}</strong>
+                    </span>
+                  </div>
+                  <div className="quote-info-row">
+                    <span className="quote-info-label">Địa chỉ nhận hàng</span>
+                    <span className="quote-info-val">{q.customerInfo?.shippingAddress || '—'}</span>
+                  </div>
+                  {cleanPkgNote && (
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Ghi chú đóng gói</span>
+                      <span className="quote-info-val">{cleanPkgNote}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {hasActionButtons && (
+              <div className="button-row quote-action-bar">
+                {own&&q.status==='draft'&&(
+                  <>
+                    <button className="btn" disabled={busy} onClick={()=>act('send')}><Send size={16}/> Gửi yêu cầu tới xưởng</button>
+                    <button className="text-link" onClick={()=>setDialog('edit')}>Sửa bản nháp</button>
+                  </>
+                )}
+                {user.role==='artisan'&&['sent','bidding'].includes(q.status)&&isTargetArtisan&&(
+                  <button className="btn" onClick={()=>setDialog('bid')}>{mineBid?'Cập nhật chào giá':'Gửi chào giá lô tranh'}</button>
+                )}
+                {mine?.status==='accepted'&&(
+                  <button className="btn" disabled={busy} onClick={()=>act('production',{action:'start'})}>Bắt đầu sản xuất toàn bộ lô</button>
+                )}
+                {mine?.status==='in_production'&&(
+                  <div style={{display:'inline-flex',flexDirection:'column',gap:4}}>
+                    <button
+                      className="btn"
+                      disabled={busy || !allItemsCompleted}
+                      onClick={()=>setDialog('complete')}
+                      title={!allItemsCompleted ? 'Cần đánh dấu hoàn thành toàn bộ tác phẩm trước' : 'Báo hoàn thành lô tranh'}
+                    >
+                      Báo hoàn thành lô tranh
+                    </button>
+                    {!allItemsCompleted && (
+                      <small style={{fontSize:'12px',color:'var(--muted)'}}>
+                        * Đánh dấu &ldquo;Xong&rdquo; các tranh trong bảng dưới đây trước khi báo hoàn thành lô
+                      </small>
+                    )}
+                  </div>
+                )}
+                {mine?.status==='ready'&&!mine.batchId&&<button className="btn" disabled={busy} onClick={()=>setDialog('complete')}>Tạo landing page cho lô đã hoàn thành</button>}
+                {own&&q.status==='in_production'&&(
+                  <button className="btn" disabled={busy||q.allocations?.some(a=>a.status!=='ready')} onClick={()=>act('deliver')}>Xác nhận đã nhận đủ hàng</button>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Panel Danh sách tác phẩm thành phần trong lô */}
           {q.items&&q.items.length>0&&(
             <div className="panel quote-items-panel">
               <div className="section-head">
                 <div>
-                  <span className="eyebrow">DANH SÁCH TÁC PHẨM TRONG LÔ ({q.items.length})</span>
-                  <h2>Các bức tranh chế tác</h2>
+                  <span className="eyebrow" style={{marginBottom:4}}>DANH SÁCH TÁC PHẨM TRONG LÔ ({q.items.length})</span>
+                  <h2 style={{margin:0,fontSize:'21px'}}>Các bức tranh chế tác</h2>
                 </div>
-                <span className="badge">Tổng {q.quantity?.toLocaleString('vi-VN')} bản in</span>
+                <span className="badge" style={{fontSize:'13px',padding:'4px 12px'}}>Tổng {q.quantity?.toLocaleString('vi-VN')} bản in</span>
               </div>
               <div className="cart-table-shell">
-                <table className="cart-table">
+                <table className="cart-table quote-art-table">
                   <thead>
                     <tr>
-                      <th style={{width:56}}>Ảnh</th>
+                      <th style={{width:54}}>Ảnh</th>
                       <th>Tác phẩm</th>
-                      <th style={{width:130}}>Kích thước</th>
-                      <th style={{width:110}}>Số lượng</th>
-                      <th>Ghi chú in</th>
+                      <th style={{width:140}}>Kích thước</th>
+                      <th style={{width:110,textAlign:'center'}}>Số lượng</th>
+                      <th>Ghi chú in ấn</th>
+                      {['in_production', 'delivered'].includes(q.status) && !isAssignedToOtherWorkshop && (
+                        <th style={{width:170,textAlign:'center'}}>Trạng thái chế tác</th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -1095,7 +1285,7 @@ function QuoteContent(){
                         <td>
                           <div className="quote-item-info">
                             <Link to={'/tranh/' + it.productId} title="Xem chi tiết tác phẩm" style={{textDecoration:'none',color:'inherit'}}>
-                              <h4 style={{margin:'0 0 3px',fontFamily:'var(--serif)',fontSize:'14.5px'}}>{it.artworkName}</h4>
+                              <h4 style={{margin:'0 0 4px',fontFamily:'var(--serif)',fontSize:'15.5px',color:'var(--ink)'}}>{it.artworkName}</h4>
                             </Link>
                             <div className="cart-item-tags">
                               <span>{it.category}</span>
@@ -1107,12 +1297,68 @@ function QuoteContent(){
                             </div>
                           </div>
                         </td>
-                        <td style={{fontSize:'12.5px',color:'var(--muted)'}}>{it.dimensions||'Tiêu chuẩn'}</td>
-                        <td>
-                          <strong style={{fontSize:'14px',color:'var(--ink)'}}>{it.quantity?.toLocaleString('vi-VN')}</strong>{' '}
-                          <span style={{fontSize:'12px',color:'var(--muted)'}}>bản</span>
+                        <td style={{fontSize:'13.5px',color:'var(--ink)'}}>{it.dimensions||'Tiêu chuẩn'}</td>
+                        <td style={{textAlign:'center'}}>
+                          <strong style={{fontSize:'15px',color:'var(--ink)'}}>{it.quantity?.toLocaleString('vi-VN')}</strong>{' '}
+                          <span style={{fontSize:'12.5px',color:'var(--muted)'}}>bản</span>
                         </td>
-                        <td style={{fontSize:'12px',color:it.note?'var(--ink)':'var(--muted)'}}>{it.note||'—'}</td>
+                        <td style={{fontSize:'13px',color:it.note?'var(--ink)':'var(--muted)'}}>{it.note||'—'}</td>
+                        {['in_production', 'delivered'].includes(q.status) && !isAssignedToOtherWorkshop && (
+                          <td style={{textAlign:'center'}}>
+                            <div className="item-progress-cell">
+                              {it.productionStatus === 'completed' ? (
+                                <span className="item-status-pill item-status-completed">
+                                  <CheckCircle2 size={13}/> Đã in xong
+                                </span>
+                              ) : it.productionStatus === 'in_progress' ? (
+                                <span className="item-status-pill item-status-in-progress">
+                                  Đang in
+                                </span>
+                              ) : (
+                                <span className="item-status-pill item-status-pending">
+                                  Chờ in
+                                </span>
+                              )}
+                              {canUpdateItemProgress && q.status === 'in_production' && (
+                                <div className="item-progress-actions">
+                                  {(!it.productionStatus || it.productionStatus === 'pending') && (
+                                    <button
+                                      type="button"
+                                      className="btn-item-action action-start"
+                                      disabled={busy}
+                                      onClick={() => handleUpdateItemStatus(it.productId, 'in_progress')}
+                                      title="Bắt đầu in tác phẩm này"
+                                    >
+                                      In
+                                    </button>
+                                  )}
+                                  {it.productionStatus === 'in_progress' && (
+                                    <button
+                                      type="button"
+                                      className="btn-item-action action-done"
+                                      disabled={busy}
+                                      onClick={() => handleUpdateItemStatus(it.productId, 'completed')}
+                                      title="Đánh dấu đã in xong toàn bộ tác phẩm này"
+                                    >
+                                      <Check size={12}/> Xong
+                                    </button>
+                                  )}
+                                  {it.productionStatus === 'completed' && (
+                                    <button
+                                      type="button"
+                                      className="btn-item-action-revert"
+                                      disabled={busy}
+                                      onClick={() => handleUpdateItemStatus(it.productId, 'in_progress')}
+                                      title="Chỉnh sửa lại nếu cần tiếp tục in"
+                                    >
+                                      Sửa
+                                    </button>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -1121,83 +1367,153 @@ function QuoteContent(){
             </div>
           )}
 
-          {/* Panel Thông tin giao hàng của khách */}
-          {q.customerInfo&&(q.customerInfo.fullName||q.customerInfo.shippingAddress)&&(
-            <div className="panel customer-info-panel">
-              <h2>Thông tin nhận hàng</h2>
-              <dl>
-                <div><dt>Người nhận</dt><dd>{q.customerInfo.fullName||'—'}</dd></div>
-                <div><dt>Số điện thoại</dt><dd>{q.customerInfo.phoneNumber||'—'}</dd></div>
-                <div className="wide"><dt>Địa chỉ giao hàng</dt><dd>{q.customerInfo.shippingAddress||'—'}</dd></div>
-                {q.customerInfo.packagingNote&&(
-                  <div className="wide"><dt>Ghi chú đóng gói / quy cách</dt><dd>{q.customerInfo.packagingNote}</dd></div>
+          {/* Khi ĐÃ CHẤP NHẬN XƯỞNG: Thay thế hoàn toàn phần Chào giá bằng 1 Panel duy nhất của Xưởng đảm nhận */}
+          {isClosedStage ? (
+            <div className="panel quote-contract-panel">
+              <div className="section-head">
+                <div>
+                  <span className="eyebrow" style={{marginBottom:4}}>ĐƠN VỊ THỰC HIỆN</span>
+                  <h2 style={{margin:0,fontSize:'21px'}}>Xưởng đảm nhận sản xuất trọn gói</h2>
+                </div>
+                {isWinningWorkshop && (
+                  <span className="badge-won-tag">Xưởng của bạn</span>
                 )}
-              </dl>
-            </div>
-          )}
+              </div>
 
-          {/* Panel Bids từ các xưởng - Tinh gọn, 1 xưởng nhận trọn gói 100% */}
-          <div className="panel">
-            <div className="section-head">
-              <h2>Chào giá từ các xưởng</h2>
-              <span className="muted">{q.bids?.length||0} chào giá</span>
-            </div>
-            {!q.bids?.length&&(
-              <Empty title="Chưa có chào giá nào">
-                <p>{isDirect?'Đang chờ xưởng chế tác phản hồi và gửi chào giá.':'Các xưởng phù hợp sẽ gửi chào giá trọn gói sau khi yêu cầu được chuyển tới.'}</p>
-              </Empty>
-            )}
-            {q.bids?.map(b=>{
-              const isAccepted=q.acceptedWorkshopId===b.workshopId;
-              const isWinning=q.allocations?.some(a=>a.workshopId===b.workshopId);
-              const totalPrice=b.unitPrice*q.quantity;
-              return (
-                <article className={'bid-card '+(isAccepted||isWinning?'bid-card-accepted':'')} key={b.workshopId}>
-                  <div style={{flex:1}}>
-                    <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:4}}>
-                      <h3 style={{margin:0}}>{studioName(b.workshopId)}</h3>
-                      {(isAccepted||isWinning)&&(
-                        <span className="badge status-accepted">Xưởng trúng thầu trọn gói 100%</span>
+              {(q.allocations?.length ? q.allocations : [{ workshopId: acceptedWorkshopId, quantity: q.quantity, unitPrice: q.bids?.find(b=>b.workshopId===acceptedWorkshopId)?.unitPrice || 0, status: q.status }]).map(a => {
+                const winningBid = q.bids?.find(b => b.workshopId === a.workshopId);
+                const unitPrice = a.unitPrice || winningBid?.unitPrice || 0;
+                const contractTotal = winningBid?.totalPrice || (unitPrice * (a.quantity || q.quantity));
+                return (
+                  <div className="contract-workshop-card" key={a.workshopId}>
+                    <div className="contract-card-main">
+                      <div style={{flex:1}}>
+                        <div style={{display:'flex',alignItems:'center',gap:10,flexWrap:'wrap',marginBottom:6}}>
+                          <h3 style={{margin:0,fontFamily:'var(--serif)',fontSize:'18px'}}>{studioName(a.workshopId)}</h3>
+                          <Badge status={q.status==='delivered'?'delivered':(a.status||q.status)}/>
+                        </div>
+                        <p className="contract-meta-line">
+                          Nhận trọn gói 100% lô (<strong>{(a.quantity || q.quantity)?.toLocaleString('vi-VN')} bản in</strong>)
+                          {winningBid?.days ? <> · Thời gian cam kết: <strong>{winningBid.days} ngày</strong></> : null}
+                        </p>
+                        {winningBid?.note && (
+                          <p className="contract-note-line">Cam kết chế tác: &ldquo;{winningBid.note}&rdquo;</p>
+                        )}
+                      </div>
+
+                      {!isAssignedToOtherWorkshop && unitPrice > 0 && (
+                        <div className="contract-price-col">
+                          <span className="contract-unit-price">Đơn giá BQ: <strong>{money(unitPrice)}</strong> / bản</span>
+                          <strong className="contract-total-price">{money(contractTotal)} <small>/ trọn gói</small></strong>
+                        </div>
                       )}
                     </div>
-                    <p style={{margin:'4px 0',fontSize:'12.5px',color:'var(--muted)'}}>
-                      Thời gian hoàn thành: <strong>{b.days} ngày</strong> · Nhận tối đa {b.quantity?.toLocaleString('vi-VN')} bản
-                    </p>
-                    {b.note&&<p style={{margin:'4px 0',fontSize:'13px'}}>{b.note}</p>}
-                  </div>
-                  <div style={{textAlign:'right',display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6}}>
-                    <div style={{fontSize:'12px',color:'var(--muted)'}}>Đơn giá: {money(b.unitPrice)} / bản</div>
-                    <strong style={{fontSize:'18px',color:'var(--red)'}}>{money(totalPrice)}<small style={{fontSize:'11px',fontWeight:400,color:'var(--muted)'}}> / trọn gói</small></strong>
-                    {own&&['sent','bidding'].includes(q.status)&&(
-                      <button
-                        type="button"
-                        className="btn small"
-                        disabled={busy}
-                        onClick={()=>handleSelectWorkshop(b.workshopId,studioName(b.workshopId))}
-                      >
-                        Chọn xưởng này
-                      </button>
+
+                    {!isAssignedToOtherWorkshop && winningBid?.itemPrices?.length > 0 && (
+                      <div className="contract-itemized-section">
+                        <span className="contract-itemized-title">Bảng đơn giá thỏa thuận theo từng tác phẩm:</span>
+                        <div className="contract-itemized-list">
+                          {winningBid.itemPrices.map(ip => {
+                            const item = q.items?.find(it => it.productId === ip.productId);
+                            const qty = item?.quantity || 1;
+                            return (
+                              <div key={ip.productId} className="contract-itemized-row">
+                                <span>{item?.artworkName || ip.productId} <small style={{color:'var(--muted)'}}>({qty} bản)</small></span>
+                                <span>{money(ip.unitPrice)} / bản · <strong>{money(ip.unitPrice * qty)}</strong></span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {a.batchId && (
+                      <div className="contract-batch-footer">
+                        <span>Trang truy xuất nguồn gốc & Mã QR của lô tranh đã hoàn thành:</span>
+                        <BatchPageLinks batchId={a.batchId}/>
+                      </div>
                     )}
                   </div>
-                </article>
-              );
-            })}
-          </div>
+                );
+              })}
 
-          {/* Panel Tiến độ xưởng trúng thầu */}
-          {q.allocations?.length>0&&(
-            <div className="panel">
-              <h2>Xưởng đảm nhận sản xuất trọn gói</h2>
-              {q.allocations.map(a=>(
-                <div className="allocation-row" key={a.workshopId}>
+              {isAssignedToOtherWorkshop && mineBid && (
+                <div className="other-artisan-bid-summary">
                   <div>
-                    <h3>{studioName(a.workshopId)}</h3>
-                    <p>Nhận 100% lô ({a.quantity?.toLocaleString('vi-VN')} bản in) · Đơn giá {money(a.unitPrice)}</p>
+                    <span className="eyebrow" style={{marginBottom:2}}>ĐỀ NGHỊ BÁO GIÁ XƯỞNG BẠN ĐÃ GỬI</span>
+                    <p style={{margin:0,fontSize:'13.5px',color:'var(--ink)'}}>
+                      Tổng báo giá: <strong>{money(mineBid.totalPrice || (mineBid.unitPrice * q.quantity))}</strong> (Đơn giá BQ: {money(mineBid.unitPrice)} / bản) · Thời gian: <strong>{mineBid.days} ngày</strong>
+                    </p>
                   </div>
-                  <BatchPageLinks batchId={a.batchId}/>
-                  <Badge status={q.status==='delivered'?'delivered':a.status}/>
+                  <span className="badge status-other-workshop">Không trúng thầu</span>
                 </div>
-              ))}
+              )}
+            </div>
+          ) : (
+            /* Khi CHƯA CHẤP NHẬN XƯỞNG: Hiển thị danh sách chào giá từ các xưởng */
+            <div className="panel quote-bids-panel">
+              <div className="section-head">
+                <div>
+                  <span className="eyebrow" style={{marginBottom:4}}>ĐỀ NGHỊ BÁO GIÁ</span>
+                  <h2 style={{margin:0,fontSize:'21px'}}>Chào giá từ các xưởng</h2>
+                </div>
+                <span className="badge" style={{fontSize:'13px',padding:'4px 12px'}}>{q.bids?.length||0} chào giá</span>
+              </div>
+              {!q.bids?.length&&(
+                <Empty title="Chưa có chào giá nào">
+                  <p>{isDirect?'Đang chờ xưởng chế tác phản hồi và gửi chào giá.':'Các xưởng phù hợp sẽ gửi chào giá trọn gói sau khi yêu cầu được chuyển tới.'}</p>
+                </Empty>
+              )}
+              {q.bids?.map(b=>{
+                const totalPrice=b.totalPrice || (b.unitPrice*q.quantity);
+                const isMyBid=studio.data?._id===b.workshopId;
+                return (
+                  <article className={'bid-card '+(isMyBid?'bid-card-mine':'')} key={b.workshopId}>
+                    <div style={{flex:1}}>
+                      <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6,flexWrap:'wrap'}}>
+                        <h3 style={{margin:0,fontFamily:'var(--serif)',fontSize:'17px'}}>{studioName(b.workshopId)}</h3>
+                        {isMyBid&&<span className="badge-bid-sent">Báo giá của xưởng bạn</span>}
+                      </div>
+                      <p style={{margin:'4px 0',fontSize:'13.5px',color:'var(--ink)'}}>
+                        Thời gian hoàn thành: <strong>{b.days} ngày</strong> · Nhận trọn gói {b.quantity?.toLocaleString('vi-VN')} bản
+                      </p>
+                      {b.note&&<p style={{margin:'4px 0',fontSize:'13.5px',color:'var(--muted)',fontStyle:'italic'}}>&ldquo;{b.note}&rdquo;</p>}
+                      {b.itemPrices&&b.itemPrices.length>0&&(
+                        <details className="bid-itemized-dropdown">
+                          <summary style={{fontSize:'12.5px',cursor:'pointer',color:'var(--ink)',fontWeight:500}}>
+                            Chi tiết đơn giá từng tác phẩm ({b.itemPrices.length} tranh)
+                          </summary>
+                          <div className="bid-itemized-grid">
+                            {b.itemPrices.map(ip=>{
+                              const item=q.items?.find(it=>it.productId===ip.productId);
+                              return (
+                                <div key={ip.productId} style={{display:'flex',justifyContent:'space-between',fontSize:'13px',padding:'4px 8px',background:'var(--bg)',borderRadius:4}}>
+                                  <span>{item?.artworkName || ip.productId} ({item?.quantity || 1} bản)</span>
+                                  <strong>{money(ip.unitPrice)} <small style={{fontWeight:400,color:'var(--muted)'}}>/ bản</small></strong>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </details>
+                      )}
+                    </div>
+                    <div style={{textAlign:'right',display:'flex',flexDirection:'column',alignItems:'flex-end',gap:8}}>
+                      <div style={{fontSize:'13px',color:'var(--muted)'}}>Đơn giá BQ: <strong style={{color:'var(--ink)'}}>{money(b.unitPrice)}</strong> / bản</div>
+                      <strong style={{fontSize:'22px',color:'var(--red)'}}>{money(totalPrice)}<small style={{fontSize:'12px',fontWeight:400,color:'var(--muted)'}}> / trọn gói</small></strong>
+                      {own&&['sent','bidding'].includes(q.status)&&(
+                        <button
+                          type="button"
+                          className="btn small"
+                          disabled={busy}
+                          onClick={()=>setConfirmingBid(b)}
+                        >
+                          Chọn xưởng này
+                        </button>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           )}
         </div>
@@ -1220,8 +1536,29 @@ function QuoteContent(){
       </div>
 
       {dialog==='edit'&&<FormDialog title="Sửa bản nháp" fields={quoteFields} initial={pick(q,quoteFields)} onClose={()=>setDialog(null)} onSubmit={async body=>{await api('/quotes/'+id,{method:'PATCH',body:{...body,version:q.version}});state.reload();notify('Đã lưu bản nháp');}}/>}
-      {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async landingPage=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version:q.version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh và tạo landing page cùng mã QR');}}/>}
-      {dialog==='bid'&&<FormDialog title="Chào giá từ xưởng" fields={[field('unitPrice','Đơn giá mỗi bản (VNĐ)','number',{min:1}),field('quantity','Số lượng có thể nhận','number',{min:1,max:q.quantity,step:1}),field('days','Số ngày hoàn thành','number',{min:1,max:365,step:1}),field('note','Ghi chú / cam kết chế tác','textarea',{required:false,wide:true,maxLength:2000})]} initial={{unitPrice:100000,quantity:q.quantity,days:7,note:''}} onClose={()=>setDialog(null)} submitLabel="Gửi chào giá" onSubmit={async body=>{await api('/quotes/'+id+'/bids',{method:'POST',body:{...body,version:q.version}});state.reload();notify('Đã gửi chào giá');}}/>}
+      {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} initialDraft={mine.journalDraft} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async (landingPage,version)=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh và tạo landing page cùng mã QR');}}/>}
+      {dialog==='bid'&&(
+        <WorkshopBidDialog
+          quote={q}
+          initialBid={mineBid}
+          onClose={()=>setDialog(null)}
+          onSubmit={async body=>{
+            await api('/quotes/'+id+'/bids',{method:'POST',body:{...body,version:q.version}});
+            state.reload();
+            notify('Đã gửi chào giá lô tranh');
+          }}
+        />
+      )}
+      {confirmingBid && (
+        <ConfirmWorkshopModal
+          quote={q}
+          bid={confirmingBid}
+          studioName={studioName(confirmingBid.workshopId)}
+          onClose={()=>setConfirmingBid(null)}
+          onConfirm={handleConfirmWorkshop}
+          busy={busy}
+        />
+      )}
     </section>
   );
 }

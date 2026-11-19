@@ -117,7 +117,7 @@ export class BatchesService {
       d = parse(landingEditSchema, body);
       const { published, ...content } = d;
       parse(landingContentSchema, { ...content, productId: existing.productId });
-      await this.ownedImages(actor.id, [...d.coverImages, ...d.events.flatMap((e: any) => e.images)]);
+      await this.assertOwnedImages(actor.id, [...d.coverImages, ...d.events.flatMap((e: any) => e.images)]);
     } else {
       d = parse(editInputSchema, body);
     }
@@ -139,7 +139,7 @@ export class BatchesService {
     if (!batch) throw new NotFoundException();
     if (batch.quoteId) {
       if (!(await this.isLinked(batch))) throw new NotFoundException();
-      await this.ownedImages(actor.id, d.images);
+      await this.assertOwnedImages(actor.id, d.images);
       if (batch.events.length >= 30 || batch.events.some((e: any) => e.date > d.date))
         throw new BadRequestException("Mốc mới phải sau nhật ký hiện có, tối đa 30 mốc");
     }
@@ -175,7 +175,7 @@ export class BatchesService {
       throw new BadRequestException("Tác phẩm phải thuộc phân loại của yêu cầu đặt tranh");
     if (orderItems.some(item => item.type === "custom" && item.workshopId !== String(s._id)))
       throw new ForbiddenException("Tranh độc bản trong lô phải do chính xưởng sở hữu thực hiện");
-    await this.ownedImages(actor.id, [...d.coverImages, ...d.events.flatMap(e => e.images)]);
+    await this.assertOwnedImages(actor.id, [...d.coverImages, ...d.events.flatMap(e => e.images)]);
     // Stage first; public reads also require the quotation's successful completion link.
     // This keeps publication safe on a standalone MongoDB without transactions.
     return this.batchesModel.create({ ...d, quoteId, quantity, workshopId: String(s._id),
@@ -195,7 +195,7 @@ export class BatchesService {
     } } });
   }
 
-  private async ownedImages(ownerId: string, urls: string[]) {
+  async assertOwnedImages(ownerId: string, urls: string[]) {
     const unique = [...new Set(urls)];
     const count = await this.assetsModel.countDocuments({ ownerId, url: { $in: unique } });
     if (count !== unique.length) throw new ForbiddenException(

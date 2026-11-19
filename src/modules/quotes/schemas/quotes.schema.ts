@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { ProductionJournalSchema } from "./production-journal.schema";
 
 export const QuotationModelName = "Quotation";
 
@@ -18,6 +19,12 @@ export const LotItemSchema = new Schema(
     workshopName: { type: String, default: "" },
     quantity: { type: Number, required: true, min: 1 },
     note: { type: String, default: "", maxLength: 500 },
+    productionStatus: {
+      type: String,
+      enum: ["pending", "in_progress", "completed"],
+      default: "pending",
+    },
+    completedAt: { type: Date, default: null },
   },
   { _id: false },
 );
@@ -61,9 +68,17 @@ export const QuotationSchema = new Schema(
         workshopId: String,
         artisanId: String,
         unitPrice: Number,
+        totalPrice: { type: Number, default: 0 },
+        itemPrices: [
+          {
+            productId: String,
+            unitPrice: Number,
+          },
+        ],
         quantity: Number,
         days: Number,
         note: String,
+        createdAt: { type: Date, default: Date.now },
       },
     ],
     allocations: [
@@ -73,6 +88,7 @@ export const QuotationSchema = new Schema(
         unitPrice: Number,
         status: String,
         batchId: String,
+        journalDraft: { type: ProductionJournalSchema, default: undefined },
       },
     ],
     history: [{ status: String, at: Date, actor: String, note: String,
