@@ -39,7 +39,7 @@ Khách hàng và chủ xưởng cũng nhận thông báo hoàn thành tại bi�
 
 - Ảnh thành phẩm và ảnh công đoạn phải do chính tài khoản xưởng tải lên hệ thống. Không dùng ảnh của tài khoản khác hoặc ảnh tư liệu `/art/` làm bằng chứng cho lô mới.
 - Ngày công đoạn không được ở tương lai và phải tăng dần; các công đoạn cùng ngày được chấp nhận. Phải đợi ảnh tải xong trước khi gửi form.
-- Tác phẩm có hoạt họa sẵn, hiện là **Đám cưới chuột**, được gắn phim tự động. Các tác phẩm khác dùng ảnh thành phẩm ở góc thưởng tranh. Không bắt buộc cung cấp video.
+- Các tác phẩm có hoạt họa sẵn gồm **Đám cưới chuột, Gà đại cát, Đàn lợn âm dương, Vinh hoa – Em bé ôm gà, Phú quý – Em bé ôm vịt, Mục đồng đọc sách / Hiếu học chăn trâu đọc sách**. Trang tự ghép phim theo tác phẩm đại diện của lô; không cần nhập hoặc tải video. Những mẫu còn lại tiếp tục dùng ảnh thành phẩm ở góc thưởng tranh. Có thể xem thử sáu clip tại `/films/xem-thu.html`.
 - QR được cung cấp ở trang quản lý và chi tiết đơn; landing page tiếp tục tập trung vào câu chuyện, nhật ký và hình ảnh.
 
 ## Quản lý sau khi tạo
