@@ -15,7 +15,7 @@ function willow(time) {
       }).join(''))).join(''));
 }
 
-function buffalo(time) {
+export function buffalo(time, coat = C.grey) {
   const stride = wave(time, 4);
   const legs = [-144, 142].map((x, i) => {
     const swing = n(stride * (i ? -9 : 9));
@@ -25,7 +25,7 @@ function buffalo(time) {
       line(`M${x - 2} 66V77`, C.cream, 1.4));
   }).join('');
   const nearLegs = [-176, 182].map((x, i) => group(`rotate(${n(stride * (i ? 7 : -7))} ${x} -48)`,
-    path(`M${x - 16}-62L${x - 15} 8L${x + 4} 41L${x - 3} 82L${x + 24} 82L${x + 29} 36L${x + 14} 1L${x + 22}-62Z`, C.grey) +
+    path(`M${x - 16}-62L${x - 15} 8L${x + 4} 41L${x - 3} 82L${x + 24} 82L${x + 29} 36L${x + 14} 1L${x + 22}-62Z`, coat) +
     path(`M${x - 2} 65L${x - 5} 84L${x + 25} 84L${x + 27} 64Z`, C.ink) +
     line(`M${x + 10} 71V82`, C.cream, 1.4))).join('');
   const blanket = group('translate(14 -117)',
@@ -34,7 +34,7 @@ function buffalo(time) {
     `<ellipse rx="39" ry="31" fill="${C.red}"/><ellipse rx="30" ry="23" fill="${C.cream}"/>` +
     line('M-15 0Q0-23 15 0Q0 23-15 0ZM0-16V16M-20 0H20', C.green, 2));
   const head = group(`rotate(${n(wave(time, 3, .4) * 2.5)} -205 -110)`,
-    path('M-166-140Q-226-163-264-115Q-290-78-302-48L-325-15Q-340 2-320 20Q-299 39-274 13L-242-26Q-201-49-189-90Z', C.grey) +
+    path('M-166-140Q-226-163-264-115Q-290-78-302-48L-325-15Q-340 2-320 20Q-299 39-274 13L-242-26Q-201-49-189-90Z', coat) +
     path('M-255-104Q-310-118-322-168Q-319-118-285-96Z', C.cream) +
     path('M-239-114Q-194-128-198-179Q-173-147-213-109Z', C.cream) +
     group(`rotate(${n(wave(time, 4) * 8)} -240 -98)`, path('M-242-102Q-205-121-180-102Q-200-75-232-84Z', '#677664') + line('M-234-96L-193-100', C.ink, 1.2)) +
@@ -48,7 +48,7 @@ function buffalo(time) {
     group(`rotate(${n(wave(time, 2) * 8)} 208 -107)`,
       line('M207-117Q280-125 267-46Q258-6 277 25', C.ink, 6) +
       path('M277 17Q293 24 289 53Q275 48 263 33Z', C.ink, 'stroke-width="2"')) +
-    path('M-200-134Q-156-190-54-180Q-4-187 29-170Q145-202 205-140Q246-81 197-29Q118 7 19-16Q-107 3-185-45Q-226-73-200-134Z', C.grey) +
+    path('M-200-134Q-156-190-54-180Q-4-187 29-170Q145-202 205-140Q246-81 197-29Q118 7 19-16Q-107 3-185-45Q-226-73-200-134Z', coat) +
     path('M-168-145Q-115-177-46-163Q24-166 69-154Q156-174 194-133Q138-162 68-137Q15-153-48-146Q-107-159-168-125Z', '#a0a08a', 'stroke="none"') +
     blanket + nearLegs + head +
     line('M-145-75Q-130-48-99-43M102-63Q130-56 157-71M160-98Q185-93 201-102', C.ink, 1.8) + '</g>';

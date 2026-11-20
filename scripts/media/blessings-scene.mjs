@@ -1,7 +1,7 @@
 import { C, n, wave, stroke, line, path, group, eye, leaf, petalFlower, lotus, butterfly, ground, scene } from './folk-art.mjs';
 import { rooster } from './rooster-scene.mjs';
 
-function child(time, variant) {
+export function child(time, variant) {
   const duck = variant === 'duck';
   const bib = duck ? C.cream : C.red;
   const hair = Array.from({ length: 17 }, (_, i) => {

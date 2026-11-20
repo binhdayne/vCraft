@@ -85,5 +85,5 @@ export function scene(time, content, { sunX = 920, sunY = 179, sky = true } = {}
     ${sky ? `<circle cx="${sunX}" cy="${sunY}" r="101" fill="url(#sun)"/><circle cx="${sunX}" cy="${sunY}" r="76" fill="none" stroke="#bda16b" stroke-width=".7" opacity=".37"/>${cloud(216, 150, .82, time)}${cloud(1009, 292, .58, time, 1.4)}` : ''}
     ${content}
     <rect width="1280" height="720" fill="url(#fibres)" pointer-events="none"/>
-  </svg>`;
+  </svg>`.replace(/[ \t]+$/gm, '');
 }

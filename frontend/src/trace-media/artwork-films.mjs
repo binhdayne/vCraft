@@ -53,6 +53,60 @@ export const artworkFilms = [
     poster: '/films/muc-dong-doc-sach-poster.svg',
     duration: '00:12',
   },
+  {
+    key: 'chan-trau-thoi-sao',
+    title: 'Chăn trâu thổi sáo',
+    names: ['chan trau thoi sao', 'muc dong thoi sao'],
+    src: '/films/chan-trau-thoi-sao.mp4',
+    type: 'video/mp4',
+    poster: '/films/chan-trau-thoi-sao-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'chan-trau-tha-dieu',
+    title: 'Chăn trâu thả diều',
+    names: ['chan trau tha dieu', 'muc dong tha dieu'],
+    src: '/films/chan-trau-tha-dieu.mp4',
+    type: 'video/mp4',
+    poster: '/films/chan-trau-tha-dieu-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'nhan-nghia',
+    title: 'Nhân nghĩa · Em bé ôm cóc',
+    names: ['nhan nghia em be om coc', 'nhan nghia'],
+    src: '/films/nhan-nghia.mp4',
+    type: 'video/mp4',
+    poster: '/films/nhan-nghia-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'le-tri',
+    title: 'Lễ trí · Em bé ôm rùa',
+    names: ['le tri em be om rua', 'le tri'],
+    src: '/films/le-tri.mp4',
+    type: 'video/mp4',
+    poster: '/films/le-tri-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'ly-ngu-vong-nguyet',
+    title: 'Lý ngư vọng nguyệt',
+    names: ['ly ngu vong nguyet', 'ca chep vong nguyet', 'ca chep trong trang'],
+    src: '/films/ly-ngu-vong-nguyet.mp4',
+    type: 'video/mp4',
+    poster: '/films/ly-ngu-vong-nguyet-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'chim-cong-thai-binh',
+    title: 'Chim công thiên hạ thái bình',
+    names: ['chim cong thien ha thai binh', 'chim cong thai binh'],
+    src: '/films/chim-cong-thai-binh.mp4',
+    type: 'video/mp4',
+    poster: '/films/chim-cong-thai-binh-poster.svg',
+    duration: '00:12',
+  },
 ];
 
 // Frontend presentation mapping only. It does not alter artworks or batch creation.
@@ -62,7 +116,7 @@ export function findArtworkFilm(product = {}) {
     .replace(/[đĐ]/g, 'd').replace(/[×✕]/g, 'x').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   // Full subjects can have size suffixes. Short legacy names only match on their
   // own: "Mục đồng thổi sáo" must not receive the reading scene, for example.
-  const legacy = new Set(['dai cat', 'vinh hoa', 'phu quy', 'muc dong']);
+  const legacy = new Set(['dai cat', 'vinh hoa', 'phu quy', 'muc dong', 'nhan nghia', 'le tri']);
   const legacyName = name.replace(/(?: kho)? \d+(?: ?x ?\d+)?(?: ?cm)?$/, '').trim();
   return artworkFilms.find(film => film.names.some(title => legacy.has(title)
     ? legacyName === title : ` ${name} `.includes(` ${title} `))) || null;

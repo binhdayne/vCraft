@@ -23,9 +23,13 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.deepEqual((await ok('/notifications','GET',undefined,buyer)).items,[]);
   const accounts=await ok('/admin/users','GET',undefined,admin);assert.ok(accounts.every(u=>!u.passwordHash));
  });
- await t.test('admin creates pending artisans and explicitly approves their studios',async()=>{
+ await t.test('admin-created studios are approved immediately and suspension still guards artisan actions',async()=>{
   studio1=await ok('/admin/artisans','POST',{name:'Artisan A',email:'a@test.local',password,workshop:studio},admin);
   studio2=await ok('/admin/artisans','POST',{name:'Artisan B',email:'b@test.local',password,workshop:{...studio,name:'Studio B'}},admin);
+  assert.equal(studio1.approved,true);assert.equal(studio2.approved,true);
+  assert.equal((await ok('/workshops','GET')).length,2);
+  await ok('/admin/workshops/'+studio1._id+'/approval','PATCH',{approved:false},admin);
+  await ok('/admin/workshops/'+studio2._id+'/approval','PATCH',{approved:false},admin);
   assert.equal((await ok('/workshops','GET')).length,0);
   art1=(await ok('/auth/login','POST',{email:'a@test.local',password})).token;art2=(await ok('/auth/login','POST',{email:'b@test.local',password})).token;
   const draft={name:'Painting A',category:'Chúc tụng',description:'Test artwork',price:100000,dimensions:'30x40',material:'Giấy điệp',images:['/art/dai-cat.jpg'],published:true};

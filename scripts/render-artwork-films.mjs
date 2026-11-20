@@ -1,6 +1,6 @@
-// Rebuild the five original vCraft films. No database or downloaded video is used.
+// Rebuild original vCraft films. No database or downloaded video is used.
 // Optional: npm install --prefix .local/media-tools --no-save playwright
-// Run: node scripts/render-artwork-films.mjs [ga-dai-cat|lon-am-duong|vinh-hoa|phu-quy|muc-dong-doc-sach]
+// Run: node scripts/render-artwork-films.mjs [scene-key ...]
 import { createRequire } from 'node:module';
 import fs from 'node:fs/promises';
 import path from 'node:path';
