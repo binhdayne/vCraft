@@ -1,4 +1,6 @@
-import React,{useState,useEffect} from 'react';import {Link,Navigate,useNavigate,useParams} from 'react-router-dom';import {Plus,ArrowUpRight,Palette,Layers,ClipboardList,Users,Newspaper,Home,Check,Edit3,Trash2,RefreshCw,Send,MapPin,ShieldCheck,X,Landmark,Search,Eye,User,Lock,Mail,Calendar,CheckCircle2,AlertCircle,UserCheck} from 'lucide-react';import {api,useApp,useLoad,LoadState,Empty,Badge,FormDialog,PageTitle,CATEGORIES,STATUS,money,date,ImageUpload,Pagination} from './shared';
+import React,{useState,useEffect} from 'react';
+import { createPortal } from 'react-dom';
+import {Link,Navigate,useNavigate,useParams} from 'react-router-dom';import {Plus,ArrowUpRight,Palette,Layers,ClipboardList,Users,Newspaper,Home,Check,Edit3,Trash2,RefreshCw,Send,MapPin,ShieldCheck,X,Landmark,Search,Eye,User,Lock,Mail,Calendar,CheckCircle2,AlertCircle,UserCheck} from 'lucide-react';import {api,useApp,useLoad,LoadState,Empty,Badge,FormDialog,PageTitle,CATEGORIES,STATUS,money,date,ImageUpload,Pagination} from './shared';
 import { BatchLandingDialog, BatchPageLinks } from './BatchLandingDialog';
 import { WorkshopBidDialog } from './WorkshopBidDialog';
 import { ConfirmWorkshopModal } from './ConfirmWorkshopModal';
@@ -8,7 +10,7 @@ const productFields=[field('name','Tên tranh'),field('category','Phân loại',
 const studioFields=[field('name','Tên xưởng'),field('address','Địa chỉ'),field('latitude','Vĩ độ','number',{min:-90,max:90}),field('longitude','Kinh độ','number',{min:-180,max:180}),field('visitingHours','Giờ đón khách'),field('openForVisits','Mở cửa đón khách','checkbox'),field('story','Câu chuyện gia đình / lịch sử làm nghề','textarea',{wide:true}),field('categories','Phân loại nhận sản xuất','categories',{wide:true}),field('images','Ảnh xưởng (hiển thị trên bản đồ)','images',{wide:true}),field('certificates','Ảnh chứng nhận chất lượng','images',{wide:true,required:false})];
 const newsFields=[field('title','Tiêu đề'),field('category','Chuyên mục','select',{options:['Thông báo','Làng nghề','Sự kiện']}),field('body','Nội dung','textarea',{wide:true,maxLength:15000}),field('pictures','Ảnh minh họa','images',{wide:true,required:false}),field('published','Công khai','checkbox')];
 const pick=(obj,fields)=>Object.fromEntries(fields.map(f=>[f.name,obj[f.name]??(f.type==='images'||f.type==='categories'?[]:f.type==='checkbox'?false:'')]));
-export function Dashboard(){const {user,loading}=useApp(),[tab,setTab]=useState('quotes');if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;const items=user.role==='artisan'?[['quotes','Yêu cầu báo giá',ClipboardList],['studio','Hồ sơ xưởng',Home],['products','Tranh của xưởng',Palette],['batches','Lô tranh & nhật ký',Layers],['account','Hồ sơ tài khoản',UserCheck]]:user.role==='admin'?[['quotes','Điều phối đơn hàng',ClipboardList],['heritage','Kho Di sản Làng',Landmark],['artisans','Nghệ nhân & xưởng',Users],['users','Quản lý tài khoản',ShieldCheck],['news','Tin tức cộng đồng',Newspaper],['account','Hồ sơ tài khoản',UserCheck]]:[['quotes','Yêu cầu đặt tranh',ClipboardList],['account','Hồ sơ tài khoản',UserCheck]];return <section className="workspace wrap"><aside className="workspace-sidebar"><span className="eyebrow">KHÔNG GIAN LÀM VIỆC</span><h2>{user.name}</h2><span className="role-label">{user.role==='admin'?'Ban quản lý':user.role==='artisan'?'Nghệ nhân':'Khách hàng'}</span><nav>{items.map(([key,label,Icon])=><button key={key} className={tab===key?'active':''} onClick={()=>setTab(key)}><Icon size={18}/>{label}</button>)}</nav><div className="sidebar-note"><ShieldCheck/><p>Mỗi tác phẩm một câu chuyện. Mỗi đơn hàng một kết nối.</p></div></aside><div className="workspace-content" key={tab}>{tab==='quotes'&&<QuotesList/>}{tab==='studio'&&<StudioEditor/>}{tab==='products'&&<ProductsEditor/>}{tab==='batches'&&<BatchesEditor onOpenQuotes={()=>setTab('quotes')}/>}{tab==='artisans'&&<ArtisansAdmin/>}{tab==='heritage'&&<HeritageAdmin/>}{tab==='news'&&<NewsEditor/>}{tab==='users'&&<UsersAdmin/>}{tab==='account'&&<AccountProfile/>}</div></section>;}
+export function Dashboard(){const {user,loading}=useApp(),[tab,setTab]=useState('quotes');if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;const items=user.role==='artisan'?[['quotes','Yêu cầu báo giá',ClipboardList],['studio','Hồ sơ xưởng',Home],['products','Tranh của xưởng',Palette],['batches','Lô tranh & nhật ký',Layers],['account','Hồ sơ tài khoản',UserCheck]]:user.role==='admin'?[['quotes','Điều phối đơn hàng',ClipboardList],['artworks','Quản lý tranh',Landmark],['artisans','Nghệ nhân & xưởng',Users],['users','Quản lý tài khoản',ShieldCheck],['news','Tin tức cộng đồng',Newspaper],['account','Hồ sơ tài khoản',UserCheck]]:[['quotes','Yêu cầu đặt tranh',ClipboardList],['account','Hồ sơ tài khoản',UserCheck]];return <section className="workspace wrap"><aside className="workspace-sidebar"><span className="eyebrow">KHÔNG GIAN LÀM VIỆC</span><h2>{user.name}</h2><span className="role-label">{user.role==='admin'?'Ban quản lý':user.role==='artisan'?'Nghệ nhân':'Khách hàng'}</span><nav>{items.map(([key,label,Icon])=><button key={key} className={tab===key?'active':''} onClick={()=>setTab(key)}><Icon size={18}/>{label}</button>)}</nav><div className="sidebar-note"><ShieldCheck/><p>Mỗi tác phẩm một câu chuyện. Mỗi đơn hàng một kết nối.</p></div></aside><div className="workspace-content" key={tab}>{tab==='quotes'&&<QuotesList/>}{tab==='studio'&&<StudioEditor/>}{tab==='products'&&<ProductsEditor/>}{tab==='batches'&&<BatchesEditor onOpenQuotes={()=>setTab('quotes')}/>}{tab==='artisans'&&<ArtisansAdmin/>}{(tab==='artworks'||tab==='heritage')&&<ArtworksAdmin/>}{tab==='news'&&<NewsEditor/>}{tab==='users'&&<UsersAdmin/>}{tab==='account'&&<AccountProfile/>}</div></section>;}
 function QuotesList(){
   const {user}=useApp(),state=useLoad('/quotes'),studio=useLoad(user.role==='artisan'?'/studio':'/auth/me'),[dialog,setDialog]=useState(false),navigate=useNavigate(),[filter,setFilter]=useState('');
   const myStudioId=user.role==='artisan'?studio.data?._id:null;
@@ -247,31 +249,74 @@ function ProductsEditor() {
             </Empty>
           )}
           <div className="management-grid">
-            {pagedCustom.map(p => (
-              <article className="manage-card" key={p._id}>
-                <div className="manage-card-img-wrap">
-                  <img src={p.images?.[0]} alt={p.name} />
-                  <span className="custom-tag">Độc bản</span>
-                </div>
-                <div className="manage-card-content">
-                  <div className="card-top-meta">
-                    <span className="eyebrow">{p.category}</span>
-                    <span className="meta-dim">{p.dimensions}</span>
+            {pagedCustom.map(p => {
+              const status = p.approvalStatus || 'pending';
+              return (
+                <article className="manage-card custom-artisan-card" key={p._id}>
+                  <div className="manage-card-img-wrap">
+                    <img src={p.images?.[0]} alt={p.name} />
+                    <span className="custom-tag">Độc bản</span>
                   </div>
-                  <h3>{p.name}</h3>
-                  <div className="card-price-row">
-                    <span className="price-label">Giá tham khảo:</span>
-                    <strong className="price-value">{money(p.price)}</strong>
+                  <div className="manage-card-content">
+                    <div className="card-top-meta">
+                      <span className="eyebrow">{p.category}</span>
+                      <span
+                        className={
+                          'badge ' +
+                          (status === 'approved'
+                            ? 'status-delivered'
+                            : status === 'rejected'
+                            ? 'status-draft'
+                            : 'status-bidding')
+                        }
+                      >
+                        {status === 'approved'
+                          ? 'Đã duyệt'
+                          : status === 'rejected'
+                          ? 'Bị từ chối'
+                          : 'Chờ duyệt'}
+                      </span>
+                    </div>
+                    <h3>{p.name}</h3>
+                    <div className="card-top-meta" style={{ marginBottom: 6 }}>
+                      <span className="meta-dim">{p.dimensions}</span>
+                    </div>
+                    <div className="card-price-row">
+                      <span className="price-label">Giá tham khảo:</span>
+                      <strong className="price-value">{money(p.price)}</strong>
+                    </div>
+
+                    {status === 'approved' && (
+                      <p className="card-desc-snippet status-note-approved">
+                        {p.published ? 'Đang công khai trên Triển lãm' : 'Tạm ẩn (chưa bật hiển thị)'}
+                      </p>
+                    )}
+
+                    {status === 'pending' && (
+                      <p className="card-desc-snippet status-note-pending">
+                        Đang chờ Ban quản lý phê duyệt để xuất hiện trong bộ sưu tập.
+                      </p>
+                    )}
+
+                    {status === 'rejected' && (
+                      <div className="custom-reject-callout">
+                        <div className="reject-callout-header">
+                          <AlertCircle size={14} />
+                          <strong>Lý do từ chối:</strong>
+                        </div>
+                        <p>{p.rejectedReason || 'Chưa có ghi chú cụ thể. Vui lòng chỉnh sửa lại thông tin.'}</p>
+                      </div>
+                    )}
+
+                    <div className="manage-card-actions">
+                      <button className="btn outline small" onClick={() => setEditCustom(p)}>
+                        <Edit3 size={15} /> {status === 'rejected' ? 'Sửa & Gửi duyệt lại' : 'Chỉnh sửa'}
+                      </button>
+                    </div>
                   </div>
-                  <p className="card-desc-snippet">{p.published ? 'Công khai trên triển lãm' : 'Bản nháp (chưa công khai)'}</p>
-                  <div className="manage-card-actions">
-                    <button className="btn outline small" onClick={() => setEditCustom(p)}>
-                      <Edit3 size={15} /> Chỉnh sửa
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
 
           <Pagination
@@ -333,7 +378,11 @@ function ProductsEditor() {
               body,
             });
             customState.reload();
-            notify('Đã lưu tác phẩm độc bản');
+            notify(
+              editCustom._id
+                ? 'Đã cập nhật tác phẩm và gửi lại để Ban quản lý duyệt'
+                : 'Đã đăng tác phẩm độc bản. Ban quản lý sẽ sớm phê duyệt.'
+            );
           }}
         />
       )}
@@ -643,13 +692,14 @@ function HeritageWorkshopsModal({ art, onClose }) {
   const state = useLoad('/admin/artworks/' + art._id + '/listings');
   const listings = state.data || [];
 
-  return (
-    <div className="modal-backdrop">
+  return createPortal(
+    <div className="modal-backdrop" onClick={onClose}>
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="workshops-modal-title"
         className="modal heritage-workshops-modal"
+        onClick={e => e.stopPropagation()}
       >
         <div className="modal-head">
           <div>
@@ -748,11 +798,12 @@ function HeritageWorkshopsModal({ art, onClose }) {
           </button>
         </div>
       </section>
-    </div>
+    </div>,
+    document.body
   );
 }
 
-function HeritageAdmin() {
+function HeritageArtworksTab() {
   const state = useLoad('/admin/artworks');
   const [edit, setEdit] = useState(null);
   const [viewingWorkshopsArt, setViewingWorkshopsArt] = useState(null);
@@ -787,45 +838,15 @@ function HeritageAdmin() {
   const pagedItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
-    <>
-      <PageTitle
-        eyebrow="BAN QUẢN LÝ LÀNG NGHỀ"
-        title="Kho Di sản Làng Đông Hồ"
-        action={
-          <button
-            className="btn"
-            onClick={() =>
-              setEdit({
-                name: '',
-                category: CATEGORIES[0],
-                dimensions: '26 × 37 cm',
-                material: 'Giấy điệp thủ công, màu tự nhiên',
-                images: [],
-                published: true,
-                story: '',
-                description: '',
-              })
-            }
-          >
-            <Plus size={18} /> Thêm Tranh Di sản
-          </button>
-        }
-      >
-        Bảo tồn và quản lý 69 tác phẩm tranh khắc gỗ cổ truyền của làng Đông Hồ. Biên tập câu chuyện văn hóa, tư liệu lịch sử và theo dõi các xưởng nhận in.
-      </PageTitle>
-
+    <div className="heritage-artworks-tab">
       {state.data && (
-        <div className="admin-stats-3">
-          <div>
-            <span>Tổng tranh di sản</span>
+        <div className="compact-stats-row">
+          <div className="compact-stat-card">
+            <span>Tổng tranh di sản:</span>
             <strong>{items.length}</strong>
           </div>
-          <div>
-            <span>Đang công khai</span>
-            <strong>{items.filter(a => a.published).length}</strong>
-          </div>
-          <div>
-            <span>Lượt xưởng nhận in</span>
+          <div className="compact-stat-card">
+            <span>Lượt xưởng nhận in:</span>
             <strong>{totalListings}</strong>
           </div>
         </div>
@@ -853,10 +874,10 @@ function HeritageAdmin() {
               setPage(1);
             }}
           >
-            <option value="">Tất cả các dòng tranh ({items.length})</option>
+            <option value="">Tất cả dòng tranh</option>
             {CATEGORIES.map(cat => (
               <option key={cat} value={cat}>
-                {cat} ({items.filter(a => a.category === cat).length})
+                {cat}
               </option>
             ))}
           </select>
@@ -864,9 +885,24 @@ function HeritageAdmin() {
         <button type="button" className="btn outline small" onClick={state.reload}>
           <RefreshCw size={15} /> Làm mới
         </button>
-        <div className="toolbar-count">
-          <span>Hiển thị <strong>{filtered.length}</strong> tranh</span>
-        </div>
+        <button
+          type="button"
+          className="btn small"
+          onClick={() =>
+            setEdit({
+              name: '',
+              category: CATEGORIES[0],
+              dimensions: '26 × 37 cm',
+              material: 'Giấy điệp thủ công, màu tự nhiên',
+              images: [],
+              published: true,
+              story: '',
+              description: '',
+            })
+          }
+        >
+          <Plus size={16} /> Thêm Tranh Di sản
+        </button>
       </div>
 
       <LoadState {...state} />
@@ -1000,9 +1036,635 @@ function HeritageAdmin() {
           }}
         />
       )}
-    </>
+    </div>
   );
 }
+
+function InspectArtworkModal({ art, onClose, onApprove, onReject }) {
+  const [selectedImg, setSelectedImg] = useState(art.images?.[0] || '');
+
+  return createPortal(
+    <div className="modal-backdrop" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="modal artwork-inspect-modal"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="modal-head">
+          <div>
+            <span className="eyebrow">{art.category} · Tranh độc bản xưởng</span>
+            <h2>{art.name}</h2>
+          </div>
+          <button className="icon-btn" aria-label="Đóng" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="artwork-inspect-body">
+          <div className="inspect-media-col">
+            <div className="inspect-main-img-wrap">
+              <img src={selectedImg || art.images?.[0]} alt={art.name} />
+            </div>
+            {art.images?.length > 1 && (
+              <div className="inspect-thumbs-row">
+                {art.images.map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={'inspect-thumb-btn ' + (img === selectedImg ? 'active' : '')}
+                    onClick={() => setSelectedImg(img)}
+                  >
+                    <img src={img} alt={`${art.name} ${i + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="inspect-info-col">
+            <div className="inspect-status-row">
+              <span className="status-label">Trạng thái phê duyệt:</span>
+              <span
+                className={
+                  'badge ' +
+                  (art.approvalStatus === 'approved'
+                    ? 'status-delivered'
+                    : art.approvalStatus === 'rejected'
+                    ? 'status-draft'
+                    : 'status-bidding')
+                }
+              >
+                {art.approvalStatus === 'approved'
+                  ? 'Đã duyệt'
+                  : art.approvalStatus === 'rejected'
+                  ? 'Bị từ chối'
+                  : 'Chờ duyệt'}
+              </span>
+            </div>
+
+            {art.workshop && (
+              <div className="inspect-workshop-box">
+                <span className="inspect-section-title">Xưởng chế tác</span>
+                <h4>{art.workshop.name}</h4>
+                <p className="dim-text">{art.workshop.address}</p>
+                {art.workshop.ownerName && (
+                  <p className="dim-text">
+                    Nghệ nhân: {art.workshop.ownerName} ({art.workshop.ownerEmail})
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="inspect-specs-grid">
+              <div>
+                <span className="spec-label">Kích thước</span>
+                <strong>{art.dimensions || '—'}</strong>
+              </div>
+              <div>
+                <span className="spec-label">Chất liệu</span>
+                <strong>{art.material || '—'}</strong>
+              </div>
+              <div>
+                <span className="spec-label">Giá đề xuất</span>
+                <strong className="spec-price">{art.price ? money(art.price) : 'Chưa định giá'}</strong>
+              </div>
+            </div>
+
+            {art.story && (
+              <div className="inspect-prose-block">
+                <span className="inspect-section-title">Câu chuyện tác phẩm</span>
+                <p className="prose">{art.story}</p>
+              </div>
+            )}
+
+            {art.description && (
+              <div className="inspect-prose-block">
+                <span className="inspect-section-title">Mô tả quy cách / Tích truyện</span>
+                <p className="prose">{art.description}</p>
+              </div>
+            )}
+
+            {art.approvalStatus === 'rejected' && art.rejectedReason && (
+              <div className="rejection-reason-box">
+                <span className="reason-label">Lý do từ chối:</span>
+                <p>{art.rejectedReason}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="modal-actions-bar">
+          <button type="button" className="btn outline" onClick={onClose}>
+            Đóng
+          </button>
+          {art.approvalStatus === 'pending' && (
+            <>
+              <button
+                type="button"
+                className="btn outline danger"
+                onClick={() => {
+                  onClose();
+                  onReject(art);
+                }}
+              >
+                <X size={16} /> Từ chối duyệt
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  onClose();
+                  onApprove(art);
+                }}
+              >
+                <Check size={16} /> Phê duyệt tác phẩm
+              </button>
+            </>
+          )}
+          {art.approvalStatus === 'rejected' && (
+            <button
+              type="button"
+              className="btn"
+              onClick={() => {
+                onClose();
+                onApprove(art);
+              }}
+            >
+              <Check size={16} /> Phê duyệt lại
+            </button>
+          )}
+          {art.approvalStatus === 'approved' && (
+            <button
+              type="button"
+              className="btn outline danger"
+              onClick={() => {
+                onClose();
+                onReject(art);
+              }}
+            >
+              Hủy phê duyệt
+            </button>
+          )}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function RejectArtworkModal({ art, onClose, onSubmit }) {
+  const [reason, setReason] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const isRevoke = art?.approvalStatus === 'approved';
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await onSubmit(art, reason.trim());
+      onClose();
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return createPortal(
+    <div className="modal-backdrop" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="modal reject-artwork-dialog"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="modal-head">
+          <div>
+            <span className="eyebrow">BAN QUẢN LÝ LÀNG NGHỀ</span>
+            <h2>{isRevoke ? 'Hủy phê duyệt tác phẩm' : 'Từ chối duyệt tác phẩm'}</h2>
+          </div>
+          <button className="icon-btn" aria-label="Đóng" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="reject-form">
+          <p className="reject-prompt">
+            {isRevoke ? (
+              <>
+                Ghi rõ lý do hủy phê duyệt tác phẩm <strong>“{art.name}”</strong> của xưởng{' '}
+                <strong>{art.workshop?.name || 'chế tác'}</strong>. Tác phẩm sẽ bị tạm ẩn khỏi Triển lãm và nghệ nhân sẽ nhận được lý do này.
+              </>
+            ) : (
+              <>
+                Ghi rõ lý do từ chối tác phẩm <strong>“{art.name}”</strong> của xưởng{' '}
+                <strong>{art.workshop?.name || 'chế tác'}</strong> để nghệ nhân điều chỉnh và nộp duyệt lại.
+              </>
+            )}
+          </p>
+
+          <label className="field-label" htmlFor="reject-reason-input">
+            {isRevoke ? 'Lý do hủy phê duyệt (tối đa 500 ký tự):' : 'Lý do từ chối (tối đa 500 ký tự):'}
+          </label>
+          <textarea
+            id="reject-reason-input"
+            className="reject-reason-textarea"
+            rows={4}
+            maxLength={500}
+            required
+            placeholder={
+              isRevoke
+                ? 'Ví dụ: Phát hiện sai quy cách bồi tranh; Cần bổ sung nguồn gốc mộc bản; Tạm ẩn để đối chiếu chất lượng…'
+                : 'Ví dụ: Ảnh chụp bị mờ; Cần bổ sung câu chuyện văn hóa; Kích thước chưa chuẩn theo văn hóa Đông Hồ…'
+            }
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+          />
+
+          <div className="button-row" style={{ marginTop: 16 }}>
+            <button type="button" className="btn outline" onClick={onClose} disabled={submitting}>
+              Hủy bỏ
+            </button>
+            <button type="submit" className="btn danger" disabled={submitting || !reason.trim()}>
+              {submitting ? 'Đang xử lý…' : isRevoke ? 'Xác nhận hủy phê duyệt' : 'Xác nhận từ chối'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function CustomArtworksTab() {
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [category, setCategory] = useState('');
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [inspectArt, setInspectArt] = useState(null);
+  const [rejectingArt, setRejectingArt] = useState(null);
+  const [busyId, setBusyId] = useState('');
+  const { notify } = useApp();
+
+  const queryParams = new URLSearchParams();
+  queryParams.set('type', 'custom');
+  if (statusFilter && statusFilter !== 'all') queryParams.set('approvalStatus', statusFilter);
+  if (category) queryParams.set('category', category);
+  if (search.trim()) queryParams.set('search', search.trim());
+  queryParams.set('page', String(page));
+  queryParams.set('limit', '8');
+
+  const state = useLoad('/admin/artworks?' + queryParams.toString());
+  const data = state.data || {};
+  const items = data.items || [];
+  const stats = data.stats || { total: 0, pending: 0, approved: 0, rejected: 0 };
+  const total = data.total || 0;
+  const pages = data.pages || 1;
+
+  async function handleApprove(art) {
+    setBusyId(art._id);
+    try {
+      await api('/admin/artworks/' + art._id + '/approval', {
+        method: 'PATCH',
+        body: { status: 'approved' },
+      });
+      state.reload();
+      notify('Đã phê duyệt tác phẩm “' + art.name + '”');
+    } catch (e) {
+      notify(e.message);
+    } finally {
+      setBusyId('');
+    }
+  }
+
+  async function handleRejectSubmit(art, reason) {
+    setBusyId(art._id);
+    const isRevoking = art.approvalStatus === 'approved';
+    try {
+      await api('/admin/artworks/' + art._id + '/approval', {
+        method: 'PATCH',
+        body: { status: 'rejected', reason },
+      });
+      state.reload();
+      notify(isRevoking ? 'Đã hủy phê duyệt tác phẩm “' + art.name + '”' : 'Đã từ chối tác phẩm “' + art.name + '”');
+    } catch (e) {
+      notify(e.message);
+    } finally {
+      setBusyId('');
+    }
+  }
+
+  return (
+    <div className="custom-artworks-tab">
+      {state.data && (
+        <div className="compact-stats-row">
+          <div
+            className={'compact-stat-card ' + (statusFilter === 'all' ? 'active' : '')}
+            onClick={() => {
+              setStatusFilter('all');
+              setPage(1);
+            }}
+            style={{ cursor: 'pointer' }}
+            title="Xem tất cả tranh độc bản"
+          >
+            <span>Tổng tranh:</span>
+            <strong>{stats.total}</strong>
+          </div>
+          <div
+            className={'compact-stat-card ' + (statusFilter === 'pending' ? 'active' : '')}
+            onClick={() => {
+              setStatusFilter('pending');
+              setPage(1);
+            }}
+            style={{ cursor: 'pointer' }}
+            title="Lọc tranh chờ duyệt"
+          >
+            <span>Chờ duyệt:</span>
+            <strong>{stats.pending}</strong>
+          </div>
+          <div
+            className={'compact-stat-card ' + (statusFilter === 'approved' ? 'active' : '')}
+            onClick={() => {
+              setStatusFilter('approved');
+              setPage(1);
+            }}
+            style={{ cursor: 'pointer' }}
+            title="Lọc tranh đã duyệt"
+          >
+            <span>Đã duyệt:</span>
+            <strong>{stats.approved}</strong>
+          </div>
+          <div
+            className={'compact-stat-card ' + (statusFilter === 'rejected' ? 'active' : '')}
+            onClick={() => {
+              setStatusFilter('rejected');
+              setPage(1);
+            }}
+            style={{ cursor: 'pointer' }}
+            title="Lọc tranh bị từ chối"
+          >
+            <span>Bị từ chối:</span>
+            <strong>{stats.rejected}</strong>
+          </div>
+        </div>
+      )}
+
+      <div className="heritage-admin-toolbar">
+        <div className="toolbar-search-wrap">
+          <Search size={16} className="search-icon" />
+          <input
+            type="search"
+            placeholder="Tìm theo tên tranh hoặc tên xưởng chế tác…"
+            value={search}
+            onChange={e => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+          />
+        </div>
+        <div className="toolbar-select-wrap">
+          <select
+            aria-label="Lọc trạng thái phê duyệt"
+            value={statusFilter}
+            onChange={e => {
+              setStatusFilter(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="all">Tất cả trạng thái</option>
+            <option value="pending">Chờ duyệt</option>
+            <option value="approved">Đã duyệt</option>
+            <option value="rejected">Bị từ chối</option>
+          </select>
+        </div>
+        <div className="toolbar-select-wrap">
+          <select
+            aria-label="Lọc dòng tranh"
+            value={category}
+            onChange={e => {
+              setCategory(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">Tất cả dòng tranh</option>
+            {CATEGORIES.map(cat => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="button" className="btn outline small" onClick={state.reload}>
+          <RefreshCw size={15} /> Làm mới
+        </button>
+      </div>
+
+      <LoadState {...state} />
+
+      {state.data && items.length === 0 && (
+        <Empty title="Không có tác phẩm độc bản nào phù hợp">
+          <p>Thử điều chỉnh bộ lọc trạng thái hoặc từ khóa tìm kiếm.</p>
+        </Empty>
+      )}
+
+      <div className="custom-admin-grid">
+        {items.map(art => {
+          const isBusy = busyId === art._id;
+          return (
+            <article className="panel custom-admin-card" key={art._id}>
+              <div className="card-top-layout">
+                <div
+                  className="custom-admin-thumb-wrap"
+                  onClick={() => setInspectArt(art)}
+                  title="Bấm để xem chi tiết tác phẩm"
+                >
+                  <img
+                    src={art.images?.[0]}
+                    alt={art.name}
+                    className="custom-admin-thumb"
+                  />
+                  <span className="custom-tag">Độc bản</span>
+                </div>
+                <div className="custom-admin-info">
+                  <div className="card-top-meta">
+                    <span className="eyebrow">{art.category}</span>
+                    <span
+                      className={
+                        'badge ' +
+                        (art.approvalStatus === 'approved'
+                          ? 'status-delivered'
+                          : art.approvalStatus === 'rejected'
+                          ? 'status-draft'
+                          : 'status-bidding')
+                      }
+                    >
+                      {art.approvalStatus === 'approved'
+                        ? 'Đã duyệt'
+                        : art.approvalStatus === 'rejected'
+                        ? 'Từ chối'
+                        : 'Chờ duyệt'}
+                    </span>
+                  </div>
+
+                  <h3
+                    className="clickable-title"
+                    onClick={() => setInspectArt(art)}
+                    title="Bấm để xem chi tiết"
+                  >
+                    {art.name}
+                  </h3>
+
+                  <div className="workshop-origin-tag">
+                    <Home size={13} />
+                    <span>{art.workshop?.name || 'Xưởng Đông Hồ'}</span>
+                  </div>
+
+                  <p className="dim-text specs-row">
+                    {art.dimensions} · {art.material}
+                  </p>
+
+                  <div className="card-price-row">
+                    <span className="price-label">Giá đề xuất:</span>
+                    <strong className="price-value">{art.price ? money(art.price) : 'Chưa định giá'}</strong>
+                  </div>
+                </div>
+              </div>
+
+              {art.approvalStatus === 'rejected' && (
+                <div className="rejection-reason-box">
+                  <span className="reason-label">Lý do từ chối:</span>
+                  <p>{art.rejectedReason || 'Chưa có ghi chú cụ thể.'}</p>
+                </div>
+              )}
+
+              {art.story && (
+                <div className="custom-story-snippet">
+                  <p className="prose">{art.story.slice(0, 130)}…</p>
+                </div>
+              )}
+
+              <div className="button-row custom-card-actions">
+                <button
+                  type="button"
+                  className="btn ghost small"
+                  onClick={() => setInspectArt(art)}
+                >
+                  <Eye size={15} /> Chi tiết
+                </button>
+
+                {art.approvalStatus === 'pending' && (
+                  <>
+                    <button
+                      type="button"
+                      className="btn outline small danger"
+                      disabled={isBusy}
+                      onClick={() => setRejectingArt(art)}
+                    >
+                      <X size={15} /> Từ chối
+                    </button>
+                    <button
+                      type="button"
+                      className="btn small"
+                      disabled={isBusy}
+                      onClick={() => handleApprove(art)}
+                    >
+                      <Check size={15} /> Phê duyệt
+                    </button>
+                  </>
+                )}
+
+                {art.approvalStatus === 'approved' && (
+                  <button
+                    type="button"
+                    className="text-link danger small"
+                    disabled={isBusy}
+                    onClick={() => setRejectingArt(art)}
+                  >
+                    Hủy phê duyệt
+                  </button>
+                )}
+
+                {art.approvalStatus === 'rejected' && (
+                  <button
+                    type="button"
+                    className="btn outline small"
+                    disabled={isBusy}
+                    onClick={() => handleApprove(art)}
+                  >
+                    <Check size={15} /> Phê duyệt lại
+                  </button>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <Pagination
+        page={page}
+        pages={pages}
+        onPageChange={p => {
+          setPage(p);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        total={total}
+      />
+
+      {inspectArt && (
+        <InspectArtworkModal
+          art={inspectArt}
+          onClose={() => setInspectArt(null)}
+          onApprove={handleApprove}
+          onReject={art => setRejectingArt(art)}
+        />
+      )}
+
+      {rejectingArt && (
+        <RejectArtworkModal
+          art={rejectingArt}
+          onClose={() => setRejectingArt(null)}
+          onSubmit={handleRejectSubmit}
+        />
+      )}
+    </div>
+  );
+}
+
+function ArtworksAdmin() {
+  const [tab, setTab] = useState('heritage');
+
+  return (
+    <div className="artworks-admin-wrap">
+      <div className="artworks-header">
+        <div className="artworks-header-top">
+          <div>
+            <span className="eyebrow">BAN QUẢN LÝ LÀNG NGHỀ</span>
+            <h1 className="artworks-page-title">Quản lý tranh</h1>
+          </div>
+          <div className="type-tabs" role="tablist">
+            <button
+              type="button"
+              className={tab === 'heritage' ? 'selected' : ''}
+              onClick={() => setTab('heritage')}
+            >
+              Tranh Di sản Làng
+            </button>
+            <button
+              type="button"
+              className={tab === 'custom' ? 'selected' : ''}
+              onClick={() => setTab('custom')}
+            >
+              Tranh Độc bản Xưởng
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {tab === 'heritage' ? <HeritageArtworksTab /> : <CustomArtworksTab />}
+    </div>
+  );
+}
+
+const HeritageAdmin = ArtworksAdmin;
 
 
 function ArtisansAdmin(){const state=useLoad('/admin/workshops'),users=useLoad('/admin/users'),[create,setCreate]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),{notify}=useApp();async function action(url,body){setBusy(true);setError('');try{await api(url,{method:'PATCH',body});state.reload();users.reload();notify('Đã cập nhật');}catch(e){setError(e.message);}finally{setBusy(false);}}return <><PageTitle eyebrow="BAN QUẢN LÝ LÀNG NGHỀ" title="Nghệ nhân & kiểm duyệt" action={<button className="btn" onClick={()=>setCreate(true)}><Plus size={18}/> Cấp tài khoản</button>}/><LoadState {...state}/>{error&&<p className="error">{error}</p>}<div className="admin-studios">{state.data?.map(s=>{const u=users.data?.find(u=>u._id===s.ownerId);return <article className="panel" key={s._id}><span className={'badge '+(s.approved?'status-delivered':'status-draft')}>{s.approved?'Đã duyệt':'Chờ kiểm duyệt'}</span><h3>{s.name}</h3><p>{u?.name} · {u?.email}</p><p>{s.address}</p><p className="prose">{s.story}</p><div className="thumbnails">{s.images.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={i}><img src={src} alt="Hồ sơ xưởng"/></a>)}{s.certificates.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={'c'+i}><img src={src} alt="Chứng nhận"/></a>)}</div><div className="button-row"><button className="btn outline small" disabled={busy} onClick={()=>action('/admin/workshops/'+s._id+'/approval',{approved:!s.approved})}>{s.approved?'Thu hồi công khai':'Duyệt xưởng'}</button>{u&&<button className="text-link" disabled={busy} onClick={()=>action('/admin/users/'+u._id,{active:!u.active})}>{u.active?'Khóa tài khoản':'Mở lại tài khoản'}</button>}</div></article>;})}</div>{create&&<FormDialog title="Cấp tài khoản nghệ nhân" fields={[field('accountName','Họ tên nghệ nhân'),field('email','Email đăng nhập','email'),field('password','Mật khẩu ban đầu (10–72 ký tự)','password'),...studioFields]} initial={{categories:CATEGORIES,images:[],certificates:[],latitude:21.0606,longitude:106.0813,visitingHours:'08:00–17:00',openForVisits:false}} onClose={()=>setCreate(false)} submitLabel="Cấp tài khoản chờ duyệt" onSubmit={async values=>{const {accountName,email,password,...workshop}=values;await api('/admin/artisans',{method:'POST',body:{name:accountName,email,password,workshop}});state.reload();users.reload();notify('Đã cấp tài khoản. Kiểm tra hồ sơ rồi duyệt xưởng.');}}/>}</>;}

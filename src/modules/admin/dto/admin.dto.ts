@@ -38,3 +38,26 @@ export type AdminArtworkDto = z.output<typeof adminArtworkInput>;
 
 export const updateAdminArtworkInput = adminArtworkInput.partial();
 export type UpdateAdminArtworkDto = z.output<typeof updateAdminArtworkInput>;
+
+export const artworkApprovalInputSchema = z
+  .object({
+    status: z.enum(["approved", "rejected"]),
+    reason: text(500).optional(),
+  })
+  .strict();
+export type ArtworkApprovalDto = z.output<typeof artworkApprovalInputSchema>;
+
+export const adminArtworksQuerySchema = z
+  .object({
+    type: z.enum(["general", "custom"]).optional().default("general"),
+    approvalStatus: z
+      .enum(["all", "pending", "approved", "rejected"])
+      .optional()
+      .default("all"),
+    category: z.string().max(80).optional(),
+    search: z.string().max(100).optional(),
+    page: z.coerce.number().int().min(1).max(10000).default(1),
+    limit: z.coerce.number().int().min(1).max(100).default(12),
+  })
+  .strict();
+export type AdminArtworksQueryDto = z.output<typeof adminArtworksQuerySchema>;

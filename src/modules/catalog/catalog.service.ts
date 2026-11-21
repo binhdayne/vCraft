@@ -71,19 +71,32 @@ export class CatalogService {
         .find({ workshopId: q.workshopId, published: true })
         .distinct("productId");
       filter.$or = [
-        { workshopId: q.workshopId },
+        {
+          workshopId: q.workshopId,
+          type: "custom",
+          approvalStatus: "approved",
+        },
         { _id: { $in: listedProductIds } },
       ];
     } else if (q.type === "general") {
       filter.type = "general";
     } else if (q.type === "custom") {
       filter.type = "custom";
+      filter.approvalStatus = "approved";
       filter.workshopId = { $in: approvedStudioIds };
     } else {
       filter.$or = [
         { type: "general" },
-        { type: "custom", workshopId: { $in: approvedStudioIds } },
-        { type: { $exists: false }, workshopId: { $in: approvedStudioIds } },
+        {
+          type: "custom",
+          approvalStatus: "approved",
+          workshopId: { $in: approvedStudioIds },
+        },
+        {
+          type: { $exists: false },
+          approvalStatus: "approved",
+          workshopId: { $in: approvedStudioIds },
+        },
       ];
     }
 
@@ -107,6 +120,9 @@ export class CatalogService {
 
     let workshop: any = null;
     if (item.type === "custom" || item.workshopId) {
+      if (item.type === "custom" && item.approvalStatus !== "approved") {
+        throw new NotFoundException("Tác phẩm chưa được phê duyệt");
+      }
       workshop = await this.workshopsModel
         .findOne({ _id: item.workshopId, approved: true })
         .lean();
@@ -193,15 +209,29 @@ export class CatalogService {
       ...data,
       type: "custom",
       workshopId: String(studio._id),
+      approvalStatus: "pending",
+      rejectedReason: "",
+      approvedAt: null,
+      approvedBy: null,
     });
   }
 
   async editProduct(actor: Actor, key: string, body: unknown) {
     role(actor, "artisan");
     const studio = await this.own(actor);
+    const data = parse(productInput, body);
     const item = await this.productsModel.findOneAndUpdate(
       { _id: parse(id, key), workshopId: String(studio._id) },
-      { $set: parse(productInput, body) },
+      {
+        $set: {
+          ...data,
+          type: "custom",
+          approvalStatus: "pending",
+          rejectedReason: "",
+          approvedAt: null,
+          approvedBy: null,
+        },
+      },
       { new: true },
     );
     if (!item) throw new NotFoundException();

@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
@@ -75,8 +76,22 @@ export class AdminController {
   artworks(
     @CurrentUser()
     actor: Actor,
+    @Query()
+    query: unknown,
   ) {
-    return this.service.artworks(actor);
+    return this.service.artworks(actor, query);
+  }
+
+  @Patch("artworks/:id/approval")
+  approveArtwork(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.approveArtwork(actor, key, body);
   }
 
   @Get("artworks/:id/listings")

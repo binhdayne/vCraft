@@ -18,6 +18,17 @@ export const ArtworkSchema = new Schema(
     material: String,
     images: [String],
     published: { type: Boolean, default: false, index: true },
+    approvalStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+      index: true,
+    },
+    rejectedReason: { type: String, default: "" },
+    approvedAt: { type: Date, default: null },
+    approvedBy: { type: String, default: null },
   },
   { timestamps: true, strict: true },
 );
+
+ArtworkSchema.index({ published: 1, type: 1, approvalStatus: 1 });

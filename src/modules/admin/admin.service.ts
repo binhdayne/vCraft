@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -13,7 +14,9 @@ import { Actor } from "../auth/interfaces/actor.interface";
 import {
   accountInputSchema,
   adminArtworkInput,
+  adminArtworksQuerySchema,
   approvalInputSchema,
+  artworkApprovalInputSchema,
   createInputSchema,
   updateAdminArtworkInput,
 } from "./dto/admin.dto";
@@ -94,8 +97,105 @@ export class AdminService {
     return item;
   }
 
-  async artworks(actor: Actor) {
+  async artworks(actor: Actor, query?: unknown) {
     role(actor, "admin");
+    const q = parse(adminArtworksQuerySchema, query || {});
+
+    if (q.type === "custom") {
+      const filter: Record<string, any> = { type: "custom" };
+      if (q.approvalStatus && q.approvalStatus !== "all") {
+        filter.approvalStatus = q.approvalStatus;
+      }
+      if (q.category) {
+        filter.category = q.category;
+      }
+      if (q.search) {
+        const sanitized = q.search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const matchedWorkshops = await this.workshopsModel
+          .find({ name: { $regex: sanitized, $options: "i" } })
+          .distinct("_id");
+        filter.$or = [
+          { name: { $regex: sanitized, $options: "i" } },
+          { workshopId: { $in: matchedWorkshops.map(String) } },
+        ];
+      }
+
+      const [totalCustom, pendingCount, approvedCount, rejectedCount] =
+        await Promise.all([
+          this.productsModel.countDocuments({ type: "custom" }),
+          this.productsModel.countDocuments({
+            type: "custom",
+            approvalStatus: "pending",
+          }),
+          this.productsModel.countDocuments({
+            type: "custom",
+            approvalStatus: "approved",
+          }),
+          this.productsModel.countDocuments({
+            type: "custom",
+            approvalStatus: "rejected",
+          }),
+        ]);
+
+      const [items, total] = await Promise.all([
+        this.productsModel
+          .find(filter)
+          .sort({ _id: -1 })
+          .skip((q.page - 1) * q.limit)
+          .limit(q.limit)
+          .lean(),
+        this.productsModel.countDocuments(filter),
+      ]);
+
+      const workshopIds = [
+        ...new Set(items.map((i: any) => i.workshopId).filter(Boolean)),
+      ];
+      const workshops = await this.workshopsModel
+        .find({ _id: { $in: workshopIds } })
+        .lean();
+      const ownerIds = [
+        ...new Set(workshops.map((w: any) => w.ownerId).filter(Boolean)),
+      ];
+      const owners = await this.usersModel
+        .find({ _id: { $in: ownerIds } })
+        .select("name email")
+        .lean();
+      const ownerMap = new Map(owners.map((u: any) => [String(u._id), u]));
+      const workshopMap = new Map(
+        workshops.map((w: any) => {
+          const owner = ownerMap.get(String(w.ownerId));
+          return [
+            String(w._id),
+            {
+              _id: String(w._id),
+              name: w.name,
+              address: w.address,
+              ownerName: owner?.name || "",
+              ownerEmail: owner?.email || "",
+            },
+          ];
+        }),
+      );
+
+      const itemsWithWorkshop = items.map((item: any) => ({
+        ...item,
+        workshop: workshopMap.get(String(item.workshopId)) || null,
+      }));
+
+      return {
+        items: itemsWithWorkshop,
+        total,
+        page: q.page,
+        pages: Math.ceil(total / q.limit) || 1,
+        stats: {
+          total: totalCustom,
+          pending: pendingCount,
+          approved: approvedCount,
+          rejected: rejectedCount,
+        },
+      };
+    }
+
     const items = await this.productsModel
       .find({ type: "general" })
       .sort({ _id: -1 })
@@ -110,6 +210,35 @@ export class AdminService {
       ...item,
       workshopCount: countMap.get(String(item._id)) || 0,
     }));
+  }
+
+  async approveArtwork(actor: Actor, key: string, body: unknown) {
+    role(actor, "admin");
+    const data = parse(artworkApprovalInputSchema, body);
+    const artId = parse(id, key);
+
+    const artwork = await this.productsModel.findById(artId);
+    if (!artwork) {
+      throw new NotFoundException("Không tìm thấy tác phẩm");
+    }
+    if (artwork.type !== "custom") {
+      throw new BadRequestException("Chỉ có thể phê duyệt tác phẩm độc bản của xưởng");
+    }
+
+    const updates: Record<string, any> = {
+      approvalStatus: data.status,
+      rejectedReason: data.status === "rejected" ? (data.reason || "") : "",
+      approvedAt: data.status === "approved" ? new Date() : null,
+      approvedBy: data.status === "approved" ? actor.id : null,
+    };
+
+    const updated = await this.productsModel.findByIdAndUpdate(
+      artId,
+      { $set: updates },
+      { new: true },
+    );
+
+    return updated;
   }
 
   async artworkListings(actor: Actor, key: string) {
@@ -137,6 +266,7 @@ export class AdminService {
     return this.productsModel.create({
       ...data,
       type: "general",
+      approvalStatus: "approved",
       workshopId: null,
       price: null,
     });
