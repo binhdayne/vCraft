@@ -109,6 +109,10 @@ export class QuotesController {
   ) {
     return this.service.production(actor, key, body);
   }
+  @Patch(":id/production-journal")
+  saveProductionJournal(@CurrentUser() actor: Actor, @Param("id") key: string, @Body() body: unknown) {
+    return this.service.saveProductionJournal(actor, key, body);
+  }
   @Post(":id/deliver")
   deliver(
     @CurrentUser()

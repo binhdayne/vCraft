@@ -23,9 +23,13 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.deepEqual((await ok('/notifications','GET',undefined,buyer)).items,[]);
   const accounts=await ok('/admin/users','GET',undefined,admin);assert.ok(accounts.every(u=>!u.passwordHash));
  });
- await t.test('admin creates pending artisans and explicitly approves their studios',async()=>{
+ await t.test('admin-created studios are approved immediately and suspension still guards artisan actions',async()=>{
   studio1=await ok('/admin/artisans','POST',{name:'Artisan A',email:'a@test.local',password,workshop:studio},admin);
   studio2=await ok('/admin/artisans','POST',{name:'Artisan B',email:'b@test.local',password,workshop:{...studio,name:'Studio B'}},admin);
+  assert.equal(studio1.approved,true);assert.equal(studio2.approved,true);
+  assert.equal((await ok('/workshops','GET')).length,2);
+  await ok('/admin/workshops/'+studio1._id+'/approval','PATCH',{approved:false},admin);
+  await ok('/admin/workshops/'+studio2._id+'/approval','PATCH',{approved:false},admin);
   assert.equal((await ok('/workshops','GET')).length,0);
   art1=(await ok('/auth/login','POST',{email:'a@test.local',password})).token;art2=(await ok('/auth/login','POST',{email:'b@test.local',password})).token;
   const draft={name:'Painting A',category:'Chúc tụng',description:'Test artwork',price:100000,dimensions:'30x40',material:'Giấy điệp',images:['/art/dai-cat.jpg'],published:true};
@@ -128,6 +132,45 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.equal((await ok('/quotes/'+q._id,'GET',undefined,art1)).allocations[0].status,'in_production');
   assert.equal(await db.batches.countDocuments({quoteId:q._id}),0);
  });
+ await t.test('production journals save incomplete private drafts without publishing or notifying buyers',async()=>{
+  const journal={productId:'',story:'Private journal first draft',workshopStory:'',coverImages:[],events:[
+   {title:'Preparing paper',date:'2026-10-01',note:'',images:[uploads[0]]},
+   {title:'',date:'',note:'',images:[]},
+  ]};
+  const historyLength=q.history.length,version=q.version;
+  const notices=(await ok('/notifications?limit=50','GET',undefined,buyer)).unreadCount;
+  const url='/quotes/'+q._id+'/production-journal';
+  assert.equal((await req(url,'PATCH',{version,journal},buyer)).status,403);
+  assert.equal((await req(url,'PATCH',{version,journal},admin)).status,403);
+  assert.equal((await req(url,'PATCH',{version,journal},art2)).status,409);
+  assert.equal((await req(url,'PATCH',{version,journal:{...journal,coverImages:[uploads[1]]}},art1)).status,403);
+  assert.equal((await req(url,'PATCH',{version,journal:{...journal,coverImages:['/art/dai-cat.jpg']}},art1)).status,403);
+  assert.equal((await req(url,'PATCH',{version,journal:{...journal,published:true}},art1)).status,400);
+  assert.equal((await req(url,'PATCH',{version,journal:{...journal,events:[{...journal.events[0],date:'2099-01-01'}]}},art1)).status,400);
+  assert.equal((await req(url,'PATCH',{version,journal:{...journal,events:Array(31).fill(journal.events[0])}},art1)).status,400);
+  q=await ok(url,'PATCH',{version,journal},art1);
+  const own=q.allocations.find(a=>a.workshopId===studio1._id);
+  assert.equal(q.status,'in_production');assert.equal(own.status,'in_production');assert.equal(q.history.length,historyLength);assert.equal(q.version,version+1);
+  assert.deepEqual(own.journalDraft.events,journal.events);assert.ok(own.journalDraft.savedAt);
+  const reloaded=await ok('/quotes/'+q._id,'GET',undefined,art1);
+  assert.equal(reloaded.allocations.find(a=>a.workshopId===studio1._id).journalDraft.story,journal.story);
+  for(const token of [buyer,art2,admin]) {
+   const detail=await ok('/quotes/'+q._id,'GET',undefined,token);
+   assert.ok(detail.allocations.every(a=>!a.journalDraft));
+   const list=await ok('/quotes','GET',undefined,token);
+   assert.ok(list.find(item=>item._id===q._id).allocations.every(a=>!a.journalDraft));
+  }
+  assert.equal(await db.batches.countDocuments({quoteId:q._id}),0);
+  assert.equal((await req('/trace/'+q._id)).status,404);
+  assert.equal((await req('/trace/'+q._id+'/qr')).status,404);
+  assert.equal((await ok('/notifications?limit=50','GET',undefined,buyer)).unreadCount,notices);
+  assert.equal((await req(url,'PATCH',{version,journal:{...journal,story:'Stale overwrite'}},art1)).status,409);
+  const input={version:q.version,journal};
+  const concurrent=await Promise.all([req(url,'PATCH',{...input,journal:{...journal,story:'Concurrent draft A'}},art1),req(url,'PATCH',{...input,journal:{...journal,story:'Concurrent draft B'}},art1)]);
+  assert.deepEqual(concurrent.map(result=>result.status).sort(),[200,409]);q=concurrent.find(result=>result.status===200).data;
+  assert.equal(q.history.length,historyLength);
+  assert.equal((await req('/quotes/'+q._id+'/production','POST',{version:q.version,action:'ready'},art1)).status,400);
+ });
  await t.test('concurrent completions publish exactly one page per workshop allocation',async()=>{
   const payload={version:q.version,action:'ready',landingPage:landing(p1._id,uploads[0])};
   const results=await Promise.all([req('/quotes/'+q._id+'/production','POST',payload,art1),req('/quotes/'+q._id+'/production','POST',payload,art1)]);
@@ -173,6 +216,8 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.equal((await ok('/products/'+p2._id)).batches.some(b=>b._id===String(staged._id)),false);
   await db.batches.deleteOne({_id:staged._id});
   q=await ok('/quotes/'+q._id+'/production','POST',{version:q.version,action:'start'},art2);
+  assert.equal(q.allocations.find(a=>a.workshopId===studio1._id).journalDraft,undefined);
+  assert.ok((await conn.models.Quotation.findById(q._id).lean()).allocations.find(a=>a.workshopId===studio1._id).journalDraft);
   // Simulate a completion made by the previous app version, which had no landing page.
   await conn.models.Quotation.updateOne({_id:q._id,'allocations.workshopId':studio2._id},{$set:{'allocations.$.status':'ready'}});
   q=await ok('/quotes/'+q._id+'/deliver','POST',{version:q.version},buyer);assert.equal(q.status,'delivered');assert.equal(q.allocations.reduce((s,a)=>s+a.quantity,0),100);
@@ -181,6 +226,26 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.notEqual(q.allocations[0].batchId,q.allocations[1].batchId);
   assert.equal((await ok('/trace/'+q.allocations.find(a=>a.workshopId===studio2._id).batchId)).quantity,50);
   assert.equal((await req('/quotes/'+q._id+'/production','POST',{version:q.version,action:'start'},art1)).status,409);
+  assert.equal((await req('/quotes/'+q._id+'/production-journal','PATCH',{version:q.version,journal:{}},art1)).status,409);
+ });
+ await t.test('a complete saved journal becomes the batch only after explicit completion',async()=>{
+  let order=await ok('/quotes','POST',{title:'Journal-to-batch workflow',category:'Chúc tụng',quantity:10,description:'A journal saved during production',deadline:new Date(Date.now()+40*86400000).toISOString().slice(0,10)},buyer);
+  order=await ok('/quotes/'+order._id+'/send','POST',{version:order.version},buyer);
+  order=await ok('/quotes/'+order._id+'/bids','POST',{version:order.version,unitPrice:100000,quantity:10,days:7,note:'Journal order'},art1);
+  order=await ok('/quotes/'+order._id+'/accept','POST',{version:order.version,workshopId:studio1._id},buyer);
+  assert.equal((await req('/quotes/'+order._id+'/production-journal','PATCH',{version:order.version,journal:{}},art1)).status,409);
+  order=await ok('/quotes/'+order._id+'/production','POST',{version:order.version,action:'start'},art1);
+  assert.equal((await req('/quotes/'+order._id+'/production-journal','PATCH',{version:order.version,journal:{}},art2)).status,403);
+  const content=landing(p1._id,uploads[0]);
+  order=await ok('/quotes/'+order._id+'/production-journal','PATCH',{version:order.version,journal:content},art1);
+  assert.equal(await db.batches.countDocuments({quoteId:order._id}),0);
+  assert.equal((await req('/trace/'+order._id)).status,404);
+  order=await ok('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready'},art1);
+  const trace=await ok('/trace/'+order.allocations[0].batchId);
+  assert.equal(trace.story,content.story);assert.equal(trace.quantity,10);
+  assert.deepEqual(trace.events.map(({title,date,note,images})=>({title,date,note,images})),content.events);
+  assert.equal(trace.journalDraft,undefined);assert.equal(trace.allocations,undefined);
+  assert.equal((await req('/quotes/'+order._id+'/production-journal','PATCH',{version:order.version,journal:{}},art1)).status,409);
  });
  await t.test('heritage listings supply published artwork choices for batch completion',async()=>{
   const artwork=await conn.models.Artwork.create({name:'Heritage test',category:'Chúc tụng',type:'general',workshopId:null,published:true,images:['/art/dai-cat.jpg']});
@@ -208,6 +273,7 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.equal(order.acceptedWorkshopId,studio1._id);
   order=await ok('/quotes/'+order._id+'/production','POST',{version:order.version,action:'start'},art1);
   assert.equal((await req('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready',landingPage:landing(p1._id,uploads[0])},art1)).status,400);
+  for(const artwork of artworks)order=await ok('/quotes/'+order._id+'/item-progress','POST',{version:order.version,productId:String(artwork._id),status:'completed'},art1);
   order=await ok('/quotes/'+order._id+'/production','POST',{version:order.version,action:'ready',landingPage:landing(String(artworks[1]._id),uploads[0])},art1);
   const trace=await ok('/trace/'+order.allocations[0].batchId);
   assert.equal(trace.quantity,100);assert.equal(trace.product.name,'Ordered heritage B');

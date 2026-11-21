@@ -364,3 +364,5 @@ createRoot(document.getElementById('root')).render(
     </HashRouter>
   </React.StrictMode>,
 );
+
+import './request-bridge';

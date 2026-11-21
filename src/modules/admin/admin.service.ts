@@ -63,7 +63,9 @@ export class AdminService {
       return await this.workshopsModel.create({
         ...data.workshop,
         ownerId: String(user._id),
-        approved: false,
+        // Accounts created directly by the management board are already vetted.
+        // The approval toggle remains available for later suspension/review.
+        approved: true,
       });
     } catch (e) {
       await this.usersModel.deleteOne({ _id: user._id });
