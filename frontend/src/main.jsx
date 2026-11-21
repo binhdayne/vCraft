@@ -72,10 +72,6 @@ function Layout() {
 
   return (
     <>
-      <div className="announcement">
-        TRIỂN LÃM SỐ LÀNG TRANH ĐÔNG HỒ <span>·</span> Gìn giữ nét xưa, kết nối
-        hôm nay
-      </div>
       <header>
         <div className="nav-shell">
           <Link to="/" className="brand">

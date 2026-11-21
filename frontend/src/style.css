@@ -3544,3 +3544,80 @@ input[type=number] {
 .location-picker-coordinates { color: var(--ink); font-size: 12px; letter-spacing: .02em; }
 .location-picker-coordinates strong { color: var(--red); font-variant-numeric: tabular-nums; }
 .location-picker .leaflet-tooltip { border: 1px solid var(--red); color: var(--red); font-size: 11px; font-weight: 600; }
+
+/* Lotus background artwork supplied for the homepage */
+body:has(.hero){
+  background-color:#f3eadb;
+  background-image:linear-gradient(rgba(247,243,233,.76),rgba(247,243,233,.82)),url('/art/dong-ho-lotus-bg.png');
+  background-size:cover;
+  background-position:center top;
+  background-attachment:fixed;
+}
+body:has(.hero) header{background:rgba(247,243,233,.9)}
+body:has(.hero) .hero,
+body:has(.hero) .section,
+body:has(.hero) .story-section{background:rgba(247,243,233,.58)}
+body:has(.hero) .values-strip{background:rgba(238,233,220,.78)}
+@media(max-width:800px){body:has(.hero){background-attachment:scroll;background-position:center top}}
+/* Keep the story panel flush with the artwork background */
+body:has(.hero) .story-section{background:transparent}
+/* Remove gray blocks from homepage sections and let the parchment show through */
+body:has(.hero) .values-strip,
+body:has(.hero) .art-image,
+body:has(.hero) .studio-card-image{background:transparent}
+body:has(.hero) .studio-card{background:rgba(247,243,233,.28)}
+/* Remove remaining translucent gray panels from homepage sections */
+body:has(.hero) .hero,
+body:has(.hero) .section,
+body:has(.hero) .story-section{background:transparent}
+/* CTA banner styled like a dark paper exhibition panel */
+body:has(.hero) .quote-banner{
+  max-width:none;
+  margin:0 0 70px;
+  padding:42px max(44px,calc((100vw - 1320px)/2));
+  min-height:220px;
+  border-radius:0;
+  background-color:#3b211c;
+  background-image:
+    radial-gradient(circle at 18% 24%,rgba(255,235,202,.06) 0 1px,transparent 1.5px),
+    radial-gradient(circle at 76% 68%,rgba(255,235,202,.05) 0 1px,transparent 1.5px),
+    linear-gradient(120deg,#35201c,#4a2922 52%,#321d19);
+  background-size:19px 19px,23px 23px,100% 100%;
+  color:#f5e7d0;
+}
+body:has(.hero) .quote-banner>div{max-width:700px;position:relative;z-index:1}
+body:has(.hero) .quote-banner .eyebrow{color:#e8cdb0;margin-bottom:12px}
+body:has(.hero) .quote-banner h2{font-size:40px;line-height:1.08;margin:0 0 20px;color:#f6e8d3}
+body:has(.hero) .quote-banner p{color:#e3cdb4;font-size:14px;line-height:1.55}
+body:has(.hero) .quote-banner .btn{margin:0 0 0 40px;background:#f6ead7;color:#4b2a22;border:1px solid #f6ead7;min-width:174px;min-height:43px;font-size:12px}
+body:has(.hero) .quote-banner .btn:hover{background:#fff8ed;color:#3b211c}
+body:has(.hero) .quote-banner .banner-flower{opacity:.08;color:#f0d4b4}
+@media(max-width:800px){
+  body:has(.hero) .quote-banner{margin:0 0 45px;padding:34px 22px;display:block;min-height:0}
+  body:has(.hero) .quote-banner h2{font-size:33px}
+  body:has(.hero) .quote-banner .btn{margin:24px 0 0;min-width:160px}
+}
+/* Reference mouse cutout for the CTA banner */
+body:has(.hero) .quote-mice{position:absolute;right:max(44px,calc((100vw - 1320px)/2));bottom:18px;width:180px;height:auto;z-index:1;pointer-events:none}
+@media(max-width:800px){body:has(.hero) .quote-mice{right:18px;bottom:12px;width:118px;opacity:.82}}
+/* Keep the mouse illustration clear of the CTA button */
+body:has(.hero) .quote-mice{right:-8px;bottom:6px;width:110px}
+@media(max-width:800px){body:has(.hero) .quote-mice{right:-6px;bottom:4px;width:78px}}
+/* Use the homepage parchment background across all routes */
+body{
+  background-color:#f3eadb;
+  background-image:linear-gradient(rgba(247,243,233,.8),rgba(247,243,233,.86)),url('/art/dong-ho-lotus-bg.png');
+  background-size:cover;
+  background-position:center top;
+  background-attachment:fixed;
+}
+body:not(:has(.hero)) header{background:rgba(247,243,233,.92)}
+body:not(:has(.hero)) footer{background:rgba(238,232,218,.82)}
+body:not(:has(.hero)) .page,
+body:not(:has(.hero)) .workspace,
+body:not(:has(.hero)) .auth-layout{background:rgba(247,243,233,.3)}
+@media(max-width:800px){body{background-attachment:scroll}}
+/* Keep internal pages on the same clean parchment surface */
+body:not(:has(.hero)) .page,
+body:not(:has(.hero)) .workspace,
+body:not(:has(.hero)) .auth-layout{background:transparent}
