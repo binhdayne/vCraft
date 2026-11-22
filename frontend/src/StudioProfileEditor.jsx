@@ -5,6 +5,7 @@ import { Camera, Check, ChevronLeft, ChevronRight, Edit3, Eye, ImagePlus, MapPin
 import { api, CATEGORIES, ImageUpload, LoadState, PageTitle, useApp, useLoad } from './shared';
 import { LocationPicker } from './maps/LocationPicker';
 import { WorkshopImage } from './workshops/profile-media';
+import { parseWorkshopStory } from './workshops/story-book.mjs';
 import './workshop-profile.css';
 import './studio-profile-editor.css';
 
@@ -16,6 +17,8 @@ export function StudioEditor() {
   const [editing, setEditing] = useState(null);
   const { notify } = useApp();
   const studio = state.data, photos = studio?.images || [];
+  const story = parseWorkshopStory(studio?.story, studio?.name);
+  const excerpt = story.introduction[0] || story.chapters[0]?.paragraphs[0] || 'Bạn chưa chia sẻ câu chuyện của xưởng.';
   return <div className="sp-owner">
     <PageTitle eyebrow="KHÔNG GIAN DO BẠN KỂ" title="Hồ sơ xưởng" action={<button className="btn" type="button" disabled={!studio} onClick={() => setEditing('photos')}><Camera size={17} /> Quản lý ảnh</button>}>Chia sẻ câu chuyện làm nghề và những góc nhìn từ xưởng của bạn.</PageTitle>
     <LoadState {...state} retry={state.reload} />
@@ -29,7 +32,7 @@ export function StudioEditor() {
         {photos.length > 0 && <div className="sp-owner-photo-strip">{photos.map((src, i) => <button key={src + i} type="button" onClick={() => setEditing('photos')} aria-label={`Quản lý ảnh ${i + 1} của xưởng`}><WorkshopImage src={src} alt={`Ảnh xưởng ${i + 1}`} loading="lazy" />{i === 0 && <span><Star size={12} /> Ảnh bìa</span>}</button>)}</div>}
         <button type="button" className="sp-owner-add" onClick={() => setEditing('photos')}><ImagePlus size={19} />{photos.length ? 'Thêm ảnh & sắp xếp bộ ảnh' : 'Thêm những hình ảnh đầu tiên'}</button>
       </section>
-      <section className="sp-owner-story"><span className="eyebrow">CÂU CHUYỆN CỦA XƯỞNG</span><p>{studio.story}</p><small>{studio.certificates?.length || 0} ảnh giấy tờ / chứng nhận đã được xưởng cung cấp.</small></section>
+      <section className="sp-owner-story"><span className="eyebrow">QUYỂN SÁCH CỦA XƯỞNG · {story.chapters.length} CHƯƠNG</span><h3>{story.title}</h3><p>{excerpt.length > 400 ? excerpt.slice(0, 400) + '…' : excerpt}</p>{story.fictional && <small>Truyện hư cấu minh họa được nạp sẵn cho xưởng demo.</small>}<div><button type="button" className="sp-text-button" onClick={() => setEditing('info')}>Biên tập câu chuyện</button></div></section>
     </>}
     {editing && studio && <StudioProfileDialog studio={studio} initialSection={editing} onClose={() => setEditing(null)} onSubmit={async values => {
       await api('/studio', { method: 'PATCH', body: values });
@@ -134,7 +137,7 @@ function StudioProfileDialog({ studio, initialSection, onClose, onSubmit }) {
         <label className="wide"><span>Địa chỉ xưởng *</span><input required maxLength={300} value={values.address} onChange={e => change('address', e.target.value)} /></label>
         <div className="wide"><span className="sp-field-label">Vị trí xưởng trên bản đồ *</span><LocationPicker latitude={values.latitude} longitude={values.longitude} onChange={point => setValues(current => ({ ...current, ...point }))} /></div>
         <label className="wide sp-open-check"><input type="checkbox" checked={values.openForVisits} onChange={e => change('openForVisits', e.target.checked)} /><span>Xưởng đang mở cửa đón khách tham quan</span></label>
-        <label className="wide"><span>Câu chuyện gia đình / lịch sử làm nghề *</span><textarea required rows={6} maxLength={10000} value={values.story} onChange={e => change('story', e.target.value)} placeholder="Kể về người làm nghề, dấu ấn riêng của xưởng và câu chuyện phía sau những bản in…" /></label>
+        <label className="wide"><span>Câu chuyện gia đình / lịch sử làm nghề *</span><textarea required rows={10} maxLength={10000} value={values.story} onChange={e => change('story', e.target.value)} aria-describedby="sp-story-format" placeholder={'# Tên quyển sách\n\nLời mở đầu của xưởng…\n\n## 1980 · Tên chương đầu\n\nKể câu chuyện của chương này…'} /><small id="sp-story-format" style={{ display: 'block', marginTop: 9, color: '#8b765b', lineHeight: 1.8 }}>Dùng # Tên sách ở đầu, ## Năm · Tên chương cho mỗi mẩu chuyện. Cách một dòng trống giữa các đoạn; trang công khai tự chia trang và tạo mục lục. Bạn vẫn có thể viết văn bản thường. {values.story?.length || 0}/10.000 ký tự.</small></label>
         <fieldset className="wide sp-category-checks"><legend>Phân loại nhận sản xuất *</legend><div>{CATEGORIES.map(category => <label key={category}><input type="checkbox" checked={values.categories.includes(category)} onChange={e => change('categories', e.target.checked ? [...values.categories, category] : values.categories.filter(item => item !== category))} /><span>{category}</span></label>)}</div></fieldset>
       </div></section>
       <section className="sp-profile-photo-section" ref={photos} tabIndex={-1} aria-label="Ảnh hồ sơ xưởng"><h3>Hình ảnh kể chuyện xưởng</h3><p>Những góc không gian, bàn tay làm nghề và khoảnh khắc bạn muốn chia sẻ với khách ghé thăm.</p>

@@ -5,6 +5,7 @@ import { ArtworkCard, LoadState, Pagination, useApp, useLoad } from './shared';
 import { buildCatalogQuery } from './lib/catalog';
 import { googleDirectionsUrl, hasCoordinates } from './maps/map-settings.mjs';
 import { StudioLotus, StudioRosette, WorkshopImage, WorkshopLightbox } from './workshops/profile-media';
+import { WorkshopStoryBook } from './workshops/WorkshopStoryBook';
 import './workshop-profile.css';
 
 export function WorkshopProfile() {
@@ -25,10 +26,6 @@ function StudioProfile({ studio: s, products, page, onPageChange }) {
   const [lightbox, setLightbox] = useState(null);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const [fullStory, setFullStory] = useState(false);
-  const paragraphs = (s.story || '').split(/\n\s*\n/).filter(text => text.trim());
-  const longStory = (s.story || '').length > 1800;
-  const storyParts = longStory && !fullStory ? (s.story.slice(0, 1100).trim() + '…').split(/\n\s*\n/).filter(text => text.trim()) : paragraphs;
   const isOwner = user?.role === 'artisan' && user.id === s.ownerId;
   const caption = src => owned.has(src) ? 'Ảnh do chủ xưởng chia sẻ' : 'Ảnh tư liệu trong hồ sơ xưởng';
   const scrollTo = key => document.getElementById(key)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'start' });
@@ -94,13 +91,9 @@ function StudioProfile({ studio: s, products, page, onPageChange }) {
       <div><Clock size={20} /><strong>{s.openForVisits ? 'Đón khách' : 'Hẹn trước'}</strong><span>{s.visitingHours || 'Liên hệ xưởng trước khi ghé'}</span></div>
     </section>
 
-    <section className="sp-story sp-shell" id="sp-story">
-      <div className="sp-story-heading" data-sp-reveal><span className="sp-kicker">CÂU CHUYỆN NGƯỜI GIỮ NGHỀ</span><h2>Phía sau<br />{' '}một <em>nét mộc.</em></h2><StudioRosette className="sp-story-rosette" /></div>
-      <div className="sp-story-copy" data-sp-reveal>
-        <span className="sp-story-name">{s.name}</span>
-        {storyParts.length ? storyParts.map((paragraph, i) => <p key={i}>{paragraph}</p>) : <p>Xưởng đang cập nhật câu chuyện làm nghề của mình.</p>}
-        {longStory && <button className="sp-text-button" type="button" onClick={() => setFullStory(value => !value)}>{fullStory ? 'Thu gọn câu chuyện' : 'Đọc trọn câu chuyện'}</button>}
-        <div className="sp-story-signature"><span /> Những câu chuyện do chính xưởng kể.</div>
+    <section className="sp-story sp-story-library" id="sp-story"><div className="sp-shell">
+      <div className="sb-section-heading" data-sp-reveal><div><span className="sp-kicker">CÂU CHUYỆN NGƯỜI GIỮ NGHỀ</span><h2>Mở một trang.<br /><em>Gặp một đời làm tranh.</em></h2></div><p>Ngồi lại cùng {s.name}, lần giở những mẩu chuyện về gia đình, người làm nghề và những điều được giữ qua năm tháng.</p></div>
+      <WorkshopStoryBook studio={s} motion={!paused && !reduced} />
       </div>
     </section>
 
