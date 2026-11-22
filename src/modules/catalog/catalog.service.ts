@@ -184,11 +184,13 @@ export class CatalogService {
           "Chỉ được thêm ảnh do tài khoản xưởng của bạn tải lên",
         );
     }
-    return this.workshopsModel.findOneAndUpdate(
+    const updated = await this.workshopsModel.findOneAndUpdate(
       { ownerId: actor.id },
       { $set: data },
       { new: true },
     );
+    if (!updated) throw new NotFoundException("Không tìm thấy hồ sơ xưởng");
+    return (await this.withOwnerPhotos([updated.toObject()]))[0];
   }
 
   async ownProducts(actor: Actor) {

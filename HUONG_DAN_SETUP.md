@@ -213,6 +213,18 @@ Trên database mới, kết quả lần lượt là **3, 6, 3**. Trên web, ki�
 
 QR chứa `PUBLIC_URL` của máy đang chạy. Để kiểm tra trên cùng máy, mở trang truy xuất và tải/xem mã QR. Điện thoại quét URL có `localhost` sẽ trỏ về chính điện thoại; việc truy cập qua mạng LAN cần cấu hình địa chỉ mạng riêng và không phải tiêu chí setup local này.
 
+### 3.3.1. Ảnh và trang hồ sơ xưởng
+
+1. Đăng nhập tài khoản nghệ nhân, mở **Không gian làm việc → Hồ sơ xưởng → Quản lý ảnh**.
+2. Chọn **Thêm ảnh xưởng**. Mỗi hồ sơ lưu tối đa **8 ảnh** JPEG, PNG hoặc WebP, tối đa **8 MB/ảnh**. Có thể chọn nhiều ảnh trong một lần tải.
+3. Nhấn **Đặt làm bìa** dưới ảnh muốn dùng ở đầu trang. Dùng hai nút chuyển trước/sau để sắp xếp; nút **X** xóa ảnh khỏi bộ ảnh của hồ sơ.
+4. Đợi tải ảnh xong rồi nhấn **Lưu hồ sơ xưởng**. Lưu xong có thể tải lại trang để kiểm tra; chọn **Xem trang công khai** để mở hồ sơ trong tab mới. Ảnh chỉ xuất hiện công khai sau khi lưu và khi xưởng được BQL duyệt.
+5. Trên hồ sơ công khai, bấm ảnh bìa hoặc ảnh trong thư viện để xem lớn. Có thể chuyển ảnh bằng hai nút trên màn hình, phím trái/phải, Home/End; nhấn Escape để đóng.
+
+Ảnh đầu tiên dùng làm bìa trên hồ sơ và thẻ danh sách xưởng. Các ảnh do tài khoản xưởng tải lên cũng xuất hiện trong popup bản đồ, theo thứ tự đã lưu. Ảnh tư liệu cũ vẫn dùng được và được ghi chú là ảnh tư liệu; không được tính vào nhóm ảnh do chủ xưởng tải lên trên bản đồ.
+
+Hồ sơ không bắt buộc có ảnh để lưu thông tin. Khi chưa có ảnh, trang hiển thị minh họa và trạng thái chờ xưởng bổ sung. Giấy tờ/chứng nhận có bộ ảnh riêng, tối đa 8 ảnh. Trang hồ sơ hỗ trợ tạm dừng chuyển động và tự giảm chuyển động theo cài đặt thiết bị.
+
 ### 3.4. Thử luồng báo giá mẫu
 
 1. Đăng nhập `buyer@vcraft.local`, vào không gian làm việc, mở **Bộ tranh quà tặng văn hóa · đơn demo**.

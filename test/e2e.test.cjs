@@ -37,6 +37,10 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   await ok('/admin/workshops/'+studio1._id+'/approval','PATCH',{approved:true},admin);await ok('/admin/workshops/'+studio2._id+'/approval','PATCH',{approved:true},admin);
   p1=await ok('/studio/products','POST',draft,art1);
   p2=await ok('/studio/products','POST',{...draft,name:'Painting B'},art2);
+  assert.equal(p1.approvalStatus,'pending');assert.equal(p2.approvalStatus,'pending');
+  assert.equal((await ok('/products?search=Painting','GET')).total,0);
+  await ok('/admin/artworks/'+p1._id+'/approval','PATCH',{status:'approved'},admin);
+  await ok('/admin/artworks/'+p2._id+'/approval','PATCH',{status:'approved'},admin);
   assert.equal((await req('/studio/products/'+p1._id,'PATCH',draft,art2)).status,404);
   assert.equal((await ok('/products?search=Painting','GET')).total,2);
   assert.equal((await ok('/products?search=%5B.*','GET')).total,0);
@@ -72,6 +76,26 @@ test('end-to-end workflows against isolated MongoDB database',async t=>{
   assert.deepEqual((await ok('/workshops/'+studio1._id,'GET')).ownerPhotos,[photo]);
   await ok('/studio','PATCH',studio,art1);
   assert.deepEqual((await ok('/workshops/'+studio1._id,'GET')).ownerPhotos,[]);
+ });
+ await t.test('studio gallery enforces eight unique photos and persists cover order without changing other studios',async()=>{
+  const form=new FormData();const buffer=await sharp({create:{width:600,height:400,channels:3,background:'#4b6b53'}}).png().toBuffer();
+  for(let i=0;i<7;i++)form.append('files',new Blob([buffer],{type:'image/png'}),'gallery-'+i+'.png');
+  const added=await ok('/media','POST',form,art1);uploads.push(...added.urls);
+  const photos=[uploads[0],...added.urls];assert.equal(photos.length,8);
+  const saved=await ok('/studio','PATCH',{...studio,images:photos},art1);
+  assert.deepEqual(saved.images,photos);assert.deepEqual(saved.ownerPhotos,photos);
+  assert.equal(saved.story,studio.story);
+  assert.equal((await req('/studio','PATCH',{...studio,images:[...photos,'/uploads/ninth.webp']},art1)).status,400);
+  assert.equal((await req('/studio','PATCH',{...studio,images:[photos[0],photos[0]]},art1)).status,400);
+  const ordered=[photos[5],...photos.filter((_,i)=>i!==5)];
+  await ok('/studio','PATCH',{...studio,images:ordered},art1);
+  const publicProfile=await ok('/workshops/'+studio1._id);
+  assert.deepEqual(publicProfile.images,ordered);assert.deepEqual(publicProfile.ownerPhotos,ordered);
+  assert.deepEqual((await ok('/studio','GET',undefined,art1)).images,ordered);
+  assert.deepEqual((await ok('/workshops/'+studio2._id)).images,studio.images);
+  await ok('/studio','PATCH',{...studio,images:[]},art1);
+  const empty=await ok('/workshops/'+studio1._id);assert.deepEqual(empty.images,[]);assert.deepEqual(empty.ownerPhotos,[]);
+  await ok('/studio','PATCH',studio,art1);
  });
  await t.test('batch ownership, chronology and public QR provenance',async()=>{
   const input={productId:p1._id,quantity:100,story:'Batch provenance test',published:true};
