@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpRight, ImageOff, Pause, Play, RotateCcw } from 'lucide-react';
 import { ArtworkFilm } from './trace-media/ArtworkFilm';
+import { getWorkshopStoryExcerpt } from './workshops/story-book.mjs';
 import './trace-landing.css';
 
 const number = value => String(value).padStart(2, '0');
@@ -271,7 +272,7 @@ function TraceStory({ batch }) {
 
     <section className="trace-maker trace-shell" aria-labelledby="trace-maker-title">
       <div className="trace-maker-emblem" data-reveal data-ambient><FolkFlower /><span>NGƯỜI<br /><em>giữ nghề.</em></span></div>
-      <div className="trace-maker-copy" data-reveal><span className="trace-kicker">CÂU CHUYỆN ĐƯỢC GỬI TỪ</span><h2 id="trace-maker-title">{workshop.name || 'Không gian làm nghề'}</h2><p>{workshop.story || 'Một không gian làm nghề, nơi những câu chuyện được lưu lại qua từng bản in.'}</p>
+      <div className="trace-maker-copy" data-reveal><span className="trace-kicker">CÂU CHUYỆN ĐƯỢC GỬI TỪ</span><h2 id="trace-maker-title">{workshop.name || 'Không gian làm nghề'}</h2><p>{getWorkshopStoryExcerpt(workshop.story) || 'Một không gian làm nghề, nơi những câu chuyện được lưu lại qua từng bản in.'}</p>
         {workshop._id && <a className="trace-text-link" href={`#/xuong/${workshop._id}`} target="_blank" rel="noopener noreferrer">Ghé thăm không gian xưởng <ArrowUpRight size={17} /></a>}
       </div>
     </section>

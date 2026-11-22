@@ -11,7 +11,7 @@ export const workshopInput = z
     openForVisits: z.boolean(),
     visitingHours: text(200),
     categories: z.array(category).min(1).max(4),
-    images,
+    images: images.refine(urls => new Set(urls).size === urls.length, "Ảnh hồ sơ xưởng không được trùng nhau"),
     certificates: images,
   })
   .strict();

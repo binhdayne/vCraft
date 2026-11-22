@@ -213,6 +213,59 @@ Trên database mới, kết quả lần lượt là **3, 6, 3**. Trên web, ki�
 
 QR chứa `PUBLIC_URL` của máy đang chạy. Để kiểm tra trên cùng máy, mở trang truy xuất và tải/xem mã QR. Điện thoại quét URL có `localhost` sẽ trỏ về chính điện thoại; việc truy cập qua mạng LAN cần cấu hình địa chỉ mạng riêng và không phải tiêu chí setup local này.
 
+### 3.3.1. Ảnh và trang hồ sơ xưởng
+
+1. Đăng nhập tài khoản nghệ nhân, mở **Không gian làm việc → Hồ sơ xưởng → Quản lý ảnh**.
+2. Chọn **Thêm ảnh xưởng**. Mỗi hồ sơ lưu tối đa **8 ảnh** JPEG, PNG hoặc WebP, tối đa **8 MB/ảnh**. Có thể chọn nhiều ảnh trong một lần tải.
+3. Nhấn **Đặt làm bìa** dưới ảnh muốn dùng ở đầu trang. Dùng hai nút chuyển trước/sau để sắp xếp; nút **X** xóa ảnh khỏi bộ ảnh của hồ sơ.
+4. Đợi tải ảnh xong rồi nhấn **Lưu hồ sơ xưởng**. Lưu xong có thể tải lại trang để kiểm tra; chọn **Xem trang công khai** để mở hồ sơ trong tab mới. Ảnh chỉ xuất hiện công khai sau khi lưu và khi xưởng được BQL duyệt.
+5. Trên hồ sơ công khai, bấm ảnh bìa hoặc ảnh trong thư viện để xem lớn. Có thể chuyển ảnh bằng hai nút trên màn hình, phím trái/phải, Home/End; nhấn Escape để đóng.
+
+Ảnh đầu tiên dùng làm bìa trên hồ sơ và thẻ danh sách xưởng. Các ảnh do tài khoản xưởng tải lên cũng xuất hiện trong popup bản đồ, theo thứ tự đã lưu. Ảnh tư liệu cũ vẫn dùng được và được ghi chú là ảnh tư liệu; không được tính vào nhóm ảnh do chủ xưởng tải lên trên bản đồ.
+
+Hồ sơ không bắt buộc có ảnh để lưu thông tin. Khi chưa có ảnh, trang hiển thị minh họa và trạng thái chờ xưởng bổ sung. Giấy tờ/chứng nhận có bộ ảnh riêng, tối đa 8 ảnh. Trang hồ sơ hỗ trợ tạm dừng chuyển động và tự giảm chuyển động theo cài đặt thiết bị.
+
+### 3.3.2. Quyển sách câu chuyện của xưởng
+
+Ba xưởng mẫu có **8 chương / xưởng** (khoảng 8.000–8.300 ký tự), kể về nguồn gốc, các thế hệ, kỷ vật và người nối nghề:
+
+- **Nét Mộc:** *Những vân gỗ còn nhớ*.
+- **Sắc Điệp:** *Một miền sáng trong tờ giấy*.
+- **Hồn Quê:** *Con đường trở về qua một bức tranh*.
+
+Đây là truyện hư cấu minh họa; nhân vật và niên đại được sáng tác. Ghi chú này hiển thị trong sách. Nội dung nguồn nằm ở `scripts/data/workshop-stories.cjs` và được lưu vào trường `story` của từng xưởng trong MongoDB, không gắn cứng vào trang giao diện.
+
+Database mới nhận các truyện khi chạy `npm.cmd run seed`. Với database đã có ba xưởng demo, nạp riêng câu chuyện mà không chạy lại các phần seed khác:
+
+```powershell
+npm.cmd run seed:stories -- --dry-run
+npm.cmd run seed:stories
+```
+
+Lệnh chỉ nhận đúng ba tài khoản xưởng mẫu và tên xưởng tương ứng, giữ nguyên ảnh, tọa độ, sản phẩm và đơn hàng. Truyện do chủ xưởng tự sửa sẽ được giữ lại; muốn chủ động thay bằng bản mẫu, dùng `npm.cmd run seed:stories -- --replace`. Trước khi thay, bản cũ được lưu ở `.local/backups/workshop-stories-*.json`. Chạy lại không tạo bản ghi trùng; lệnh từ chối môi trường production.
+
+Mở hồ sơ công khai của một xưởng rồi chọn **Câu chuyện của xưởng**. Sách có bìa, mục lục chọn chương, nút trang trước / trang tiếp và hiệu ứng lật giấy. Máy tính xem hai trang, màn hình nhỏ xem một trang với đoạn ngắn hơn; có thể dùng phím trái / phải, Home / End khi chọn sách hoặc vuốt ngang trên điện thoại. Chế độ giảm chuyển động và nút tạm dừng của hồ sơ vẫn chuyển trang tức thì.
+
+Để chủ xưởng tự biên tập: **Không gian làm việc → Hồ sơ xưởng → Biên tập câu chuyện**. Cấu trúc được hỗ trợ:
+
+```text
+# Tên quyển sách
+
+Lời mở đầu của xưởng.
+
+## 1980 · Tên mẩu chuyện đầu tiên
+
+Đoạn văn đầu tiên.
+
+Đoạn văn tiếp theo.
+
+## Hôm nay · Người nối nghề
+
+Câu chuyện của chương mới.
+```
+
+Tối đa 10.000 ký tự. Sách tự tạo mục lục, số trang và chia đoạn để đọc; văn bản thường vẫn hiển thị được trong sách. Chọn **Lưu hồ sơ xưởng** để công khai thay đổi.
+
 ### 3.4. Thử luồng báo giá mẫu
 
 1. Đăng nhập `buyer@vcraft.local`, vào không gian làm việc, mở **Bộ tranh quà tặng văn hóa · đơn demo**.

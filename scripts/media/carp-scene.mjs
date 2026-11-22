@@ -1,6 +1,6 @@
 import { C, n, wave, stroke, line, path, group, eye, cloud, lotus, grasses, scene } from './folk-art.mjs';
 
-function carp(time, { x, y, size = 1, angle = -24, phase = 0, small = false, flipped = false, key = 'main' }) {
+export function carp(time, { x, y, size = 1, angle = -24, phase = 0, small = false, flipped = false, key = 'main' }) {
   const body = 'M-147-18C-119-82-47-99 61-57Q135-39 158-3Q110 56 33 78Q-66 109-127 54Z';
   const finRays = Array.from({ length: 11 }, (_, i) => line(`M${-40 + i * 11} ${-64 + Math.abs(4 - i) * 2}Q${-35 + i * 10} ${-109 + Math.abs(5 - i) * 3} ${-36 + i * 11} ${-130 + Math.abs(5 - i) * 5}`, C.ink, 1.4)).join('');
   const tailRays = Array.from({ length: 10 }, (_, i) => line(`M164 0Q${199 + i * 3} ${-24 + i * 5} ${229 + Math.abs(4 - i) * 10} ${-63 + i * 14}`, C.ink, 1.25)).join('');

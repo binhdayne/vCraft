@@ -33,6 +33,7 @@ test('demo seed creates related data, preserves edits on rerun and refuses produ
     assert.equal(buyer.role, 'buyer');
     assert.equal(await compare('DongHo@2026!', buyer.passwordHash), true);
     assert.equal(await db.workshops.countDocuments({ approved: true }), 3);
+    assert.equal(await db.workshops.countDocuments({ story: /Truyện hư cấu minh họa cho vCraft/ }), 3);
     const batches = await db.batches.find();
     assert.deepEqual(batches.map(batch => batch.code).sort(), ['DH-DEMO-002', 'DH-DEMO-003']);
     assert.ok(batches.every(batch => batch.events.length === 4));
@@ -46,6 +47,8 @@ test('demo seed creates related data, preserves edits on rerun and refuses produ
 
     await db.users.updateOne({ _id: buyer._id }, { $set: { active: false, name: 'Changed locally' } });
     await db.quotes.updateOne({ _id: quote._id }, { $set: { status: 'delivered', version: 7 } });
+    const studio = await db.workshops.findOne();
+    await db.workshops.updateOne({ _id: studio._id }, { $set: { story: 'Chủ xưởng đã tự viết lại câu chuyện.' } });
     await runSeed();
     assert.deepEqual(await counts(), expected);
     const unchangedBuyer = await db.users.findById(buyer._id).select('+passwordHash');
@@ -55,6 +58,7 @@ test('demo seed creates related data, preserves edits on rerun and refuses produ
     const unchangedQuote = await db.quotes.findById(quote._id);
     assert.equal(unchangedQuote.status, 'delivered');
     assert.equal(unchangedQuote.version, 7);
+    assert.equal((await db.workshops.findById(studio._id)).story, 'Chủ xưởng đã tự viết lại câu chuyện.');
 
     await assert.rejects(runSeed('production'), error => {
       assert.equal(error.code, 1);

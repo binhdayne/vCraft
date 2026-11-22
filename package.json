@@ -17,8 +17,9 @@
     "web:dev": "vite --config frontend/vite.config.mjs --configLoader native",
     "preseed": "npm run build:api",
     "seed": "node scripts/seed.cjs",
+    "seed:stories": "node scripts/seed-workshop-stories.cjs",
     "pretest:e2e": "npm run build:api",
-    "test:e2e": "node --test test/e2e.test.cjs test/seed.test.cjs",
+    "test:e2e": "node --test test/e2e.test.cjs test/seed.test.cjs test/workshop-stories.test.cjs",
     "dev": "node scripts/dev.cjs",
     "seed:artworks": "node art_work_import.js"
   },
