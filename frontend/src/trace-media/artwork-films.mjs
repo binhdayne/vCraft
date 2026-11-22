@@ -107,6 +107,78 @@ export const artworkFilms = [
     poster: '/films/chim-cong-thai-binh-poster.svg',
     duration: '00:12',
   },
+  {
+    key: 'hung-dua',
+    title: 'Hứng dừa',
+    names: ['hung dua'],
+    src: '/films/hung-dua.mp4',
+    type: 'video/mp4',
+    poster: '/films/hung-dua-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'hoi-du',
+    title: 'Hội đu',
+    names: ['hoi du', 'hoi danh du', 'danh du'],
+    src: '/films/hoi-du.mp4',
+    type: 'video/mp4',
+    poster: '/films/hoi-du-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'hoi-keo-co',
+    title: 'Hội kéo co',
+    names: ['hoi keo co', 'keo co'],
+    src: '/films/hoi-keo-co.mp4',
+    type: 'video/mp4',
+    poster: '/films/hoi-keo-co-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'hat-quan-ho',
+    title: 'Hát quan họ',
+    names: ['hat quan ho', 'quan ho'],
+    src: '/films/hat-quan-ho.mp4',
+    type: 'video/mp4',
+    poster: '/films/hat-quan-ho-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'mua-rong',
+    title: 'Múa rồng',
+    names: ['mua rong', 'hoi mua rong'],
+    src: '/films/mua-rong.mp4',
+    type: 'video/mp4',
+    poster: '/films/mua-rong-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'ga-dan',
+    title: 'Gà đàn',
+    names: ['ga dan', 'dan ga'],
+    src: '/films/ga-dan.mp4',
+    type: 'video/mp4',
+    poster: '/films/ga-dan-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'ca-dan',
+    title: 'Cá đàn',
+    names: ['ca dan', 'dan ca chep'],
+    src: '/films/ca-dan.mp4',
+    type: 'video/mp4',
+    poster: '/films/ca-dan-poster.svg',
+    duration: '00:12',
+  },
+  {
+    key: 'uy-tran-son-ha',
+    title: 'Uy trấn sơn hà · Con hổ',
+    names: ['uy tran son ha con ho', 'uy tran son ha'],
+    src: '/films/uy-tran-son-ha.mp4',
+    type: 'video/mp4',
+    poster: '/films/uy-tran-son-ha-poster.svg',
+    duration: '00:12',
+  },
 ];
 
 // Frontend presentation mapping only. It does not alter artworks or batch creation.
@@ -118,6 +190,8 @@ export function findArtworkFilm(product = {}) {
   // own: "Mục đồng thổi sáo" must not receive the reading scene, for example.
   const legacy = new Set(['dai cat', 'vinh hoa', 'phu quy', 'muc dong', 'nhan nghia', 'le tri']);
   const legacyName = name.replace(/(?: kho)? \d+(?: ?x ?\d+)?(?: ?cm)?$/, '').trim();
+  // The human dragon dance is a different subject from the mouse dragon dance.
+  if (/\bchuot\b/.test(name) && /\bmua rong\b/.test(name)) return null;
   return artworkFilms.find(film => film.names.some(title => legacy.has(title)
     ? legacyName === title : ` ${name} `.includes(` ${title} `))) || null;
 }
