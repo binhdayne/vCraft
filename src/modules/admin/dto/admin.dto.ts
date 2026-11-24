@@ -19,6 +19,9 @@ export type CreateDto = z.output<typeof createInputSchema>;
 export const approvalInputSchema = z.object({ approved: z.boolean() }).strict();
 export type ApprovalDto = z.output<typeof approvalInputSchema>;
 
+export const updateWorkshopInput = workshopInput.partial();
+export type UpdateWorkshopDto = z.output<typeof updateWorkshopInput>;
+
 export const accountInputSchema = z.object({ active: z.boolean() }).strict();
 export type AccountDto = z.output<typeof accountInputSchema>;
 

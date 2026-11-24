@@ -60,6 +60,18 @@ export class AdminController {
     return this.service.approval(actor, key, body);
   }
 
+  @Patch("workshops/:id")
+  updateWorkshop(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+    @Body()
+    body: unknown,
+  ) {
+    return this.service.updateWorkshop(actor, key, body);
+  }
+
   @Patch("users/:id")
   account(
     @CurrentUser()

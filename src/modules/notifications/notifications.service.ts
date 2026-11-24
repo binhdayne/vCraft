@@ -64,19 +64,27 @@ export class NotificationsService {
   private async feed(actor: Actor): Promise<any[]> {
     let filter: any = { _id: { $in: [] } };
     let eventFilter: any = { "history.status": { $in: ["sent", "bidding", "accepted", "in_production", "delivered"] } };
-    if (actor.role === "buyer") filter = { buyerId: actor.id, status: { $ne: "draft" } };
+    if (actor.role === "buyer") {
+      filter = { buyerId: actor.id, status: { $ne: "draft" } };
+      eventFilter = {
+        $or: [
+          { "history.status": { $in: ["sent", "bidding", "accepted", "delivered"] } },
+          { "history.status": "in_production", "history.eventType": { $in: ["production_started", "batch_completed"] } },
+        ],
+      };
+    }
     if (actor.role === "artisan") {
       const studio = await this.studios.findOne({ ownerId: actor.id }).select("_id").lean();
       if (studio) {
         const studioId = String(studio._id);
         filter = { status: { $ne: "draft" }, $or: [
-          { recipients: studioId }, { targetWorkshopId: studioId }, { "allocations.workshopId": studioId },
+          { recipients: studioId }, { targetWorkshopId: studioId }, { "allocations.workshopId": studioId }, { "bids.workshopId": studioId },
         ] };
         eventFilter = { $or: [
           { "history.status": "sent" },
           { "history.status": "bidding", "history.actor": actor.id },
-          { "history.status": "accepted", "allocations.workshopId": studioId },
-          { "history.status": "in_production", "history.actor": actor.id, "allocations.workshopId": studioId },
+          { "history.status": "accepted", $or: [{ "allocations.workshopId": studioId }, { "bids.workshopId": studioId }] },
+          { "history.status": "in_production", "history.actor": actor.id, "allocations.workshopId": studioId, "history.eventType": { $in: ["production_started", "batch_completed"] } },
           { "history.status": "delivered", "allocations.workshopId": studioId,
             $or: [{ $expr: { $eq: ["$history.actor", "$buyerId"] } }, { "history.actor": actor.id }] },
         ] };
@@ -112,6 +120,21 @@ export class NotificationsService {
     const owners = await this.studios.find({ ownerId: { $in: items.map(item => item.actorId).filter(Boolean) } })
       .select("_id ownerId name").lean();
     const ownerMap = new Map(owners.map(studio => [studio.ownerId, studio]));
+
+    const winningWorkshopIds = items
+      .filter(item => item.status === "accepted" || item.eventType === "quote_accepted")
+      .flatMap(item => (item.allocations || []).map((a: any) => a.workshopId))
+      .filter(Boolean);
+    const winningStudios = winningWorkshopIds.length
+      ? await this.studios.find({ _id: { $in: winningWorkshopIds } }).select("_id name").lean()
+      : [];
+    const winningStudioMap = new Map(winningStudios.map(s => [String(s._id), s.name]));
+
+    const myStudio = actor.role === "artisan"
+      ? await this.studios.findOne({ ownerId: actor.id }).select("_id name").lean()
+      : null;
+    const myStudioId = myStudio ? String(myStudio._id) : null;
+
     const normalized = items.map(item => {
       if (item.source === "announcement") return { ...item, type: "announcement" };
       const inferred = item.status === "in_production"
@@ -140,12 +163,28 @@ export class NotificationsService {
         batch_completed: item.batchId ? "Lô tranh đã hoàn thành · Có trang truy xuất" : "Xưởng đã hoàn thành phần việc",
         order_delivered: "Đơn hàng đã được xác nhận nhận đủ",
       };
+
+      let title = labels[item.eventType] || "Đơn hàng có cập nhật mới";
+      let message = item.quoteTitle;
+
+      if (artisan && item.eventType === "quote_accepted") {
+        const isWinning = item.allocations?.some((entry: any) => entry.workshopId === myStudioId);
+        if (!isWinning) {
+          const winningWorkshopId = item.allocations?.[0]?.workshopId;
+          const winningStudioName = winningWorkshopId ? winningStudioMap.get(String(winningWorkshopId)) : null;
+          title = "Đơn hàng đã có xưởng đảm nhận";
+          message = winningStudioName
+            ? `Khách hàng đã lựa chọn ${winningStudioName} thực hiện lô "${item.quoteTitle}".`
+            : `Lô "${item.quoteTitle}" đã có xưởng khác đảm nhận.`;
+        }
+      }
+
       const batch = item.batchId && batchMap.get(item.batchId);
       const linked = batch && String(batch.quoteId) === item.quoteId && item.allocations?.some((entry: any) =>
         entry.batchId === item.batchId && entry.workshopId === batch.workshopId && entry.status === "ready");
       return { ...common, type: item.eventType === "batch_completed" ? "batch" : "order",
-        eventType: item.eventType, title: labels[item.eventType] || "Đơn hàng có cập nhật mới",
-        message: item.quoteTitle, workshopName: item.workshopName, quoteId: item.quoteId, path: "/quotes/" + item.quoteId,
+        eventType: item.eventType, title,
+        message, workshopName: item.workshopName, quoteId: item.quoteId, path: "/quotes/" + item.quoteId,
         ...(batch ? { batchId: String(batch._id), batchCode: batch.code,
           traceAvailable: Boolean(linked && batch.published && approved.has(String(batch.workshopId))) } : {}),
       };

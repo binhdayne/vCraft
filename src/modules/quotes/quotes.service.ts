@@ -334,11 +334,13 @@ export class QuotesService {
 
     if (data.quantity > q.quantity)
       throw new BadRequestException("Số lượng chào vượt yêu cầu");
-    if (
-      Date.now() + data.days * 86400000 >
-      new Date(q.deadline + "T23:59:59Z").getTime()
-    )
-      throw new BadRequestException("Thời gian hoàn thành vượt hạn giao");
+    const deadlineTime = new Date(q.deadline + "T23:59:59Z").getTime();
+    const remainingDays = Math.max(1, Math.floor((deadlineTime - Date.now()) / 86400000));
+    if (Date.now() + data.days * 86400000 > deadlineTime) {
+      throw new BadRequestException(
+        `Thời gian hoàn thành (${data.days} ngày) vượt quá hạn giao hàng (${q.deadline}). Vui lòng rút ngắn thời gian hoặc chọn tối đa ${remainingDays} ngày.`,
+      );
+    }
 
     let unitPrice = data.unitPrice || 0;
     let totalPrice = data.totalPrice || 0;
@@ -362,6 +364,8 @@ export class QuotesService {
     }
 
     const { version, ...offer } = data;
+    const isUpdate = (q.bids || []).some((b: any) => b.workshopId === String(studio._id));
+    const historyNote = isUpdate ? "Xưởng cập nhật chào giá" : "Xưởng gửi chào giá";
     const bids = q.bids.filter((b: any) => b.workshopId !== String(studio._id));
     bids.push({
       ...offer,
@@ -377,7 +381,7 @@ export class QuotesService {
       version,
       { status: "bidding", bids },
       actor,
-      "Xưởng gửi chào giá",
+      historyNote,
     );
   }
 
@@ -423,6 +427,7 @@ export class QuotesService {
       { items },
       actor,
       `Xưởng cập nhật tiến độ tác phẩm "${targetItem.artworkName}": ${statusLabel}`,
+      { eventType: "log_only" },
     );
   }
 
@@ -524,16 +529,6 @@ export class QuotesService {
     if (q.version !== data.version) throw new ConflictException("Dữ liệu đã thay đổi. Vui lòng tải lại.");
     let batch: any;
     if (data.action === "ready") {
-      if (q.items && q.items.length > 0) {
-        const incomplete = q.items.filter(
-          (it: any) => it.productionStatus !== "completed",
-        );
-        if (incomplete.length > 0) {
-          throw new BadRequestException(
-            `Còn ${incomplete.length} tác phẩm chưa hoàn thành chế tác (${incomplete.map((i: any) => i.artworkName).join(", ")}). Vui lòng hoàn tất in toàn bộ lô tranh.`,
-          );
-        }
-      }
       const saved = own.journalDraft;
       const landingPage = data.landingPage || (saved ? {
         productId: saved.productId, story: saved.story, workshopStory: saved.workshopStory,

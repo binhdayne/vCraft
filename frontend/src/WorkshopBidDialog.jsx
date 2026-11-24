@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
-import { money } from './shared';
+import { X, AlertCircle } from 'lucide-react';
+import { money, date } from './shared';
 
 export function WorkshopBidDialog({ quote, initialBid, onClose, onSubmit }) {
+  const isEditing = Boolean(initialBid);
+  const deadlineMs = quote.deadline ? new Date(quote.deadline + 'T23:59:59Z').getTime() : 0;
+  const maxRemainingDays = deadlineMs ? Math.max(1, Math.floor((deadlineMs - Date.now()) / 86400000)) : 365;
+
   const hasMultipleItems = quote.items && quote.items.length >= 2;
   const initialMode = initialBid?.itemPrices?.length ? 'itemized' : (hasMultipleItems ? 'itemized' : 'package');
   const [mode, setMode] = useState(initialMode);
@@ -23,7 +27,10 @@ export function WorkshopBidDialog({ quote, initialBid, onClose, onSubmit }) {
     return initialBid?.unitPrice ? Number(initialBid.unitPrice) : 100000;
   });
 
-  const [days, setDays] = useState(() => initialBid?.days ? Number(initialBid.days) : 7);
+  const [days, setDays] = useState(() => {
+    const d = initialBid?.days ? Number(initialBid.days) : 7;
+    return Math.min(d, maxRemainingDays);
+  });
   const [note, setNote] = useState(() => initialBid?.note || '');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -73,6 +80,10 @@ export function WorkshopBidDialog({ quote, initialBid, onClose, onSubmit }) {
       setError('Số ngày hoàn thành phải từ 1 đến 365 ngày');
       return;
     }
+    if (deadlineMs && daysNum > maxRemainingDays) {
+      setError(`Thời gian hoàn thành (${daysNum} ngày) vượt quá hạn giao còn lại (${maxRemainingDays} ngày). Vui lòng chọn số ngày tối đa là ${maxRemainingDays} ngày.`);
+      return;
+    }
 
     let payload = {
       days: daysNum,
@@ -119,12 +130,21 @@ export function WorkshopBidDialog({ quote, initialBid, onClose, onSubmit }) {
         <div className="modal-head">
           <div>
             <span className="eyebrow" style={{ display: 'block', marginBottom: 2 }}>CHÀO GIÁ XƯỞNG CHẾ TÁC</span>
-            <h2 id="bid-dialog-title" style={{ margin: 0, fontSize: '22px' }}>Gửi chào giá lô tranh</h2>
+            <h2 id="bid-dialog-title" style={{ margin: 0, fontSize: '22px' }}>
+              {isEditing ? 'Cập nhật chào giá lô tranh' : 'Gửi chào giá lô tranh'}
+            </h2>
           </div>
           <button className="icon-btn" aria-label="Đóng" disabled={busy} onClick={onClose}>
             <X size={20} />
           </button>
         </div>
+
+        {error && (
+          <div className="bid-error-banner" role="alert" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: '#fdf2f2', border: '1px solid #f8b4b4', color: '#9e2c21', fontSize: '13.5px', margin: '0 0 16px' }}>
+            <AlertCircle size={17} style={{ flexShrink: 0 }} />
+            <span>{error}</span>
+          </div>
+        )}
 
         {/* Tab switcher: hoàn toàn không dùng icon AI / Gemini */}
         {quote.items && quote.items.length > 0 && (
@@ -271,12 +291,17 @@ export function WorkshopBidDialog({ quote, initialBid, onClose, onSubmit }) {
                 type="number"
                 required
                 min="1"
-                max="365"
+                max={maxRemainingDays}
                 step="1"
                 value={days || ''}
                 onChange={e => setDays(Number(e.target.value))}
-                placeholder="7"
+                placeholder={String(Math.min(7, maxRemainingDays))}
               />
+              {quote.deadline && (
+                <span style={{ fontSize: '12px', color: 'var(--muted)', marginTop: 4, display: 'block' }}>
+                  Hạn giao: {date(quote.deadline)} (tối đa {maxRemainingDays} ngày)
+                </span>
+              )}
             </label>
             <label className="wide">
               <span>Cam kết kỹ thuật & chất lượng chế tác</span>
@@ -297,7 +322,7 @@ export function WorkshopBidDialog({ quote, initialBid, onClose, onSubmit }) {
               Hủy
             </button>
             <button type="submit" className="btn" disabled={busy}>
-              {busy ? 'Đang gửi chào giá…' : 'Gửi chào giá lô tranh'}
+              {busy ? (isEditing ? 'Đang cập nhật…' : 'Đang gửi chào giá…') : (isEditing ? 'Cập nhật chào giá' : 'Gửi chào giá lô tranh')}
             </button>
           </div>
         </form>

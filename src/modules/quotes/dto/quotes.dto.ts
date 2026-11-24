@@ -82,7 +82,7 @@ export const bidInputSchema = z
     itemPrices: z.array(itemPriceInputSchema).optional().default([]),
     quantity: z.number().int().min(1).max(1000000),
     days: z.number().int().min(1).max(365),
-    note: z.string().trim().max(2000),
+    note: z.string().trim().max(2000).optional().default(""),
   })
   .strict()
   .refine(

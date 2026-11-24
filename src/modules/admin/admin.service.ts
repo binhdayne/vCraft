@@ -19,6 +19,7 @@ import {
   artworkApprovalInputSchema,
   createInputSchema,
   updateAdminArtworkInput,
+  updateWorkshopInput,
 } from "./dto/admin.dto";
 
 @Injectable()
@@ -82,6 +83,18 @@ export class AdminService {
       { new: true },
     );
     if (!item) throw new NotFoundException();
+    return item;
+  }
+
+  async updateWorkshop(actor: Actor, key: string, body: unknown) {
+    role(actor, "admin");
+    const data = parse(updateWorkshopInput, body);
+    const item = await this.workshopsModel.findByIdAndUpdate(
+      parse(id, key),
+      { $set: data },
+      { new: true },
+    );
+    if (!item) throw new NotFoundException("Không tìm thấy xưởng");
     return item;
   }
 

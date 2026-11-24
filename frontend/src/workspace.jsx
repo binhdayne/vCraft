@@ -8,6 +8,7 @@ import { BatchLandingDialog, BatchPageLinks } from './BatchLandingDialog';
 import { ProductionJournal } from './ProductionJournal';
 import { WorkshopBidDialog } from './WorkshopBidDialog';
 import { ConfirmWorkshopModal } from './ConfirmWorkshopModal';
+import { CompletionConfirmModal } from './CompletionConfirmModal';
 const field=(name,label,type='text',extra={})=>({name,label,type,...extra});
 const quoteFields=[field('title','Tên yêu cầu'),field('category','Phân loại','select',{options:CATEGORIES}),field('quantity','Số lượng bản tranh','number',{min:1,step:1}),field('deadline','Hạn giao hàng','date'),field('description','Mô tả yêu cầu / quy cách','textarea',{wide:true})];
 const productFields=[field('name','Tên tranh'),field('category','Phân loại','select',{options:CATEGORIES}),field('price','Giá tham khảo (VNĐ)','number',{min:0}),field('dimensions','Kích thước'),field('material','Chất liệu'),field('published','Công khai sản phẩm','checkbox'),field('description','Câu chuyện bức tranh','textarea',{wide:true}),field('images','Ảnh sản phẩm','images',{wide:true})];
@@ -66,7 +67,7 @@ function QuotesList(){
     {dialog&&<FormDialog title="Tạo yêu cầu đặt tranh" fields={quoteFields} initial={{category:CATEGORIES[0],quantity:100,deadline:'',description:'',title:''}} onClose={()=>setDialog(false)} submitLabel="Lưu bản nháp" onSubmit={async body=>{const q=await api('/quotes',{method:'POST',body});navigate('/quotes/'+q._id);}}/>}
   </>;
 }
-function StudioEditor(){const state=useLoad('/studio'),[edit,setEdit]=useState(false),{notify}=useApp();return <><PageTitle eyebrow="CÂU CHUYỆN CỦA BẠN" title="Hồ sơ xưởng" action={<button className="btn" onClick={()=>setEdit(true)} disabled={!state.data}><Edit3 size={17}/> Chỉnh sửa</button>}/><LoadState {...state}/>{state.data&&<div className="panel"><span className={'badge '+(state.data.approved?'status-delivered':'status-draft')}>{state.data.approved?'Đã được duyệt':'Đang chờ BQL duyệt'}</span><h2>{state.data.name}</h2><p className="prose">{state.data.story}</p><p><MapPin size={16}/> {state.data.address}</p><p>{state.data.visitingHours} · {state.data.openForVisits?'Đang mở cửa':'Hẹn trước'}</p><p className="muted">Ảnh xưởng bạn tải lên và lưu sẽ xuất hiện trong popup bản đồ khi xưởng đã được duyệt. Tối đa 8 ảnh; ảnh minh họa có sẵn không được tính là ảnh do chủ xưởng đăng.</p><div className="event-images">{state.data.images.map((src,i)=><img key={i} src={src} alt="Ảnh xưởng"/>)}</div><p>Phân loại: {state.data.categories.join(' · ')}</p><p>{state.data.certificates.length} ảnh chứng nhận</p></div>}{edit&&state.data&&<FormDialog title="Chỉnh sửa hồ sơ xưởng" fields={studioFields} initial={pick(state.data,studioFields)} onClose={()=>setEdit(false)} onSubmit={async body=>{await api('/studio',{method:'PATCH',body});state.reload();notify('Đã lưu hồ sơ xưởng');}}/>}</>;}
+function StudioEditor(){const state=useLoad('/studio'),[edit,setEdit]=useState(false),{notify}=useApp();return <><PageTitle eyebrow="CÂU CHUYỆN CỦA BẠN" title="Hồ sơ xưởng" action={<button className="btn" onClick={()=>setEdit(true)} disabled={!state.data}><Edit3 size={17}/> Chỉnh sửa</button>}/><LoadState {...state}/>{state.data&&<div className="panel"><span className={'badge '+(state.data.approved?'status-delivered':'status-draft')}>{state.data.approved?'Đã được duyệt':'Đang chờ BQL duyệt'}</span><h2>{state.data.name}</h2><p className="prose">{state.data.story}</p><p><MapPin size={16}/> {state.data.address}</p><p>{state.data.visitingHours} · {state.data.openForVisits?'Đang mở cửa':'Hẹn trước'}</p><p className="muted">Ảnh xưởng bạn tải lên và lưu sẽ xuất hiện trong popup bản đồ khi xưởng đã được duyệt. Tối đa 8 ảnh; ảnh minh họa có sẵn không được tính là ảnh do chủ xưởng đăng.</p><div className="event-images">{state.data.images.map((src,i)=><img key={i} src={src} alt="Ảnh xưởng"/>)}</div><p>Phân loại: {state.data.categories.join(' · ')}</p><p>{state.data.certificates.length} ảnh chứng nhận</p></div>}{edit&&state.data&&<FormDialog title="Chỉnh sửa hồ sơ xưởng" fields={studioFields} initial={{...pick(state.data,studioFields),latitude:state.data.latitude??21.0606,longitude:state.data.longitude??106.0813}} onClose={()=>setEdit(false)} onSubmit={async values=>{const {location,...body}=values;await api('/studio',{method:'PATCH',body});state.reload();notify('Đã lưu hồ sơ xưởng');}}/>}</>;}
 
 
 function ProductsEditor() {
@@ -1671,7 +1672,7 @@ function ArtworksAdmin() {
 const HeritageAdmin = ArtworksAdmin;
 
 
-function ArtisansAdmin(){const state=useLoad('/admin/workshops'),users=useLoad('/admin/users'),[create,setCreate]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),{notify}=useApp();async function action(url,body){setBusy(true);setError('');try{await api(url,{method:'PATCH',body});state.reload();users.reload();notify('Đã cập nhật');}catch(e){setError(e.message);}finally{setBusy(false);}}return <><PageTitle eyebrow="BAN QUẢN LÝ LÀNG NGHỀ" title="Nghệ nhân & kiểm duyệt" action={<button className="btn" onClick={()=>setCreate(true)}><Plus size={18}/> Cấp tài khoản</button>}/><LoadState {...state}/>{error&&<p className="error">{error}</p>}<div className="admin-studios">{state.data?.map(s=>{const u=users.data?.find(u=>u._id===s.ownerId);return <article className="panel" key={s._id}><span className={'badge '+(s.approved?'status-delivered':'status-draft')}>{s.approved?'Đã duyệt':'Chờ kiểm duyệt'}</span><h3>{s.name}</h3><p>{u?.name} · {u?.email}</p><p>{s.address}</p><p className="prose">{s.story}</p><div className="thumbnails">{s.images.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={i}><img src={src} alt="Hồ sơ xưởng"/></a>)}{s.certificates.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={'c'+i}><img src={src} alt="Chứng nhận"/></a>)}</div><div className="button-row"><button className="btn outline small" disabled={busy} onClick={()=>action('/admin/workshops/'+s._id+'/approval',{approved:!s.approved})}>{s.approved?'Thu hồi công khai':'Duyệt xưởng'}</button>{u&&<button className="text-link" disabled={busy} onClick={()=>action('/admin/users/'+u._id,{active:!u.active})}>{u.active?'Khóa tài khoản':'Mở lại tài khoản'}</button>}</div></article>;})}</div>{create&&<FormDialog title="Cấp tài khoản nghệ nhân" fields={[field('accountName','Họ tên nghệ nhân'),field('email','Email đăng nhập','email'),field('password','Mật khẩu ban đầu (10–72 ký tự)','password'),...studioFields]} initial={{categories:CATEGORIES,images:[],certificates:[],latitude:21.0606,longitude:106.0813,visitingHours:'08:00–17:00',openForVisits:false}} onClose={()=>setCreate(false)} submitLabel="Cấp tài khoản" onSubmit={async values=>{const {accountName,email,password,...workshop}=values;await api('/admin/artisans',{method:'POST',body:{name:accountName,email,password,workshop}});state.reload();users.reload();notify('Đã cấp tài khoản và công khai xưởng ngay.');}}/>}</>;}
+function ArtisansAdmin(){const state=useLoad('/admin/workshops'),users=useLoad('/admin/users'),[create,setCreate]=useState(false),[editWorkshop,setEditWorkshop]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),{notify}=useApp();async function action(url,body){setBusy(true);setError('');try{await api(url,{method:'PATCH',body});state.reload();users.reload();notify('Đã cập nhật');}catch(e){setError(e.message);}finally{setBusy(false);}}return <><PageTitle eyebrow="BAN QUẢN LÝ LÀNG NGHỀ" title="Nghệ nhân & kiểm duyệt" action={<button className="btn" onClick={()=>setCreate(true)}><Plus size={18}/> Cấp tài khoản</button>}/><LoadState {...state}/>{error&&<p className="error">{error}</p>}<div className="admin-studios">{state.data?.map(s=>{const u=users.data?.find(u=>u._id===s.ownerId);return <article className="panel" key={s._id}><span className={'badge '+(s.approved?'status-delivered':'status-draft')}>{s.approved?'Đã duyệt':'Chờ kiểm duyệt'}</span><h3>{s.name}</h3><p>{u?.name} · {u?.email}</p><p>{s.address}</p><p className="prose">{s.story}</p><div className="thumbnails">{s.images.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={i}><img src={src} alt="Hồ sơ xưởng"/></a>)}{s.certificates.map((src,i)=><a href={src} target="_blank" rel="noreferrer" key={'c'+i}><img src={src} alt="Chứng nhận"/></a>)}</div><div className="button-row"><button className="btn outline small" disabled={busy} onClick={()=>setEditWorkshop(s)}><Edit3 size={15}/> Sửa xưởng</button><button className="btn outline small" disabled={busy} onClick={()=>action('/admin/workshops/'+s._id+'/approval',{approved:!s.approved})}>{s.approved?'Thu hồi công khai':'Duyệt xưởng'}</button>{u&&<button className="text-link" disabled={busy} onClick={()=>action('/admin/users/'+u._id,{active:!u.active})}>{u.active?'Khóa tài khoản':'Mở lại tài khoản'}</button>}</div></article>;})}</div>{create&&<FormDialog title="Cấp tài khoản nghệ nhân" fields={[field('accountName','Họ tên nghệ nhân','text',{autoComplete:'off'}),field('email','Email đăng nhập','email',{autoComplete:'new-email'}),field('password','Mật khẩu ban đầu (10–72 ký tự)','password',{autoComplete:'new-password'}),...studioFields]} initial={{accountName:'',email:'',password:'',name:'',address:'',story:'',categories:CATEGORIES,images:[],certificates:[],latitude:21.0606,longitude:106.0813,visitingHours:'08:00–17:00',openForVisits:false}} onClose={()=>setCreate(false)} submitLabel="Cấp tài khoản" onSubmit={async values=>{const {accountName,email,password,location,...workshop}=values;await api('/admin/artisans',{method:'POST',body:{name:accountName,email,password,workshop}});state.reload();users.reload();notify('Đã cấp tài khoản và công khai xưởng ngay.');}}/>}{editWorkshop&&<FormDialog title={'Chỉnh sửa xưởng: '+editWorkshop.name} fields={studioFields} initial={{...pick(editWorkshop,studioFields),latitude:editWorkshop.latitude??21.0606,longitude:editWorkshop.longitude??106.0813}} onClose={()=>setEditWorkshop(null)} submitLabel="Lưu thông tin xưởng" onSubmit={async values=>{const {location,...body}=values;await api('/admin/workshops/'+editWorkshop._id,{method:'PATCH',body});state.reload();notify('Đã cập nhật thông tin xưởng');}}/>}</>;}
 function NewsEditor(){const state=useLoad('/news/manage'),[edit,setEdit]=useState(null),[error,setError]=useState(''),{notify}=useApp();async function remove(n){if(!window.confirm('Xóa tin “'+n.title+'”?'))return;try{await api('/news/'+n._id,{method:'DELETE'});state.reload();notify('Đã xóa tin');}catch(e){setError(e.message);}}return <><PageTitle eyebrow="NHỊP SỐNG CỘNG ĐỒNG" title="Quản lý tin tức" action={<button className="btn" onClick={()=>setEdit({category:'Thông báo',pictures:[],published:false})}><Plus size={17}/> Viết tin</button>}/><LoadState {...state}/>{error&&<p className="error">{error}</p>}{state.data?.length===0&&<Empty title="Chưa có tin tức"/>}{state.data?.map(n=><article className="panel" key={n._id}><span className="eyebrow">{n.category} · {n.published?'Công khai':'Bản nháp'}</span><h3>{n.title}</h3><p>{n.body.slice(0,180)}…</p><div className="button-row"><button className="btn outline small" onClick={()=>setEdit({...n,pictures:n.image?[n.image]:[]})}><Edit3 size={15}/> Chỉnh sửa</button><button className="text-link danger" onClick={()=>remove(n)}><Trash2 size={15}/> Xóa tin</button></div></article>)}{edit&&<FormDialog title={edit._id?'Chỉnh sửa tin':'Viết tin cộng đồng'} fields={newsFields} initial={pick(edit,newsFields)} onClose={()=>setEdit(null)} onSubmit={async values=>{const {pictures,...body}=values;body.image=pictures[0]||'';await api('/news'+(edit._id?'/'+edit._id:''),{method:edit._id?'PATCH':'POST',body});state.reload();notify('Đã lưu tin tức');}}/>}</>;}
 function UsersAdmin(){const state=useLoad('/admin/users'),[search,setSearch]=useState(''),[roleFilter,setRoleFilter]=useState(''),[statusFilter,setStatusFilter]=useState(''),[busyId,setBusyId]=useState(''),{user:currentAdmin,notify}=useApp();const allUsers=state.data||[];const buyersCount=allUsers.filter(u=>u.role==='buyer').length,artisansCount=allUsers.filter(u=>u.role==='artisan').length,adminsCount=allUsers.filter(u=>u.role==='admin').length;const filteredUsers=allUsers.filter(u=>{if(roleFilter&&u.role!==roleFilter)return false;if(statusFilter==='active'&&!u.active)return false;if(statusFilter==='inactive'&&u.active)return false;if(search){const q=search.toLowerCase();return u.name?.toLowerCase().includes(q)||u.email?.toLowerCase().includes(q)||u.phone?.toLowerCase().includes(q);}return true;});async function toggleStatus(targetUser){if(targetUser._id===currentAdmin?.id){alert('Không thể tự khóa tài khoản của chính mình!');return;}const act=targetUser.active?'khóa':'mở khóa';if(!window.confirm(`Bạn có chắc muốn ${act} tài khoản “${targetUser.name||targetUser.email}”?`))return;setBusyId(targetUser._id);try{await api('/admin/users/'+targetUser._id,{method:'PATCH',body:{active:!targetUser.active}});state.reload();notify(`Đã ${act} tài khoản thành công`);}catch(err){notify(err.message);}finally{setBusyId('');}}return <><PageTitle eyebrow="BAN QUẢN LÝ LÀNG NGHỀ" title="Quản lý tài khoản người dùng">Theo dõi toàn bộ tài khoản khách hàng, nghệ nhân và ban quản lý trên nền tảng vCraft Đông Hồ.</PageTitle><div className="stats-grid"><div><span>Tổng người dùng</span><strong>{allUsers.length}</strong></div><div><span>Khách hàng</span><strong>{buyersCount}</strong></div><div><span>Nghệ nhân</span><strong>{artisansCount}</strong></div><div><span>Ban quản lý</span><strong>{adminsCount}</strong></div></div><div className="table-toolbar"><div className="search-box"><Search size={16}/><input type="search" placeholder="Tìm theo tên, email, số điện thoại…" value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button type="button" onClick={()=>setSearch('')}>Xóa</button>}</div><div className="filter-selects"><select value={roleFilter} onChange={e=>setRoleFilter(e.target.value)} aria-label="Lọc theo vai trò"><option value="">Mọi vai trò</option><option value="buyer">Khách hàng</option><option value="artisan">Nghệ nhân</option><option value="admin">Ban quản lý</option></select><select value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} aria-label="Lọc trạng thái"><option value="">Mọi trạng thái</option><option value="active">Đang hoạt động</option><option value="inactive">Đã bị khóa</option></select><button className="text-link" onClick={state.reload}><RefreshCw size={15}/> Làm mới</button></div></div><LoadState {...state}/>{state.data&&filteredUsers.length===0&&<Empty title="Không tìm thấy tài khoản phù hợp"><p>Thử đổi từ khóa tìm kiếm hoặc bỏ bộ lọc vai trò/trạng thái.</p></Empty>}{state.data&&filteredUsers.length>0&&<div className="users-table-shell"><table className="users-table"><thead><tr><th>Thành viên</th><th>Liên hệ</th><th>Vai trò</th><th>Ngày tham gia</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>{filteredUsers.map(u=>{const isMe=u._id===currentAdmin?.id;return <tr key={u._id} className={!u.active?'row-inactive':''}><td><div className="user-table-cell"><span className="user-table-avatar">{u.name?.charAt(0).toUpperCase()||'U'}</span><div><strong>{u.name||'(Chưa đặt tên)'} {isMe&&<span className="me-pill">Bạn</span>}</strong><span className="user-table-email">{u.email}</span></div></div></td><td><div className="user-contact-cell"><span>{u.phone||'—'}</span>{u.address&&<small title={u.address}>{u.address}</small>}</div></td><td><span className={'badge role-badge status-'+(u.role==='admin'?'delivered':u.role==='artisan'?'in_production':'bidding')}>{u.role==='admin'?'Ban quản lý':u.role==='artisan'?'Nghệ nhân':'Khách hàng'}</span></td><td><span className="user-date-cell">{date(u.createdAt)||'—'}</span></td><td><span className={'badge '+(u.active?'status-delivered':'status-draft')}>{u.active?'Hoạt động':'Đã khóa'}</span></td><td>{isMe?<span className="muted">Tài khoản này</span>:u.role==='admin'?<span className="muted">Quản trị viên</span>:<button className={'btn small '+(u.active?'outline danger':'')} disabled={busyId===u._id} onClick={()=>toggleStatus(u)}>{busyId===u._id?'Xử lý…':u.active?'Khóa tài khoản':'Mở khóa'}</button>}</td></tr>;})}</tbody></table></div>}</>;}
 
@@ -1710,8 +1711,6 @@ function QuoteContent(){
   const isWinningWorkshop = Boolean(studio.data?._id && (q.acceptedWorkshopId === studio.data._id || q.allocations?.some(a => a.workshopId === studio.data._id)));
   const isAssignedToOtherWorkshop = user.role === 'artisan' && isClosedStage && !isWinningWorkshop;
   const acceptedWorkshopId = q.acceptedWorkshopId || q.allocations?.[0]?.workshopId;
-  const canUpdateItemProgress = user.role === 'artisan' && isWinningWorkshop;
-  const allItemsCompleted = !q.items?.length || q.items.every(it => it.productionStatus === 'completed');
 
   const cleanDesc = q.description && q.description.trim() && q.description.trim().toLowerCase() !== 'không' ? q.description.trim() : '';
   const cleanPkgNote = q.customerInfo?.packagingNote && q.customerInfo.packagingNote.trim() && q.customerInfo.packagingNote.trim().toLowerCase() !== 'không' ? q.customerInfo.packagingNote.trim() : '';
@@ -1722,24 +1721,6 @@ function QuoteContent(){
     mine?.status === 'in_production' ||
     (mine?.status === 'ready' && !mine.batchId) ||
     (own && q.status === 'in_production');
-
-  const handleUpdateItemStatus = async (productId, nextStatus) => {
-    setBusy(true);
-    setError('');
-    try {
-      await api('/quotes/' + id + '/item-progress', {
-        method: 'POST',
-        body: { version: q.version, productId, status: nextStatus },
-      });
-      state.reload();
-      notify(nextStatus === 'completed' ? 'Đã hoàn thành in tác phẩm' : 'Đã cập nhật tiến độ chế tác');
-    } catch (e) {
-      setError(e.message);
-      state.reload();
-    } finally {
-      setBusy(false);
-    }
-  };
 
   const handleConfirmWorkshop = async () => {
     if (!confirmingBid) return;
@@ -1756,13 +1737,15 @@ function QuoteContent(){
         action={<button className="btn outline" onClick={state.reload}><RefreshCw size={16}/> Làm mới</button>}
       />
 
-      <div className="status-steps">
-        {sequence.map((s,i)=>(
-          <div className={sequence.indexOf(q.status)>=i?'reached':''} key={s}>
-            <span>{i+1}</span>{STATUS[s]}
-          </div>
-        ))}
-      </div>
+      {!isAssignedToOtherWorkshop && (
+        <div className="status-steps">
+          {sequence.map((s,i)=>(
+            <div className={sequence.indexOf(q.status)>=i?'reached':''} key={s}>
+              <span>{i+1}</span>{STATUS[s]}
+            </div>
+          ))}
+        </div>
+      )}
 
       {error&&<p className="error" role="alert">{error}</p>}
 
@@ -1847,33 +1830,55 @@ function QuoteContent(){
                 </div>
               </div>
 
-              <div className="quote-info-col">
-                <h3 className="quote-info-heading">Thông tin giao nhận</h3>
-                <div className="quote-info-list">
-                  <div className="quote-info-row">
-                    <span className="quote-info-label">Người nhận hàng</span>
-                    <span className="quote-info-val">
-                      <strong>{q.customerInfo?.fullName || '—'}</strong>
-                    </span>
-                  </div>
-                  <div className="quote-info-row">
-                    <span className="quote-info-label">Số điện thoại</span>
-                    <span className="quote-info-val">
-                      <strong>{q.customerInfo?.phoneNumber || '—'}</strong>
-                    </span>
-                  </div>
-                  <div className="quote-info-row">
-                    <span className="quote-info-label">Địa chỉ nhận hàng</span>
-                    <span className="quote-info-val">{q.customerInfo?.shippingAddress || '—'}</span>
-                  </div>
-                  {cleanPkgNote && (
+              {isAssignedToOtherWorkshop ? (
+                <div className="quote-info-col">
+                  <h3 className="quote-info-heading">Xưởng nhận chế tác</h3>
+                  <div className="quote-info-list">
                     <div className="quote-info-row">
-                      <span className="quote-info-label">Ghi chú đóng gói</span>
-                      <span className="quote-info-val">{cleanPkgNote}</span>
+                      <span className="quote-info-label">Đơn vị trúng thầu</span>
+                      <span className="quote-info-val">
+                        <strong>{studioName(acceptedWorkshopId)}</strong>
+                      </span>
                     </div>
-                  )}
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Trạng thái</span>
+                      <span className="quote-info-val">Đã giao xưởng chế tác</span>
+                    </div>
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Chào giá của bạn</span>
+                      <span className="quote-info-val">Không trúng thầu</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="quote-info-col">
+                  <h3 className="quote-info-heading">Thông tin giao nhận</h3>
+                  <div className="quote-info-list">
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Người nhận hàng</span>
+                      <span className="quote-info-val">
+                        <strong>{q.customerInfo?.fullName || '—'}</strong>
+                      </span>
+                    </div>
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Số điện thoại</span>
+                      <span className="quote-info-val">
+                        <strong>{q.customerInfo?.phoneNumber || '—'}</strong>
+                      </span>
+                    </div>
+                    <div className="quote-info-row">
+                      <span className="quote-info-label">Địa chỉ nhận hàng</span>
+                      <span className="quote-info-val">{q.customerInfo?.shippingAddress || '—'}</span>
+                    </div>
+                    {cleanPkgNote && (
+                      <div className="quote-info-row">
+                        <span className="quote-info-label">Ghi chú đóng gói</span>
+                        <span className="quote-info-val">{cleanPkgNote}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {hasActionButtons && (
@@ -1891,21 +1896,13 @@ function QuoteContent(){
                   <button className="btn" disabled={busy} onClick={()=>act('production',{action:'start'})}>Bắt đầu sản xuất toàn bộ lô</button>
                 )}
                 {mine?.status==='in_production'&&(
-                  <div style={{display:'inline-flex',flexDirection:'column',gap:4}}>
-                    <button
-                      className="btn"
-                      disabled={busy || !allItemsCompleted}
-                      onClick={()=>setDialog('complete')}
-                      title={!allItemsCompleted ? 'Cần đánh dấu hoàn thành toàn bộ tác phẩm trước' : 'Báo hoàn thành lô tranh'}
-                    >
-                      Báo hoàn thành lô tranh
-                    </button>
-                    {!allItemsCompleted && (
-                      <small style={{fontSize:'12px',color:'var(--muted)'}}>
-                        * Đánh dấu &ldquo;Xong&rdquo; các tranh trong bảng dưới đây trước khi báo hoàn thành lô
-                      </small>
-                    )}
-                  </div>
+                  <button
+                    className="btn"
+                    disabled={busy}
+                    onClick={()=>setDialog('confirm_complete')}
+                  >
+                    Báo hoàn thành lô tranh
+                  </button>
                 )}
                 {mine?.status==='ready'&&!mine.batchId&&<button className="btn" disabled={busy} onClick={()=>setDialog('complete')}>Tạo landing page cho lô đã hoàn thành</button>}
                 {own&&q.status==='in_production'&&(
@@ -1934,9 +1931,6 @@ function QuoteContent(){
                       <th style={{width:140}}>Kích thước</th>
                       <th style={{width:110,textAlign:'center'}}>Số lượng</th>
                       <th>Ghi chú in ấn</th>
-                      {['in_production', 'delivered'].includes(q.status) && !isAssignedToOtherWorkshop && (
-                        <th style={{width:170,textAlign:'center'}}>Trạng thái chế tác</th>
-                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -1968,62 +1962,6 @@ function QuoteContent(){
                           <span style={{fontSize:'12.5px',color:'var(--muted)'}}>bản</span>
                         </td>
                         <td style={{fontSize:'13px',color:it.note?'var(--ink)':'var(--muted)'}}>{it.note||'—'}</td>
-                        {['in_production', 'delivered'].includes(q.status) && !isAssignedToOtherWorkshop && (
-                          <td style={{textAlign:'center'}}>
-                            <div className="item-progress-cell">
-                              {it.productionStatus === 'completed' ? (
-                                <span className="item-status-pill item-status-completed">
-                                  <CheckCircle2 size={13}/> Đã in xong
-                                </span>
-                              ) : it.productionStatus === 'in_progress' ? (
-                                <span className="item-status-pill item-status-in-progress">
-                                  Đang in
-                                </span>
-                              ) : (
-                                <span className="item-status-pill item-status-pending">
-                                  Chờ in
-                                </span>
-                              )}
-                              {canUpdateItemProgress && q.status === 'in_production' && (
-                                <div className="item-progress-actions">
-                                  {(!it.productionStatus || it.productionStatus === 'pending') && (
-                                    <button
-                                      type="button"
-                                      className="btn-item-action action-start"
-                                      disabled={busy}
-                                      onClick={() => handleUpdateItemStatus(it.productId, 'in_progress')}
-                                      title="Bắt đầu in tác phẩm này"
-                                    >
-                                      In
-                                    </button>
-                                  )}
-                                  {it.productionStatus === 'in_progress' && (
-                                    <button
-                                      type="button"
-                                      className="btn-item-action action-done"
-                                      disabled={busy}
-                                      onClick={() => handleUpdateItemStatus(it.productId, 'completed')}
-                                      title="Đánh dấu đã in xong toàn bộ tác phẩm này"
-                                    >
-                                      <Check size={12}/> Xong
-                                    </button>
-                                  )}
-                                  {it.productionStatus === 'completed' && (
-                                    <button
-                                      type="button"
-                                      className="btn-item-action-revert"
-                                      disabled={busy}
-                                      onClick={() => handleUpdateItemStatus(it.productId, 'in_progress')}
-                                      title="Chỉnh sửa lại nếu cần tiếp tục in"
-                                    >
-                                      Sửa
-                                    </button>
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -2201,6 +2139,14 @@ function QuoteContent(){
       </div>
 
       {dialog==='edit'&&<FormDialog title="Sửa bản nháp" fields={quoteFields} initial={pick(q,quoteFields)} onClose={()=>setDialog(null)} onSubmit={async body=>{await api('/quotes/'+id,{method:'PATCH',body:{...body,version:q.version}});state.reload();notify('Đã lưu bản nháp');}}/>}
+      {dialog==='confirm_complete'&&(
+        <CompletionConfirmModal
+          quote={q}
+          onClose={()=>setDialog(null)}
+          onConfirm={()=>setDialog('complete')}
+          busy={busy}
+        />
+      )}
       {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} initialDraft={mine.journalDraft} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async (landingPage,version)=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh và tạo landing page cùng mã QR');}}/>}
       {dialog==='bid'&&(
         <WorkshopBidDialog
@@ -2210,7 +2156,7 @@ function QuoteContent(){
           onSubmit={async body=>{
             await api('/quotes/'+id+'/bids',{method:'POST',body:{...body,version:q.version}});
             state.reload();
-            notify('Đã gửi chào giá lô tranh');
+            notify(mineBid ? 'Đã cập nhật chào giá lô tranh' : 'Đã gửi chào giá lô tranh');
           }}
         />
       )}
