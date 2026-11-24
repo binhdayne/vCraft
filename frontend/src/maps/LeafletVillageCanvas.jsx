@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MAX_ZOOM, MIN_ZOOM, VILLAGE_BOUNDS, VILLAGE_CENTER, formatDistance, googleDirectionsUrl, googleSatelliteUrl, isWithinVillage } from './map-settings.mjs';
+import { MAX_ZOOM, MIN_ZOOM, VILLAGE_BOUNDS, VILLAGE_CENTER, formatDistance, googleDirectionsUrl, googleSatelliteUrl, hasCoordinates, isWithinVillage } from './map-settings.mjs';
 import { createWorkshopPhotoGallery } from './workshop-photo-gallery.mjs';
 
 const AREA = L.latLngBounds(
@@ -112,6 +112,7 @@ export function LeafletVillageCanvas({ studios, selected, focusRequest, onSelect
     if (!map) return;
     const markers = L.layerGroup().addTo(map);
     studios.forEach((studio, index) => {
+      if (!hasCoordinates(studio)) return;
       const icon = L.divIcon({
         className: 'map-marker' + (studio._id === nearestId ? ' map-marker-nearest' : ''), html: `<span><b>${index + 1}</b></span>`,
         iconSize: [36, 44], iconAnchor: [18, 42],
@@ -155,7 +156,7 @@ export function LeafletVillageCanvas({ studios, selected, focusRequest, onSelect
   }, [studios, onSelect, userLocation, nearestId]);
 
   useEffect(() => {
-    if (selected) mapRef.current?.flyTo([selected.latitude, selected.longitude], 17);
+    if (selected && hasCoordinates(selected)) mapRef.current?.flyTo([selected.latitude, selected.longitude], 17);
   }, [selected, focusRequest]);
 
   useEffect(() => {

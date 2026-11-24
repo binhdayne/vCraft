@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, LocateFixed, Navigation, Satellite } from 'lucide-react';
 import { Empty, LoadState, PageTitle, useLoad } from './shared';
 import { LeafletVillageCanvas } from './maps/LeafletVillageCanvas';
-import { formatDistance, googleDirectionsUrl, googleSatelliteUrl, isWithinVillage, rankStudiosByDistance } from './maps/map-settings.mjs';
+import { formatDistance, googleDirectionsUrl, googleSatelliteUrl, hasCoordinates, isWithinVillage, rankStudiosByDistance } from './maps/map-settings.mjs';
 import { useUserLocation } from './maps/useUserLocation';
 import './village-map.css';
 
@@ -77,13 +77,15 @@ export function VillageMap() {
         {selected && <section className="map-selected" aria-label="Xưởng đã chọn">
           <span className="eyebrow">KHÁM PHÁ VỊ TRÍ</span>
           <h3>{selected.name}</h3>
-          <p>{selected.address}</p>
-          <a className="btn full map-directions-link" href={googleDirectionsUrl(selected, location.position)} target="_blank" rel="noopener noreferrer">
-            <Navigation size={17} /> {location.position ? 'Chỉ đường từ vị trí của tôi' : 'Chỉ đường đến xưởng'}
-          </a>
-          <a className="btn full" href={googleSatelliteUrl(selected)} target="_blank" rel="noopener noreferrer">
-            <Satellite size={17} /> Xem ảnh vệ tinh trên Google Maps
-          </a>
+          <p>{selected.address || 'Chưa cập nhật địa chỉ'}</p>
+          {hasCoordinates(selected) ? <>
+            <a className="btn full map-directions-link" href={googleDirectionsUrl(selected, location.position)} target="_blank" rel="noopener noreferrer">
+              <Navigation size={17} /> {location.position ? 'Chỉ đường từ vị trí của tôi' : 'Chỉ đường đến xưởng'}
+            </a>
+            <a className="btn full" href={googleSatelliteUrl(selected)} target="_blank" rel="noopener noreferrer">
+              <Satellite size={17} /> Xem ảnh vệ tinh trên Google Maps
+            </a>
+          </> : <p className="muted">Xưởng này chưa cập nhật tọa độ ghim trên bản đồ.</p>}
           <Link className="text-link" to={'/xuong/' + selected._id}>Xem hồ sơ xưởng <ArrowUpRight size={17} /></Link>
         </section>}
       </aside>
