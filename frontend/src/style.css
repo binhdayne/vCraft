@@ -3621,3 +3621,92 @@ body:not(:has(.hero)) .auth-layout{background:rgba(247,243,233,.3)}
 body:not(:has(.hero)) .page,
 body:not(:has(.hero)) .workspace,
 body:not(:has(.hero)) .auth-layout{background:transparent}
+
+/* Homepage artwork carousel */
+.hero-slides{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin:18px 6px 0}
+.hero-slides button{width:28px;height:3px;border:0;padding:0;border-radius:99px;background:#b8aa91;opacity:.55;cursor:pointer;transition:width .25s ease,background .25s ease,opacity .25s ease}
+.hero-slides button:hover,.hero-slides button:focus-visible{opacity:.85}
+.hero-slides button.active{width:52px;background:var(--red);opacity:1}
+.hero-visual .art-frame img{transition:opacity .35s ease,transform .35s ease}
+@media(max-width:800px){.hero-slides{margin-top:12px}.hero-slides button{width:22px}.hero-slides button.active{width:38px}}
+
+
+/* Crop photographed borders from artwork thumbnails and detail previews. */
+.art-image img{transform:scale(1.08)}
+.art-card:hover .art-image img{transform:scale(1.12)}
+.detail-image{overflow:hidden}
+.detail-image img{transform:scale(1.035);transition:transform .3s ease}
+.thumbnails img{transform:scale(1.06)}
+.listing-visual img{transform:scale(1.06)}
+
+
+/* Preserve the proportions of portrait-format paintings in cards. */
+.art-image.portrait{aspect-ratio:3 / 4}
+.art-image.portrait img{transform:scale(1.015);object-fit:cover}
+.art-card:hover .art-image.portrait img{transform:scale(1.035)}
+
+
+/* Keep portrait artwork in its native vertical presentation in the hero. */
+.hero-visual .art-frame.portrait{aspect-ratio:3 / 4;max-width:min(100%,430px);margin-left:auto}
+.hero-visual .art-frame.portrait img{height:100%;width:100%;object-fit:contain}
+@media(max-width:540px){.hero-visual .art-frame.portrait{max-width:78%;margin-right:auto}}
+
+
+/* Collection cards use one consistent portrait frame; landscape art fits inside it. */
+.art-image{aspect-ratio:3 / 4}
+.art-image img,.art-image.portrait img{object-fit:contain;transform:scale(1.015)}
+.art-card:hover .art-image img,.art-card:hover .art-image.portrait img{transform:scale(1.025)}
+/* Crop photographed catalog scans to the artwork area. The source photos use a warm studio backdrop around the paper; scaling the image inside its clipped frame removes that backdrop while keeping the printed artwork centered. */
+.art-image img[src*="tranh-"]{object-fit:contain;transform:scale(1.28);transform-origin:center}
+.art-card:hover .art-image img[src*="tranh-"]{transform:scale(1.32)}
+.detail-image img[src*="tranh-"]{object-fit:contain;transform:scale(1.22);transform-origin:center}
+.thumbnails img[src*="tranh-"]{object-fit:cover;transform:scale(1.18)}
+.listing-visual img[src*="tranh-"]{object-fit:cover;transform:scale(1.3);transform-origin:center}
+
+/* Khung gỗ thủ công cho khu vực trưng bày từng sản phẩm */
+.detail-image{
+  position:relative;
+  padding:32px;
+  overflow:hidden;
+  background:
+    repeating-linear-gradient(8deg,rgba(255,220,158,.12) 0 2px,transparent 2px 8px),
+    linear-gradient(135deg,#6d4328 0%,#9b6840 22%,#75482b 48%,#ad7748 74%,#633a24 100%);
+  border:12px solid #5a321e;
+  box-shadow:
+    inset 0 0 0 2px #c49258,
+    inset 0 0 0 7px #3e2316,
+    inset 0 0 0 10px #b37b48,
+    0 16px 28px rgba(61,38,21,.24);
+}
+.detail-image::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px solid rgba(235,197,135,.72);
+  box-shadow:inset 0 0 0 2px rgba(49,27,16,.42);
+  pointer-events:none;
+}
+.detail-image img{
+  position:relative;
+  z-index:1;
+  background:#f7f3e9;
+  border:6px solid #ead9b2;
+  box-shadow:0 7px 16px rgba(35,20,12,.28);
+}
+.detail-image.portrait{
+  width:min(100%,470px);
+  aspect-ratio:4 / 5;
+  min-height:0;
+  margin:0 auto;
+  padding:28px;
+}
+.detail-image.portrait img{
+  width:100%;
+  height:100%;
+  max-height:none;
+  object-fit:contain;
+}
+.detail-image.portrait img[src*="tranh-"]{transform:scale(1.1)}
+@media(max-width:800px){.detail-image{padding:22px;border-width:9px}.detail-image::before{inset:11px}.detail-image img{border-width:4px}}
+/* Keep the same crop when a detail page shows alternate source photos. */
+.thumbnails button{overflow:hidden}

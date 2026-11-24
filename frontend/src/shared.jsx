@@ -244,6 +244,8 @@ export function Badge({status}){return <span className={'badge status-'+status}>
 export function ArtworkCard({p}){
   const {addToCart}=useCart();
   const [adding,setAdding]=useState(false);
+  const dimensions=p.dimensions?.match(/(\d+(?:\.\d+)?)\s*[×x]\s*(\d+)/i);
+  const isPortrait=Boolean(dimensions&&Number(dimensions[2])>Number(dimensions[1]));
 
   const handleQuickAdd=async(e)=>{
     e.preventDefault();
@@ -259,7 +261,7 @@ export function ArtworkCard({p}){
 
   return (
     <Link className="art-card" to={'/tranh/'+p._id}>
-      <div className="art-image">
+      <div className={'art-image'+(isPortrait?' portrait':'')}>
         <img loading="lazy" src={p.images?.[0]||'/art/in-tranh.jpg'} alt={p.name}/>
         <span className="art-arrow"><ArrowUpRight size={18}/></span>
       </div>
