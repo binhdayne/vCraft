@@ -59,12 +59,24 @@ export class BatchesService {
   }
   async qr(key: string) {
     await this.trace(key);
-    const buffer = await QRCode.toBuffer(this.url(key), {
+    return this.generateTraceQrBuffer(this.url(key));
+  }
+  async generateTraceQrBuffer(traceUrl: string) {
+    return QRCode.toBuffer(traceUrl, {
       width: 480,
       margin: 2,
+      color: {
+        dark: "#2b2621",
+        light: "#ffffff",
+      },
       errorCorrectionLevel: "M",
     });
-    return buffer;
+  }
+  traceUrl(key: string) {
+    return this.url(key);
+  }
+  async findById(key: string) {
+    return this.batchesModel.findById(parse(id, key)).lean();
   }
   private url(key: string) {
     return (

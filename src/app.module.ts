@@ -6,6 +6,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { BatchesModule } from "./modules/batches/batches.module";
 import { CatalogModule } from "./modules/catalog/catalog.module";
 import { HealthModule } from "./modules/health/health.module";
+import { MailModule } from "./modules/mail/mail.module";
 import { MediaModule } from "./modules/media/media.module";
 import { NewsModule } from "./modules/news/news.module";
 import { QuotesModule } from "./modules/quotes/quotes.module";
@@ -21,6 +22,7 @@ import { NotificationsModule } from "./modules/notifications/notifications.modul
     CartModule,
     NotificationsModule,
     BatchesModule,
+    MailModule,
     NewsModule,
     MediaModule,
     HealthModule,

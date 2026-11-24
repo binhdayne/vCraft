@@ -3,6 +3,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
@@ -11,6 +12,7 @@ import { role } from "../../common/authorization";
 import { id, parse } from "../../common/validation";
 import { Actor } from "../auth/interfaces/actor.interface";
 import { BatchesService } from "../batches/batches.service";
+import { MailService } from "../mail/mail.service";
 import { productionJournalInput } from "./dto/production-journal.dto";
 import {
   acceptSingleWorkshopSchema,
@@ -25,6 +27,8 @@ import {
 
 @Injectable()
 export class QuotesService {
+  private readonly logger = new Logger(QuotesService.name);
+
   constructor(
     @InjectModel("Account")
     private readonly usersModel: Model<Record<string, any>>,
@@ -33,6 +37,7 @@ export class QuotesService {
     @InjectModel("Quotation")
     private readonly quotesModel: Model<Record<string, any>>,
     private readonly batchesService: BatchesService,
+    private readonly mailService: MailService,
     @InjectModel("Artwork")
     private readonly artworkModel: Model<Record<string, any>>,
   ) {}
@@ -71,7 +76,33 @@ export class QuotesService {
       .find({ _id: { $in: recipientIds } })
       .select("name images address categories")
       .lean();
-    return this.visibleJournals({ ...q, workshops }, actor);
+    const isBuyer = actor.role === "buyer" && q.buyerId === actor.id;
+    const isAdmin = actor.role === "admin";
+    let isWinningArtisan = false;
+    if (actor.role === "artisan") {
+      const studio = await this.workshopsModel
+        .findOne({ ownerId: actor.id })
+        .select("_id")
+        .lean();
+      if (studio) {
+        const sid = String(studio._id);
+        isWinningArtisan =
+          q.acceptedWorkshopId === sid ||
+          (q.allocations || []).some((a: any) => a.workshopId === sid);
+      }
+    }
+    let buyerEmail: string | undefined;
+    if (isBuyer || isAdmin || isWinningArtisan) {
+      const buyer = await this.usersModel
+        .findById(q.buyerId)
+        .select("email")
+        .lean();
+      buyerEmail = buyer?.email;
+    }
+    return this.visibleJournals(
+      { ...q, workshops, ...(buyerEmail ? { buyerEmail } : {}) },
+      actor,
+    );
   }
 
   async create(actor: Actor, body: unknown) {
@@ -549,8 +580,9 @@ export class QuotesService {
       own.batchId = String(batch._id);
     }
     own.status = data.action === "start" ? "in_production" : "ready";
+    let updated: any;
     try {
-      return await this.cas(q, data.version,
+      updated = await this.cas(q, data.version,
         { status: q.status === "delivered" ? "delivered" : "in_production", allocations }, actor,
         data.action === "start" ? "Xưởng bắt đầu sản xuất" : "Xưởng hoàn thành phần việc và tạo trang truy xuất lô tranh",
         { eventType: data.action === "start" ? "production_started" : "batch_completed",
@@ -559,6 +591,109 @@ export class QuotesService {
       if (batch) await this.batchesService.discardUnlinked(batch);
       throw error;
     }
+    if (data.action === "ready" && batch) {
+      const sendTask = this.dispatchBatchCompletionEmail(
+        q,
+        batch,
+        s.name,
+        own.quantity,
+      ).catch((err: any) => {
+        this.logger.error(
+          `Failed to send batch completion QR email for quote ${q._id} / batch ${batch._id}: ${err?.message || err}`,
+        );
+      });
+      if (!this.mailService.isSmtpConfigured()) {
+        await sendTask;
+      }
+    }
+    return updated;
+  }
+
+  async resendQrEmail(actor: Actor, key: string) {
+    const q = await this.load(key, actor);
+    const isBuyer = actor.role === "buyer" && q.buyerId === actor.id;
+    const isAdmin = actor.role === "admin";
+    let isWinningArtisan = false;
+    let studioId: string | null = null;
+    if (actor.role === "artisan") {
+      const studio = await this.studio(actor);
+      studioId = String(studio._id);
+      isWinningArtisan = (q.allocations || []).some(
+        (a: any) => a.workshopId === studioId && a.batchId,
+      );
+    }
+    if (!isBuyer && !isAdmin && !isWinningArtisan) {
+      throw new ForbiddenException("Bạn không có quyền gửi lại email mã QR cho đơn hàng này");
+    }
+
+    const readyAlloc = (q.allocations || []).find(
+      (a: any) =>
+        a.status === "ready" &&
+        a.batchId &&
+        (!studioId || a.workshopId === studioId),
+    );
+    if (!readyAlloc) {
+      throw new BadRequestException(
+        "Lô tranh chưa hoàn thành hoặc chưa có trang truy xuất nguồn gốc",
+      );
+    }
+
+    const batch: any = await this.batchesService.findById(readyAlloc.batchId);
+    if (!batch) {
+      throw new NotFoundException("Không tìm thấy dữ liệu lô tranh truy xuất");
+    }
+
+    const result = await this.dispatchBatchCompletionEmail(
+      q,
+      batch,
+      batch.workshopName || "Xưởng chế tác Đông Hồ",
+      readyAlloc.quantity || q.quantity,
+    );
+    if (!result) {
+      throw new BadRequestException("Tài khoản khách hàng chưa có địa chỉ email hợp lệ");
+    }
+    return result;
+  }
+
+  private async dispatchBatchCompletionEmail(
+    quote: Record<string, any>,
+    batch: Record<string, any>,
+    workshopName: string,
+    quantity: number,
+  ) {
+    const buyer = await this.usersModel
+      .findById(quote.buyerId)
+      .select("email name")
+      .lean();
+    if (!buyer?.email) return null;
+
+    const traceUrl = this.batchesService.traceUrl(String(batch._id));
+    const qrBuffer = await this.batchesService.generateTraceQrBuffer(traceUrl);
+
+    const record = await this.mailService.sendBatchCompletionEmail({
+      to: buyer.email,
+      recipientName: quote.customerInfo?.fullName || buyer.name || "Quý khách",
+      quoteTitle: quote.title,
+      batchCode: batch.code,
+      workshopName,
+      quantity,
+      traceUrl,
+      items: (quote.items || []).map((item: any) => ({
+        artworkName: item.artworkName,
+        dimensions: item.dimensions,
+        quantity: item.quantity,
+        category: item.category,
+      })),
+      qrBuffer,
+    });
+
+    return {
+      ok: true,
+      to: buyer.email,
+      batchCode: batch.code,
+      traceUrl,
+      mode: record.mode,
+    };
   }
 
   async deliver(actor: Actor, key: string, body: unknown) {

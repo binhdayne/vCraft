@@ -1680,9 +1680,22 @@ function AccountProfile(){const {user,setUser,notify}=useApp(),state=useLoad('/a
 
 export function QuoteDetail(){const {user,loading}=useApp();if(loading)return <LoadState loading/>;if(!user)return <Navigate to="/dang-nhap" replace/>;return <QuoteContent/>;}
 function QuoteContent(){
-  const {id}=useParams(),{user,notify}=useApp(),state=useLoad('/quotes/'+id),[dialog,setDialog]=useState(null),[confirmingBid,setConfirmingBid]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
+  const {id}=useParams(),{user,notify}=useApp(),state=useLoad('/quotes/'+id),[dialog,setDialog]=useState(null),[confirmingBid,setConfirmingBid]=useState(null),[busy,setBusy]=useState(false),[resendingEmail,setResendingEmail]=useState(false),[error,setError]=useState('');
   const studio=useLoad(user.role==='artisan'?'/studio':'/auth/me');
   const q=state.data,own=!!q&&user.role==='buyer'&&q.buyerId===user.id;
+
+  async function handleResendQrEmail(){
+    setResendingEmail(true);
+    setError('');
+    try{
+      const res=await api('/quotes/'+id+'/resend-qr-email',{method:'POST'});
+      notify('Đã gửi lại email mã QR tới '+(res?.to||q.buyerEmail||'khách hàng'));
+    }catch(e){
+      setError(e.message);
+    }finally{
+      setResendingEmail(false);
+    }
+  }
 
   async function act(action,body={}){
     setBusy(true);setError('');
@@ -2030,10 +2043,23 @@ function QuoteContent(){
                       </div>
                     )}
 
-                    {a.batchId && (
+                    {!isAssignedToOtherWorkshop && a.batchId && (
                       <div className="contract-batch-footer">
-                        <span>Trang truy xuất nguồn gốc & Mã QR của lô tranh đã hoàn thành:</span>
+                        <span>Trang truy xuất nguồn gốc &amp; Mã QR của lô tranh đã hoàn thành:</span>
                         <BatchPageLinks batchId={a.batchId}/>
+                        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,flexWrap:'wrap',width:'100%',marginTop:10,paddingTop:10,borderTop:'1px solid var(--line)'}}>
+                          <span style={{fontSize:'13px',color:'var(--muted)'}}>
+                            {q.buyerEmail ? <>Mã QR và link truy xuất đã được gửi qua email tới <strong style={{color:'var(--ink)'}}>{q.buyerEmail}</strong>.</> : 'Mã QR và link truy xuất đã được gửi qua email cho khách hàng.'}
+                          </span>
+                          <button
+                            type="button"
+                            className="btn outline small"
+                            disabled={resendingEmail || busy}
+                            onClick={handleResendQrEmail}
+                          >
+                            <Send size={14}/> {resendingEmail ? 'Đang gửi email…' : 'Gửi lại email mã QR'}
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -2147,7 +2173,7 @@ function QuoteContent(){
           busy={busy}
         />
       )}
-      {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} initialDraft={mine.journalDraft} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async (landingPage,version)=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh và tạo landing page cùng mã QR');}}/>}
+      {dialog==='complete'&&mine&&studio.data&&<BatchLandingDialog quote={q} allocation={mine} studio={studio.data} initialDraft={mine.journalDraft} onClose={()=>setDialog(null)} onRefresh={state.reload} onSubmit={async (landingPage,version)=>{await api('/quotes/'+id+'/production',{method:'POST',body:{version,action:'ready',landingPage}});state.reload();notify('Đã hoàn thành lô tranh, tạo trang truy xuất và gửi mã QR qua email cho khách hàng');}}/>}
       {dialog==='bid'&&(
         <WorkshopBidDialog
           quote={q}

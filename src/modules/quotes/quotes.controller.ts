@@ -124,4 +124,13 @@ export class QuotesController {
   ) {
     return this.service.deliver(actor, key, body);
   }
+  @Post(":id/resend-qr-email")
+  resendQrEmail(
+    @CurrentUser()
+    actor: Actor,
+    @Param("id")
+    key: string,
+  ) {
+    return this.service.resendQrEmail(actor, key);
+  }
 }
