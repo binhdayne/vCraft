@@ -2,6 +2,7 @@ require('reflect-metadata');
 const mongoose=require('mongoose');const {hash}=require('bcryptjs');
 try{process.loadEnvFile();}catch{}
 const categories=['Chúc tụng','Sinh hoạt','Lịch sử & dân gian','Tứ quý'];
+const {workshopBooks,serializeWorkshopBook}=require('./data/workshop-stories.cjs');
 async function seed(){
  if(process.env.NODE_ENV==='production')throw new Error('Demo seed is disabled in production');
  const {createDatabase}=require('./database.cjs');
@@ -12,7 +13,7 @@ async function seed(){
   accounts.push(await db.users.findOneAndUpdate({email},{$setOnInsert:{email,name,role,passwordHash,active:true}},{upsert:true,new:true}));
  }
  const studioNames=['Xưởng Nét Mộc','Xưởng Sắc Điệp','Xưởng Hồn Quê'];const studios=[];
- for(let i=0;i<3;i++){studios.push(await db.workshops.findOneAndUpdate({ownerId:String(accounts[i+2]._id)},{$setOnInsert:{ownerId:String(accounts[i+2]._id),name:studioNames[i],story:'Hồ sơ minh họa cho đồ án vCraft. '+['Nét Mộc kể câu chuyện về một gia đình dành tình yêu cho ván khắc và nét in dân gian. Từng lớp màu, từng đường nét được chăm chút như một lời gửi gắm đến người yêu tranh.','Sắc Điệp là không gian demo dành cho những sắc màu dân gian trên nền giấy điệp. Xưởng nhận các đơn tranh chúc tụng và quà tặng, đồng thời chia sẻ hành trình từng lô sản xuất.','Hồn Quê là xưởng minh họa cho sự kết nối giữa người làm tranh và thế hệ trẻ. Những câu chuyện quen thuộc được giới thiệu qua hoạt động trải nghiệm in tranh và triển lãm nhỏ.'][i],address:'Khu làng tranh Đông Hồ, Bắc Ninh (vị trí minh họa)',latitude:21.0603+i*.0013,longitude:106.081+i*.0012,openForVisits:i!==2,visitingHours:'08:00–17:00 · Thứ 2–Chủ nhật',categories,images:[i===1?'/art/dai-cat.jpg':i===2?'/art/muc-dong.jpg':'/art/in-tranh.jpg'],certificates:[],approved:true}},{upsert:true,new:true}));}
+ for(let i=0;i<3;i++){studios.push(await db.workshops.findOneAndUpdate({ownerId:String(accounts[i+2]._id)},{$setOnInsert:{ownerId:String(accounts[i+2]._id),name:studioNames[i],story:serializeWorkshopBook(workshopBooks.find(book=>book.name===studioNames[i])),address:'Khu làng tranh Đông Hồ, Bắc Ninh (vị trí minh họa)',latitude:21.0603+i*.0013,longitude:106.081+i*.0012,openForVisits:i!==2,visitingHours:'08:00–17:00 · Thứ 2–Chủ nhật',categories,images:[i===1?'/art/dai-cat.jpg':i===2?'/art/muc-dong.jpg':'/art/in-tranh.jpg'],certificates:[],approved:true}},{upsert:true,new:true}));}
  const artworks=[
  ['Đám cưới chuột','Sinh hoạt','dam-cuoi-chuot.jpg',280000,'Một đoàn rước rộn ràng, những dáng hình sinh động và lối kể chuyện dí dỏm của tranh dân gian. Tác phẩm mẫu giúp bạn khám phá nét khắc, cách phối màu và câu chuyện của làng tranh.'],
  ['Lợn âm dương','Chúc tụng','lon-am-duong.jpg',220000,'Dáng lợn tròn đầy cùng những đường xoáy đặc trưng tạo nên một hình ảnh quen thuộc trong tranh Đông Hồ. Bản trưng bày sử dụng ảnh tác phẩm truyền thống để minh họa.'],
